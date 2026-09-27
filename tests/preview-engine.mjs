@@ -2,8 +2,8 @@ import { mkdir, rm, writeFile, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { createCanvas } from "@napi-rs/canvas";
-import { controlIndex } from "../tools/_lib/preview-engine.mjs";
+import { createCanvas, loadImage } from "@napi-rs/canvas";
+import { controlIndex, renderProfile } from "../tools/_lib/preview-engine.mjs";
 
 const repo = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const fixture = resolve(process.env.MCBEKIT_TEST_ROOT || resolve(repo, "workspace"), "preview-engine");
@@ -46,6 +46,22 @@ assert(report.outputs.some((path) => path.endsWith("preview-touch-pressed.png"))
 assert(report.outputs.some((path) => path.endsWith("preview-contact-sheet.png")), "contact sheet exists");
 assert(report.unsupported.some((item) => item.value === "mystery_property"), "unsupported property is reported");
 assert(report.diagnostics.length === 0, "texture and nine-slice sidecar resolve");
+await mkdir(resolve(fixture, "ui", "screens"), { recursive: true });
+await mkdir(resolve(fixture, "textures", "ui.v2"), { recursive: true });
+await writeFile(resolve(fixture, "textures", "ui.v2", "frame.png"), await texture.encode("png"));
+await writeFile(resolve(fixture, "textures", "ui.v2", "frame.json"), JSON.stringify({ nineslice_size: [2, 2, 2, 2], base_size: [12, 12] }));
+for (const [index, reference] of ["textures/ui/frame.png", "textures\\ui\\frame", "textures\\ui/frame.png", "textures\\ui.v2\\frame"].entries()) {
+  const nestedUi = { namespace: "path_fixture", frame: { type: "image", size: [24, 24], texture: reference } };
+  const nestedUiFile = resolve(fixture, "ui", "screens", "paths.json"), outputPath = resolve(fixture, `path-${index}.png`);
+  await writeFile(nestedUiFile, JSON.stringify(nestedUi));
+  const diagnostics = await renderProfile({ canvasMod: { createCanvas, loadImage }, ui: nestedUi, uiFile: nestedUiFile,
+    flat: { baseW: 24, baseH: 24, rects: [{ id: "frame", x: 0, y: 0, w: 24, h: 24 }] },
+    profile: { viewport: [24, 24] }, state: "default", outputPath });
+  const rendered = createCanvas(24, 24), ctx = rendered.getContext("2d");
+  ctx.drawImage(await loadImage(outputPath), 0, 0);
+  const center = Array.from(ctx.getImageData(12, 12, 1, 1).data);
+  assert(diagnostics.length === 0 && center.join(",") === "32,48,64,255", `nested UI resolves and draws texture path: ${reference}`);
+}
 const legacy = await run(["tools/render.mjs", resolve(fixture, "ui.json"), resolve(fixture, "solved.json"), "--no-image", "--diagnostic-ok", "--report", resolve(fixture, "disabled.json")]);
 const disabled = JSON.parse(await readFile(resolve(fixture, "disabled.json"), "utf8"));
 assert(legacy.code === 0 && disabled.imageRenderer.reason === "disabled_by_flag", "legacy render and explicit disabled report work");

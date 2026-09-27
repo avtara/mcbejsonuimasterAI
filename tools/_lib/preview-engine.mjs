@@ -65,7 +65,8 @@ async function exists(path) { try { await access(path); return true; } catch { r
 
 async function resolveTexture(uiFile, texture) {
   if (typeof texture !== "string" || texture.startsWith("#") || texture.includes("$")) return null;
-  const rel = texture.replaceAll("/", "\\") + (extname(texture) ? "" : ".png");
+  const normalized = texture.replaceAll("\\", "/");
+  const rel = normalized + (extname(normalized) ? "" : ".png");
   let base = dirname(resolve(uiFile));
   for (let i = 0; i < 5; i += 1) {
     const candidate = resolve(base, rel);

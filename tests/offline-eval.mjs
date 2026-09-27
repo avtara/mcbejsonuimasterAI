@@ -9,6 +9,19 @@ const help = await run(["tools/eval-offline.mjs", "--help"]);
 assert.equal(help.code, 0); assert.match(help.stdout, /--update-goldens/); assert.match(help.stdout, /--task/);
 const outputRoot = resolve(process.env.MCBEKIT_TEST_ROOT || "workspace", "offline-eval");
 const evaluated = await run(["tools/eval-offline.mjs", "--json", "--report", resolve(outputRoot, "report.json")]);
+if (evaluated.code !== 0) {
+  const failedReport = await import("node:fs/promises").then(({ readFile }) => readFile(resolve(outputRoot, "report.json"), "utf8")).then(JSON.parse).catch(() => null);
+  const failures = failedReport?.tasks.filter((task) => !task.ok).map((task) => ({
+    task: task.id,
+    checks: task.checks.filter((check) => !check.ok).map(({ id, details }) => {
+      if (details?.measurements) return { id, issues: details.issues, measurements: details.measurements.filter((item) => !item.fits).map((item) => ({ target: item.target, fixture: item.fixture, profile: item.profile, measuredWidth: item.measuredWidth, maxWidth: item.maxWidth, requiredHeight: item.requiredHeight, available: item.available, inkFits: item.inkFits })) };
+      if (details?.comparisons) return { id, policy: details.policy, comparisons: details.comparisons.filter((item) => !item.ok) };
+      if (details?.diagnostics) return { id, imageRenderer: details.imageRenderer, diagnosticCount: details.diagnostics.length, diagnostics: details.diagnostics.slice(0, 8), unsupported: details.unsupported?.slice(0, 8) };
+      return { id, details };
+    }),
+  }));
+  console.error("Offline evaluation failed checks:", JSON.stringify(failures ?? { reportUnavailable: true }));
+}
 assert.equal(evaluated.code, 0, evaluated.stderr || evaluated.stdout);
 const envelope = JSON.parse(evaluated.stdout.trim()); assert.equal(envelope.ok, true);
 const report = JSON.parse(await import("node:fs/promises").then(({ readFile }) => readFile(resolve(outputRoot, "report.json"), "utf8")));
