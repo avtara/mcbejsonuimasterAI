@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { indexResourcePack } from "./final-rp-v2/rp-index.mjs";
+import { indexResourcePack, mergeResourcePackIndexes } from "./final-rp-v2/rp-index.mjs";
 import { resolveControl, resolveRoute } from "./final-rp-v2/resolver.mjs";
 import { materializeCollections, projectInteractionState } from "./final-rp-v2/state-engine.mjs";
 import { layoutTree } from "./final-rp-v2/layout-engine.mjs";
@@ -31,14 +31,14 @@ async function cachedOverlayIndex(vanillaRoot){
   if(!vanillaRoot)return null;
   const key=resolve(vanillaRoot),cached=overlayIndexCache.get(key),now=Date.now();
   if(cached&&await current(cached.stamps)){cached.checkedAt=now;return cached;}
-  const index=await indexResourcePack(key,{targetLayer:"overlay",includeControlProvenance:false}),paths=[join(key,"ui","_ui_defs.json"),...index.files.map(file=>file.file)];
+  const index=await indexResourcePack(key,{targetLayer:"overlay",includeControlProvenance:false}),paths=[join(key,"ui","_ui_defs.json"),join(key,"ui","_global_variables.json"),...index.files.map(file=>file.file)];
   const entry={index,stamps:await snapshot(paths),checkedAt:now,revision:(cached?.revision??0)+1};overlayIndexCache.set(key,entry);return entry;
 }
-function mergeIndexes(target,overlay){if(!overlay)return target;return{targetRoot:target.targetRoot,roots:[...overlay.roots,...target.roots],files:[...overlay.files,...target.files],controls:new Map([...overlay.controls,...target.controls]),unresolved:[...overlay.unresolved,...target.unresolved],globals:{...overlay.globals,...target.globals},globalSources:[...overlay.globalSources,...target.globalSources]};}
+function mergeIndexes(target,overlay){return mergeResourcePackIndexes(overlay,target);}
 async function cachedIndex(rpRoot,vanillaRoot){
   const targetRoot=resolve(rpRoot),key=`${targetRoot}\0${vanillaRoot?resolve(vanillaRoot):""}`,overlay=await cachedOverlayIndex(vanillaRoot),cached=indexCache.get(key),now=Date.now();
   if(cached&&cached.overlayRevision===(overlay?.revision??0)&&await current(cached.stamps)){cached.checkedAt=now;cacheStats.indexHits++;return cached.index;}
-  cacheStats.indexMisses++;const target=await indexResourcePack(targetRoot,{includeControlProvenance:false}),paths=[join(targetRoot,"ui","_ui_defs.json"),...target.files.map(file=>file.file)],index=mergeIndexes(target,overlay?.index);indexCache.set(key,{index,stamps:await snapshot(paths),checkedAt:now,overlayRevision:overlay?.revision??0});return index;
+  cacheStats.indexMisses++;const target=await indexResourcePack(targetRoot,{includeControlProvenance:false}),paths=[join(targetRoot,"ui","_ui_defs.json"),join(targetRoot,"ui","_global_variables.json"),...target.files.map(file=>file.file)],index=mergeIndexes(target,overlay?.index);indexCache.set(key,{index,stamps:await snapshot(paths),checkedAt:now,overlayRevision:overlay?.revision??0});return index;
 }
 export function finalRpCacheStats(){return{...cacheStats,indexEntries:indexCache.size,overlayIndexEntries:overlayIndexCache.size,profileEntries:profileCache.size};}
 export function clearFinalRpCaches(){indexCache.clear();overlayIndexCache.clear();profileCache.clear();discoveryCache=null;Object.assign(cacheStats,{indexHits:0,indexMisses:0,profileHits:0,profileMisses:0});clearRendererCaches();}
@@ -102,21 +102,23 @@ function attachFonts(layout, profile, unresolved) {
 }
 
 function materializeDefaultLabelSizes(tree, profile) {
-  if (profile?.font?.status !== "available") return;
-  const engine = new MinecraftFontEngine(profile.font);
-  function visit(node) {
+  const unresolved = [], engine = profile?.font?.status === "available" ? new MinecraftFontEngine(profile.font) : null;
+  function visit(node, pointer = "") {
     const props=node?.props||{};
     if(props.type==="label"&&Array.isArray(props.size)&&props.size.includes("default")){
       try {
+        if (!engine) throw Object.assign(new Error("Intrinsic label dimensions require Minecraft font metrics"), { code: FONT_UNAVAILABLE });
         const run=engine.layoutText({text:props.text??"",fontType:props.font_type??props.fontType??"default",fontSize:props.font_size??props.fontSize??"normal",fontScale:props.font_scale_factor??props.fontScale??1,rect:{x:0,y:0,w:4096,h:4096},alignment:"left",shadow:props.shadow??false});
         props.size=props.size.map((value,index)=>value==="default"?Math.ceil(index===0?run.contentSize.w:run.contentSize.h):value);
       } catch (error) {
         props.font_status=error.code??FONT_UNAVAILABLE;
+        unresolved.push({ kind: props.font_status, impact: "blocking", stage: "layout", control: node.qualified || node.id, pointer: `${pointer}/size`, reason: "intrinsic_label_size_requires_font", message: error.message });
       }
     }
-    for(const child of node?.controls||[])visit(child);
+    (node?.controls||[]).forEach((child, index) => visit(child, `${pointer}/controls/${index}`));
   }
   visit(tree);
+  return unresolved;
 }
 
 async function resolveBundle(args = {}) {
@@ -142,8 +144,8 @@ async function resolveBundle(args = {}) {
   if (!resolved.tree) throw new Error(`Control could not be resolved: ${control}`);
   const collections = materializeCollections(resolved.tree, fixture);
   const interaction = projectInteractionState(collections.tree, fixture, { index, interactionState: args.interactionState ?? "default" });
-  const bindingGraph = buildBindingGraph(interaction.tree, { globals:index.globals, fixture });
-  materializeDefaultLabelSizes(interaction.tree, profile);
+  const bindingGraph = buildBindingGraph(interaction.tree, { globals:{...index.globals,...fixtureEnvironment}, fixture });
+  const fontLayoutUnresolved = materializeDefaultLabelSizes(interaction.tree, profile);
   const layout = layoutTree(interaction.tree, { viewport: args.viewport ?? [480, 270], defaults: args.defaults, content: args.content, contentMax: args.contentMax });
   const unresolved = [
     ...routeUnresolved.map((entry) => ({ ...entry, stage: "route" })),
@@ -152,7 +154,11 @@ async function resolveBundle(args = {}) {
     ...interaction.unresolved.map((entry) => ({ ...entry, stage: "interaction" })),
     ...bindingGraph.unresolved.map((entry) => ({ ...entry, stage: "binding" })),
     ...layout.unresolved.map((entry) => ({ ...entry, stage: "layout" })),
+    ...fontLayoutUnresolved,
   ];
+  // Resolving a fixed-size tree does not require glyphs. Keep font-dependent
+  // geometry blocking here, while display-list failures remain render blockers.
+  const structure = classifyUnresolved(unresolved, rpRoot, vanillaRoot);
   attachFonts(layout, profile, unresolved);
   const classified = classifyUnresolved(unresolved, rpRoot, vanillaRoot);
   const displayList = buildDisplayList({ ...layout, unresolved: classified.blocking });
@@ -168,6 +174,7 @@ async function resolveBundle(args = {}) {
     layout,
     displayList,
     unresolved: displayList.unresolved,
+    structure,
     warnings: classified.warnings,
     diagnostics: interaction.diagnostics ?? [],
     bindingGraph,
@@ -192,7 +199,7 @@ export async function openProject(args) {
 
 export async function resolveScreen(args) {
   const bundle = await resolveBundle(args);
-  return { ok: bundle.unresolved.length === 0, engine: "final-rp-v2", control: bundle.control, route: bundle.route, routeTrace:bundle.route, tree: bundle.tree, layout: { viewport: bundle.layout.viewport, nodes: bundle.layout.nodes, unresolved: bundle.layout.unresolved, hitAnalysis:bundle.hitAnalysis }, bindingGraph:bundle.bindingGraph, collectionProvenance:bundle.collectionProvenance, stateModel:bundle.layout.nodes.filter(node=>node.interaction).map(node=>({control:node.qualified||node.id,pointer:node.pointer,...node.interaction})), hitAnalysis:bundle.hitAnalysis, displayList: bundle.displayList, unresolved: bundle.unresolved, unresolvedImpact:bundle.unresolvedImpact, warnings: bundle.warnings, vanillaProfile: publicProfile(bundle.profile), sourceAttribution: bundle.index.files.map(({ relative, namespace, hash, layer }) => ({ relative, namespace, hash, layer })) };
+  return { ok: bundle.structure.blocking.length === 0, evidenceLevel: "structural-static", runtimeVerified: false, engine: "final-rp-v2", control: bundle.control, route: bundle.route, routeTrace:bundle.route, tree: bundle.tree, layout: { viewport: bundle.layout.viewport, nodes: bundle.layout.nodes, unresolved: bundle.layout.unresolved, hitAnalysis:bundle.hitAnalysis }, bindingGraph:bundle.bindingGraph, collectionProvenance:bundle.collectionProvenance, stateModel:bundle.layout.nodes.filter(node=>node.interaction).map(node=>({control:node.qualified||node.id,pointer:node.pointer,...node.interaction})), hitAnalysis:bundle.hitAnalysis, displayList: bundle.displayList, unresolved: bundle.structure.blocking, unresolvedImpact:bundle.structure.impact, renderPreparation: { ok: bundle.unresolved.length === 0, unresolved: bundle.unresolved, evidenceLevel: "display-list-preparation", runtimeVerified: false }, warnings: bundle.warnings, vanillaProfile: publicProfile(bundle.profile), sourceAttribution: bundle.index.files.map(({ relative, namespace, hash, layer }) => ({ relative, namespace, hash, layer })) };
 }
 
 export async function renderScreen(args) {
@@ -203,6 +210,7 @@ export async function renderScreen(args) {
   if (inside(bundle.rpRoot, outputPath)) throw new Error("final-RP render output must remain outside the source resource pack");
   await mkdir(dirname(outputPath), { recursive: true });
   const render = await renderDisplayList({ canvasMod, displayList: bundle.displayList, targetRoot: bundle.rpRoot, vanillaRoot: bundle.vanillaRoot, outputPath, analyzeControls: args.analyzeControls !== false });
+  if (!render.outputAlpha?.pixels) render.diagnostics.push({ kind: "EMPTY_RENDER_OUTPUT", impact: "blocking", control: bundle.control, message: "No visible pixels were produced; this render cannot establish visual correctness" });
   const validation = validateDisplayList(render, { constraints: args.constraints ?? [], toleranceUi: args.toleranceUi ?? 1 });
   const reportPath = outputPath.replace(/\.png$/i, ".report.json");
   const compactControls = Object.fromEntries(Object.entries(render.controls).map(([id, control]) => [id, Object.fromEntries(Object.entries(control).filter(([key]) => key !== "mask"))]));
@@ -243,13 +251,13 @@ export async function inspectControl(args) {
 
 export async function validateLayout(args) {
   const rendered = await renderScreen(args);
-  return { ...rendered.validation, control: rendered.control, outputPath: rendered.outputPath, reportPath: rendered.reportPath, unresolved: rendered.unresolved };
+  return { ...rendered.validation, ok: rendered.ok, control: rendered.control, outputPath: rendered.outputPath, reportPath: rendered.reportPath, unresolved: rendered.unresolved };
 }
 
 export async function validateStateTextures(args) {
   const rendered = await renderStates(args), raw = Object.fromEntries(Object.entries(rendered.reports).map(([state, report]) => [state, report.render]));
   const comparison = compareStateReports(raw, { bboxTolerance: args.toleranceSourcePx ?? 1, centroidTolerance: args.toleranceSourcePx ?? 1 });
-  return { ...comparison, reports: rendered.reports, contactSheet: rendered.contactSheet };
+  return { ...comparison, ok: rendered.ok && comparison.ok, reports: rendered.reports, contactSheet: rendered.contactSheet };
 }
 
 export async function measureText(args) {

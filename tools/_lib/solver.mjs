@@ -1,7 +1,8 @@
 // tools/_lib/solver.mjs
 // Constraint solver. Iterates declared constraints to a fixed point.
 
-import { placeFrom, edgeValue, setEdge } from "./layout.mjs";
+import { placeFrom, edgeValue, setEdge, anchorXMode, anchorYMode } from "./layout.mjs";
+import { validateElementIds } from "./ir.mjs";
 
 const MAX_ITER = 32;
 
@@ -51,7 +52,34 @@ function initialRects(ird) {
   return rects;
 }
 
-function applyConstraint(c, rects, parents, log) {
+function createRectUpdater(elements, rects) {
+  const children = new Map();
+  for (const element of elements) {
+    const parent = element.parent || "__root__";
+    if (!children.has(parent)) children.set(parent, []);
+    children.get(parent).push(element);
+  }
+  function update(id, patch) {
+    const rect = rects.get(id);
+    const before = { ...rect };
+    Object.assign(rect, patch);
+    const dx = rect.x - before.x, dy = rect.y - before.y;
+    const dw = rect.w - before.w, dh = rect.h - before.h;
+    if (!dx && !dy && !dw && !dh) return;
+    for (const child of children.get(id) || []) {
+      const cr = rects.get(child.id);
+      const xm = anchorXMode(child.anchor), ym = anchorYMode(child.anchor);
+      // Keep solved local offsets, including offsets changed by earlier constraints.
+      update(child.id, {
+        x: Math.round(cr.x + dx + dw * (xm === "right" ? 1 : xm === "centerX" ? 0.5 : 0)),
+        y: Math.round(cr.y + dy + dh * (ym === "bottom" ? 1 : ym === "centerY" ? 0.5 : 0)),
+      });
+    }
+  }
+  return update;
+}
+
+function applyConstraint(c, rects, parents, log, update) {
   let changed = false;
   const eq = (a, b) => Math.round(a) === Math.round(b);
 
@@ -60,8 +88,10 @@ function applyConstraint(c, rects, parents, log) {
     const r0 = rects.get(first);
     for (const id of rest) {
       const r = rects.get(id);
-      if ((c.op !== "same_height") && r.w !== r0.w) { r.w = r0.w; changed = true; }
-      if ((c.op !== "same_width")  && r.h !== r0.h) { r.h = r0.h; changed = true; }
+      const next = { ...r };
+      if ((c.op !== "same_height") && r.w !== r0.w) { next.w = r0.w; changed = true; }
+      if ((c.op !== "same_width")  && r.h !== r0.h) { next.h = r0.h; changed = true; }
+      update(id, next);
     }
     if (changed) log.push({ op: c.op, ids: c.ids });
     return changed;
@@ -75,7 +105,12 @@ function applyConstraint(c, rects, parents, log) {
     const target = edgeValue(rects.get(first), edge);
     for (const id of rest) {
       const r = rects.get(id);
-      if (!eq(edgeValue(r, edge), target)) { setEdge(r, edge, target); changed = true; }
+      if (!eq(edgeValue(r, edge), target)) {
+        const next = { ...r };
+        setEdge(next, edge, target);
+        update(id, next);
+        changed = true;
+      }
     }
     if (changed) log.push({ op: c.op, edge, ids: c.ids });
     return changed;
@@ -98,7 +133,7 @@ function applyConstraint(c, rects, parents, log) {
       const right = Math.max(...group.map((g) => g.r.x + g.r.w));
       const delta = Math.round((parent.x + parent.w / 2) - ((left + right) / 2));
       if (delta !== 0) {
-        for (const g of group) g.r.x += delta;
+        for (const g of group) update(g.id, { x: g.r.x + delta });
         changed = true;
       }
     } else {
@@ -106,7 +141,7 @@ function applyConstraint(c, rects, parents, log) {
       const bottom = Math.max(...group.map((g) => g.r.y + g.r.h));
       const delta = Math.round((parent.y + parent.h / 2) - ((top + bottom) / 2));
       if (delta !== 0) {
-        for (const g of group) g.r.y += delta;
+        for (const g of group) update(g.id, { y: g.r.y + delta });
         changed = true;
       }
     }
@@ -133,8 +168,8 @@ function applyConstraint(c, rects, parents, log) {
       const bSign = aSign * -1; // mirror
       const newAcx = cx + aSign * dist;
       const newBcx = cx + bSign * dist;
-      if (!eq(a.x + a.w / 2, newAcx)) { a.x = Math.round(newAcx - a.w / 2); changed = true; }
-      if (!eq(b.x + b.w / 2, newBcx)) { b.x = Math.round(newBcx - b.w / 2); changed = true; }
+      if (!eq(a.x + a.w / 2, newAcx)) { update(aId, { x: Math.round(newAcx - a.w / 2) }); changed = true; }
+      if (!eq(b.x + b.w / 2, newBcx)) { update(bId, { x: Math.round(newBcx - b.w / 2) }); changed = true; }
     } else {
       const cy = pA.y + pA.h / 2;
       const da = (a.y + a.h / 2) - cy;
@@ -144,8 +179,8 @@ function applyConstraint(c, rects, parents, log) {
       const bSign = aSign * -1;
       const newAcy = cy + aSign * dist;
       const newBcy = cy + bSign * dist;
-      if (!eq(a.y + a.h / 2, newAcy)) { a.y = Math.round(newAcy - a.h / 2); changed = true; }
-      if (!eq(b.y + b.h / 2, newBcy)) { b.y = Math.round(newBcy - b.h / 2); changed = true; }
+      if (!eq(a.y + a.h / 2, newAcy)) { update(aId, { y: Math.round(newAcy - a.h / 2) }); changed = true; }
+      if (!eq(b.y + b.h / 2, newBcy)) { update(bId, { y: Math.round(newBcy - b.h / 2) }); changed = true; }
     }
     if (changed) log.push({ op: c.op, ids: c.ids });
     return changed;
@@ -178,10 +213,10 @@ function applyConstraint(c, rects, parents, log) {
       const r = sorted[i].r;
       const newPos = cursor + gap;
       if (c.op === "equal_gap_x") {
-        if (r.x !== newPos) { r.x = newPos; changed = true; }
+        if (r.x !== newPos) { update(sorted[i].id, { x: newPos }); changed = true; }
         cursor = r.x + r.w;
       } else {
-        if (r.y !== newPos) { r.y = newPos; changed = true; }
+        if (r.y !== newPos) { update(sorted[i].id, { y: newPos }); changed = true; }
         cursor = r.y + r.h;
       }
     }
@@ -195,7 +230,9 @@ function applyConstraint(c, rects, parents, log) {
     const target = edgeValue(rects.get(bId), bEdge) + (c.delta || 0);
     const a = rects.get(aId);
     if (!eq(edgeValue(a, aEdge), target)) {
-      setEdge(a, aEdge, target);
+      const next = { ...a };
+      setEdge(next, aEdge, target);
+      update(aId, next);
       changed = true;
       log.push({ op: c.op, a: c.a, b: c.b, delta: c.delta || 0 });
     }
@@ -207,15 +244,18 @@ function applyConstraint(c, rects, parents, log) {
 }
 
 export function solve(ird) {
+  const idErrors = validateElementIds(ird.elements);
+  if (idErrors.length) throw new Error(idErrors.map((error) => error.message).join("; "));
   const parents = buildParents(ird);
   const rects = initialRects(ird);
+  const update = createRectUpdater(ird.elements, rects);
   const log = [];
   let iter = 0;
   let changed = true;
   while (changed && iter < MAX_ITER) {
     changed = false;
     for (const c of ird.constraints) {
-      if (applyConstraint(c, rects, parents, log)) changed = true;
+      if (applyConstraint(c, rects, parents, log, update)) changed = true;
     }
     iter++;
   }

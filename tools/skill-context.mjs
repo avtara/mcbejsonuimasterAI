@@ -65,12 +65,23 @@ async function main() {
     process.exit(64);
   }
   const needs = new Set((parsed.options.needs || "").split(",").map((value) => value.trim()).filter(Boolean));
+  const contextByNeed = profile.contextByNeed || {};
+  const mappedNeeds = [...needs].filter((need) => Object.hasOwn(contextByNeed, need));
+  const mappedTools = new Set(mappedNeeds.flatMap((need) => contextByNeed[need]));
+  const onlyMappedNeeds = needs.size > 0 && mappedNeeds.length === needs.size;
   const activeWorkflow = profile.workflow.filter((id) => {
     const selection = selectionById.get(id);
+    const matchesNeed = selection?.when?.some((condition) => needs.has(condition)) || mappedTools.has(id);
+    if (selection?.optIn === true && !matchesNeed && parsed.options.tool !== id) return false;
+    if (onlyMappedNeeds) return mappedTools.has(id);
     if (!parsed.options.needs) return true;
-    if (!selection?.when?.length) return true;
-    return selection.when.some((condition) => needs.has(condition));
+    if (mappedTools.has(id) || !selection?.when?.length) return true;
+    return matchesNeed;
   });
+  // Preserve the full legacy workflow contract while keeping new opt-in tools
+  // out until requested. A mapped-only need deliberately selects a small context.
+  const contextWorkflow = onlyMappedNeeds ? activeWorkflow : profile.workflow.filter((id) =>
+    selectionById.get(id)?.optIn !== true || activeWorkflow.includes(id));
   if (parsed.options.tool && !selectionById.has(parsed.options.tool)) {
     const result = { ok: false, error: `tool ${parsed.options.tool} is not selected by ${profile.skill}` };
     if (parsed.options.json) printJson(result); else process.stderr.write(`${result.error}\n`);
@@ -94,7 +105,7 @@ async function main() {
     skill: profile.skill,
     skillStatus: profile.skillStatus,
     purpose: profile.purpose,
-    workflow: profile.workflow,
+    workflow: contextWorkflow,
     tools,
     successCriteria: profile.successCriteria,
     boundaries: profile.boundaries,

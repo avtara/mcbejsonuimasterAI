@@ -129,7 +129,7 @@ Low-level commands remain available for diagnosis:
 | `repository.audit` | `node tools/audit.mjs [--report <path>]` | repository links, JSON, skill, and script integrity |
 | `vanilla.index` | `node tools/build-vanilla-index.mjs [--force]` | local vanilla screen and texture evidence |
 
-The Go solver remains geometry-only. YAML parsing, auto-sizing, compilation, validation, preview, and reports stay in Node.
+The Go solver remains geometry-only. YAML parsing, auto-sizing, compilation, validation, preview, and reports stay in Node. Both backends preserve descendant anchors when constraints move or resize their parents. Duplicate or reserved element IDs are rejected before solving. If the solver does not converge, `run` stops with exit code 7 and an `ok: false` report; it does not compile that layout.
 
 ## Single preview engine
 
@@ -180,3 +180,5 @@ Actual Bedrock verification is performed only when the user requests that stage.
 - Run `npm run audit:public` before public release. It checks public candidates while excluding ignored local data and designated external/private reference areas.
 - Local corpus and preview data stay under ignored workspace paths.
 - Setup, tool availability, and content correctness are separate checks: use `doctor`, `skill:doctor`, and the appropriate validator for each layer.
+
+For long Korean/English and unbroken-token checks, see [offline text evidence](../evals/TEXT-EVIDENCE.md): explicit target selection, system-font raster measurements, and fixed-example coverage gaps.

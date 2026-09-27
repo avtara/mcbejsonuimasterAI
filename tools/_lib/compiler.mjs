@@ -3,6 +3,7 @@
 // Supports preset extension via element.extends (e.g. "common_dialogs.main_panel_no_buttons").
 
 import { offsetFrom } from "./layout.mjs";
+import { validateElementIds } from "./ir.mjs";
 
 const KIND_TYPE = {
   panel: "panel",
@@ -91,6 +92,9 @@ function commonExtras(el) {
 }
 
 export function compile(solved) {
+  if (solved.converged === false) throw new Error("cannot compile an unconverged layout; fix the IR constraints and solve again");
+  const idErrors = validateElementIds(solved.elements);
+  if (idErrors.length) throw new Error(idErrors.map((error) => error.message).join("; "));
   const ns = solved.namespace;
   const rects = solved.rects;
   const elements = solved.elements;

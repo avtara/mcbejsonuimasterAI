@@ -81,6 +81,9 @@ function expectedCollectionSize(el) {
 
 function geometryIssues(solved) {
   const issues = [];
+  if (solved?.converged === false) {
+    issues.push({ severity: "error", path: solved.screen || "solved", message: "solver did not converge after " + solved.iterations + " iterations", suggestion: "Resolve conflicting IR constraints and rerun the pipeline." });
+  }
   if (!solved || !solved.rects || !Array.isArray(solved.elements)) return issues;
   const rects = solved.rects;
   const elements = solved.elements;

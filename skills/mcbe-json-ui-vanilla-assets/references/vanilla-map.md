@@ -1,9 +1,12 @@
 # Vanilla Map
 
-## Upstream authority
+## Evidence order
 
-- `vanilla resource mirror`
-- `<https://github.com/vanilla resource mirror>`
+- Official implementation samples: <https://github.com/Mojang/bedrock-samples>
+- Versioned asset/search mirror: <https://github.com/ZtechNetwork/MCBVanillaResourcePack>
+- Final behavior: target Bedrock runtime and Content Log
+
+The Ztech repository is a convenience mirror, not Mojang authority. Always retain the selected revision and do not silently resolve a conflict in the mirror's favor.
 
 ## Local repo notes
 

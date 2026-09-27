@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
+import { loadProfiles, loadRegistry, validateProfiles } from "../tools/_lib/ai-contracts.mjs";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
 const REPO = resolve(here, "..");
@@ -70,6 +71,50 @@ async function main() {
   const contextResult = json(context.stdout);
   check("skill-context:workflow", context.code === 0 && contextResult?.tools?.[0]?.selection?.id === "design.search");
   check("skill-context:legacy-semantic-hash", semanticHash(contextResult) === "50439350f115a5f6f787880ac5744964ae170e11d4d804819502759446005e51");
+
+  check("skill-context:opt-in-absent-by-default", !contextResult.workflow.includes("design.library") && !contextResult.tools.some((entry) => entry.selection.id === "design.library"));
+  for (const need of ["style-selection", "game-ui-design", "external-design-skill", "pixel-art-method"]) {
+    const selected = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", need, "--json"]);
+    const value = json(selected.stdout);
+    check("skill-context:minimal-need:" + need, selected.code === 0 && JSON.stringify(value?.workflow) === JSON.stringify(["design.library"]) && value?.tools?.length === 1 && value.tools[0].selection.id === "design.library");
+  }
+  for (const skill of ["mcbe-json-ui-texture-design", "mcbe-json-ui-research", "mcbe-json-ui-samples"]) {
+    const selected = await run(["tools/skill-context.mjs", skill, "--needs", "pixel-art-method", "--compact", "--json"]);
+    const value = json(selected.stdout);
+    check("pixel-method:selective-routing:" + skill, selected.code === 0 && JSON.stringify(value?.workflow) === JSON.stringify(["design.library"]) && value?.tools?.length === 1);
+  }
+  const compactDesign = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", "style-selection,game-ui-design", "--compact", "--json"]);
+  const compactDesignValue = json(compactDesign.stdout);
+  check("skill-context:mapped-union-deduplicated", compactDesign.code === 0 && JSON.stringify(compactDesignValue?.workflow) === JSON.stringify(["design.library"]) && compactDesignValue?.tools?.length === 1);
+  const unrelated = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", "syntax-only", "--json"]);
+  check("skill-context:unrelated-need-keeps-legacy", unrelated.code === 0 && semanticHash(json(unrelated.stdout)) === semanticHash(contextResult));
+  const mixed = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", "style-selection,geometry", "--json"]);
+  const mixedValue = json(mixed.stdout);
+  check("skill-context:mixed-needs-preserve-existing-tools", mixed.code === 0 && mixedValue?.workflow?.includes("design.library") && contextResult.workflow.every((id) => mixedValue.tools.some((entry) => entry.selection.id === id)));
+  const explicit = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--tool", "design.library", "--needs", "syntax-only", "--json"]);
+  check("skill-context:explicit-tool-opt-in", explicit.code === 0 && json(explicit.stdout)?.tool?.selection?.id === "design.library");
+  const research = await run(["tools/skill-context.mjs", "mcbe-json-ui-research", "--json"]);
+  const researchValue = json(research.stdout);
+  check("skill-context:research-default-excludes-new-tools", research.code === 0 && ["design.library", "design.sources"].every((id) => !researchValue.workflow.includes(id) && !researchValue.tools.some((entry) => entry.selection.id === id)));
+  const sourceNeed = await run(["tools/skill-context.mjs", "mcbe-json-ui-research", "--needs", "source-download", "--json"]);
+  const sourceValue = json(sourceNeed.stdout);
+  check("skill-context:source-need-opt-in", sourceNeed.code === 0 && sourceValue?.tools?.some((entry) => entry.selection.id === "design.sources") && !sourceValue.tools.some((entry) => entry.selection.id === "design.library"));
+  const existingNeed = await run(["tools/skill-context.mjs", "mcbe-json-ui-master", "--needs", "public-release", "--json"]);
+  check("skill-context:existing-need-filter-preserved", existingNeed.code === 0 && JSON.stringify(json(existingNeed.stdout)?.tools?.map((entry) => entry.selection.id)) === JSON.stringify(["skill.route", "skill.doctor", "skill.context", "public.audit"]));
+
+  const { registry } = await loadRegistry();
+  const profiles = await loadProfiles();
+  const visualIndex = profiles.profiles.findIndex((entry) => entry.skill === "mcbe-json-ui-visual-design");
+  for (const [name, ids] of [["unknown", ["missing.tool"]], ["unselected", ["tools.list"]], ["empty", []], ["not-array", "design.library"]]) {
+    const invalid = structuredClone(profiles);
+    invalid.profiles[visualIndex].contextByNeed["style-selection"] = ids;
+    const result = await validateProfiles(invalid, registry);
+    check("skill-profiles:need-map-rejects-" + name, !result.ok && result.errors.some((issue) => issue.path.includes("contextByNeed")));
+  }
+  const invalidOptIn = structuredClone(profiles);
+  invalidOptIn.profiles[visualIndex].toolSelections[0].optIn = "true";
+  const invalidOptInResult = await validateProfiles(invalidOptIn, registry);
+  check("skill-profiles:opt-in-boolean", !invalidOptInResult.ok && invalidOptInResult.errors.some((issue) => issue.path.endsWith("/optIn")));
 
   const doctor = await run(["tools/skill-doctor.mjs", "mcbe-json-ui-visual-design", "--probe", "--json"]);
   const doctorResult = json(doctor.stdout);

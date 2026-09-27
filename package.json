@@ -59,7 +59,12 @@
     "card:audit": "node tools/card-deck-audit.mjs",
     "test": "node tests/run-manifest.mjs",
     "test:impact": "node tools/test-impact.mjs",
-    "benchmark:agent-path": "node tools/benchmark-agent-path.mjs"
+    "benchmark:agent-path": "node tools/benchmark-agent-path.mjs",
+    "design:library": "node tools/design-library.mjs",
+    "design:sources": "node tools/design-source-sync.mjs",
+    "test:design-library": "node tests/design-library.mjs",
+    "design:board": "node tools/design-board.mjs",
+    "test:design-board": "node tests/design-board.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",

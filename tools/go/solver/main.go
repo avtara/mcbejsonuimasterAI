@@ -185,6 +185,13 @@ func initialRects(ir IR) (map[string]*Rect, error) {
 
 	byID := map[string]Element{}
 	for _, e := range ir.Elements {
+		switch e.ID {
+		case "namespace", "root_panel", "__root__", "__screen__", "__proto__":
+			return nil, fmt.Errorf("reserved element id %q", e.ID)
+		}
+		if _, exists := byID[e.ID]; exists {
+			return nil, fmt.Errorf("duplicate element id %q", e.ID)
+		}
 		byID[e.ID] = e
 	}
 	visited := map[string]bool{"__screen__": true, "__root__": true}
@@ -221,7 +228,46 @@ func logEntry(log *[]map[string]interface{}, entry map[string]interface{}) {
 	*log = append(*log, entry)
 }
 
-func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]string, log *[]map[string]interface{}) bool {
+func createRectUpdater(elements []Element, rects map[string]*Rect) func(string, Rect) {
+	children := map[string][]Element{}
+	for _, e := range elements {
+		children[parentOf(e)] = append(children[parentOf(e)], e)
+	}
+	var update func(string, Rect)
+	update = func(id string, next Rect) {
+		r := rects[id]
+		before := *r
+		*r = next
+		dx, dy := r.X-before.X, r.Y-before.Y
+		dw, dh := r.W-before.W, r.H-before.H
+		if dx == 0 && dy == 0 && dw == 0 && dh == 0 {
+			return
+		}
+		for _, child := range children[id] {
+			cr := *rects[child.ID]
+			xFactor, yFactor := 0.0, 0.0
+			switch xMode(child.Anchor) {
+			case "right":
+				xFactor = 1
+			case "centerX":
+				xFactor = 0.5
+			}
+			switch yMode(child.Anchor) {
+			case "bottom":
+				yFactor = 1
+			case "centerY":
+				yFactor = 0.5
+			}
+			// Preserve solved local offsets, including earlier child constraints.
+			cr.X = jsRound(cr.X + dx + dw*xFactor)
+			cr.Y = jsRound(cr.Y + dy + dh*yFactor)
+			update(child.ID, cr)
+		}
+	}
+	return update
+}
+
+func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]string, log *[]map[string]interface{}, update func(string, Rect)) bool {
 	changed := false
 
 	switch c.Op {
@@ -232,14 +278,16 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 		r0 := rects[c.IDs[0]]
 		for _, id := range c.IDs[1:] {
 			r := rects[id]
+			next := *r
 			if c.Op != "same_height" && r.W != r0.W {
-				r.W = r0.W
+				next.W = r0.W
 				changed = true
 			}
 			if c.Op != "same_width" && r.H != r0.H {
-				r.H = r0.H
+				next.H = r0.H
 				changed = true
 			}
+			update(id, next)
 		}
 		if changed {
 			logEntry(log, map[string]interface{}{"op": c.Op, "ids": c.IDs})
@@ -266,7 +314,9 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 		for _, id := range c.IDs[1:] {
 			r := rects[id]
 			if !eq(edgeValue(r, edge), target) {
-				setEdge(r, edge, target)
+				next := *r
+				setEdge(&next, edge, target)
+				update(id, next)
 				changed = true
 			}
 		}
@@ -306,7 +356,9 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 			delta := jsRound((parent.X + parent.W/2) - ((left + right) / 2))
 			if delta != 0 {
 				for _, id := range c.IDs {
-					rects[id].X += delta
+					next := *rects[id]
+					next.X += delta
+					update(id, next)
 				}
 				changed = true
 			}
@@ -321,7 +373,9 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 			delta := jsRound((parent.Y + parent.H/2) - ((top + bottom) / 2))
 			if delta != 0 {
 				for _, id := range c.IDs {
-					rects[id].Y += delta
+					next := *rects[id]
+					next.Y += delta
+					update(id, next)
 				}
 				changed = true
 			}
@@ -356,11 +410,15 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 			newACx := cx + aSign*dist
 			newBCx := cx + bSign*dist
 			if !eq(a.X+a.W/2, newACx) {
-				a.X = jsRound(newACx - a.W/2)
+				next := *a
+				next.X = jsRound(newACx - a.W/2)
+				update(aID, next)
 				changed = true
 			}
 			if !eq(b.X+b.W/2, newBCx) {
-				b.X = jsRound(newBCx - b.W/2)
+				next := *b
+				next.X = jsRound(newBCx - b.W/2)
+				update(bID, next)
 				changed = true
 			}
 		} else {
@@ -376,11 +434,15 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 			newACy := cy + aSign*dist
 			newBCy := cy + bSign*dist
 			if !eq(a.Y+a.H/2, newACy) {
-				a.Y = jsRound(newACy - a.H/2)
+				next := *a
+				next.Y = jsRound(newACy - a.H/2)
+				update(aID, next)
 				changed = true
 			}
 			if !eq(b.Y+b.H/2, newBCy) {
-				b.Y = jsRound(newBCy - b.H/2)
+				next := *b
+				next.Y = jsRound(newBCy - b.H/2)
+				update(bID, next)
 				changed = true
 			}
 		}
@@ -428,13 +490,17 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 			newPos := cursor + gap
 			if c.Op == "equal_gap_x" {
 				if r.X != newPos {
-					r.X = newPos
+					next := *r
+					next.X = newPos
+					update(ids[i], next)
 					changed = true
 				}
 				cursor = r.X + r.W
 			} else {
 				if r.Y != newPos {
-					r.Y = newPos
+					next := *r
+					next.Y = newPos
+					update(ids[i], next)
 					changed = true
 				}
 				cursor = r.Y + r.H
@@ -452,7 +518,9 @@ func applyConstraint(c Constraint, rects map[string]*Rect, parents map[string]st
 		target := edgeValue(rects[bID], bEdge) + c.Delta
 		a := rects[aID]
 		if !eq(edgeValue(a, aEdge), target) {
-			setEdge(a, aEdge, target)
+			next := *a
+			setEdge(&next, aEdge, target)
+			update(aID, next)
 			changed = true
 			logEntry(log, map[string]interface{}{"op": c.Op, "a": c.A, "b": c.B, "delta": c.Delta})
 		}
@@ -478,13 +546,14 @@ func solve(ir IR) (Result, error) {
 	if err != nil {
 		return Result{}, err
 	}
+	update := createRectUpdater(ir.Elements, rects)
 	log := []map[string]interface{}{}
 	iter := 0
 	changed := true
 	for changed && iter < maxIter {
 		changed = false
 		for _, c := range ir.Constraints {
-			if applyConstraint(c, rects, parents, &log) {
+			if applyConstraint(c, rects, parents, &log, update) {
 				changed = true
 			}
 		}

@@ -1,10 +1,13 @@
 import { readFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
-import { access } from "node:fs/promises";
+import { isAbsolute, relative, resolve } from "node:path";
+import { stat } from "node:fs/promises";
 import { PATHS } from "./_lib/paths.mjs";
 
 const routing = JSON.parse(await readFile(resolve(PATHS.data, "skill-routing.json"), "utf8"));
 const modeOrder = ["quick", "standard", "deep"];
+const supportedSurfaces = new Set(routing.surfaces || ["json-ui"]);
+const knownKinds = new Set([...routing.broadTaskKinds, ...routing.routes.flatMap((entry) => [...entry.primaryFor, ...entry.antiTriggers])]);
+const supportingOwners = new Map(routing.routes.filter((entry) => entry.skill !== "mcbe-json-ui-master").flatMap((entry) => entry.primaryFor.map((kind) => [kind, entry])));
 
 function fail(code, message, details = {}) {
   process.stdout.write(`${JSON.stringify({ schema: routing.schema, ok: false, code, message, ...details })}\n`);
@@ -34,7 +37,12 @@ function validateIntent(intent) {
     }
   }
   if (!Array.isArray(intent.taskKinds) || intent.taskKinds.length === 0) fail("UNKNOWN_ROUTE", "taskKinds is required");
-  if (intent.mode && !modeOrder.includes(intent.mode)) fail("INVALID_INTENT", "unknown mode");
+  if (intent.surface !== undefined && !supportedSurfaces.has(intent.surface)) fail("UNSUPPORTED_SURFACE", "surface is not supported by the Bedrock JSON UI router", { supported: [...supportedSurfaces] });
+  const unknownKinds = intent.taskKinds.filter((kind) => !knownKinds.has(kind));
+  if (unknownKinds.length) fail("UNKNOWN_ROUTE", "unknown task kinds", { kinds: unknownKinds });
+  const unknownSupportingKinds = (intent.supportingKinds || []).filter((kind) => !supportingOwners.has(kind));
+  if (unknownSupportingKinds.length) fail("UNKNOWN_SUPPORT_ROUTE", "supporting kinds must name a specialist task", { kinds: unknownSupportingKinds });
+  if (intent.mode !== undefined && !modeOrder.includes(intent.mode)) fail("INVALID_INTENT", "unknown mode");
 }
 
 function route(intent) {
@@ -48,9 +56,12 @@ function route(intent) {
   const primary = owners[0];
   const blockedKinds = primary.antiTriggers.filter((kind) => kinds.has(kind));
   if (blockedKinds.length) fail("ROUTE_ANTI_TRIGGERED", "primary owner is excluded by the structured intent", { skill: primary.skill, antiTriggers: blockedKinds });
-  const supportingKinds = new Set(intent.supportingKinds || []);
-  const supports = routing.routes.filter((entry) => entry.skill !== primary.skill && entry.skill !== "mcbe-json-ui-master" && entry.primaryFor.some((kind) => supportingKinds.has(kind)));
-  if (supports.length > 1) fail("SUPPORT_AMBIGUOUS", "more than one supporting owner requested", { candidates: supports.map((entry) => entry.skill).sort() });
+  const supports = [...new Map((intent.supportingKinds || []).map((kind) => supportingOwners.get(kind)).filter((entry) => entry.skill !== primary.skill).map((entry) => [entry.skill, entry])).values()];
+  const allKinds = new Set([...intent.taskKinds, ...(intent.supportingKinds || [])]);
+  for (const entry of [primary, ...supports]) {
+    const antiTriggers = entry.antiTriggers.filter((kind) => allKinds.has(kind));
+    if (antiTriggers.length) fail("ROUTE_ANTI_TRIGGERED", "a requested owner is excluded by the structured intent", { skill: entry.skill, antiTriggers });
+  }
   const mode = intent.mode || primary.defaultMode;
   const escalation = validateEscalation(intent.escalation, mode);
   return {
@@ -59,6 +70,7 @@ function route(intent) {
     mode: escalation?.nextMode || mode,
     primarySkill: primary.skill,
     followOnSkill: supports[0]?.skill || null,
+    nextRoutes: supports.map((entry) => ({ skill: entry.skill, references: [] })),
     routeConfidence: "high",
     routeEvidence: intent.taskKinds.filter((kind) => primary.primaryFor.includes(kind)).map((kind) => `taskKinds contains ${kind}`),
     references: Object.values(primary.referencesByNeed || {}).slice(0, 1),
@@ -71,18 +83,27 @@ function route(intent) {
 }
 
 async function validateReferences(result) {
-  const skillRoot = resolve(PATHS.root, "skills", result.primarySkill);
-  for (const reference of result.references) {
+  for (const owner of [{ skill: result.primarySkill, references: result.references }, ...result.nextRoutes]) {
+    const skillRoot = resolve(PATHS.root, "skills", owner.skill);
+    const configured = routing.routes.find((entry) => entry.skill === owner.skill);
+    let reference = Object.values(configured.referencesByNeed || {})[0];
+    if (!reference) {
+      const entrypoint = await readFile(resolve(skillRoot, "SKILL.md"), "utf8");
+      reference = entrypoint.match(/references\/[A-Za-z0-9_./-]+\.md/)?.[0] || "SKILL.md";
+    }
     const path = resolve(skillRoot, reference);
-    if (!path.startsWith(`${skillRoot}\\`) && !path.startsWith(`${skillRoot}/`)) fail("REFERENCE_PATH_ESCAPE", "route reference escapes its Skill", { reference });
-    try { await access(path); } catch { fail("REFERENCE_NOT_FOUND", "route reference does not exist", { reference, skill: result.primarySkill }); }
+    const rel = relative(skillRoot, path);
+    if (rel === ".." || rel.startsWith(`..${process.platform === "win32" ? "\\" : "/"}`) || isAbsolute(rel)) fail("REFERENCE_PATH_ESCAPE", "route reference escapes its Skill", { reference });
+    try { if (!(await stat(path)).isFile()) throw new Error("not a file"); } catch { fail("REFERENCE_NOT_FOUND", "route reference does not exist", { reference, skill: owner.skill }); }
+    owner.references.push(...(owner.references.length ? [] : [reference]));
   }
   return result;
 }
 
 function validateEscalation(state, currentMode) {
   if (!state) return null;
-  if (!Number.isInteger(state.count) || state.count < 0 || state.count >= routing.maxEscalations) fail("ESCALATION_LIMIT", "escalation limit reached");
+  if (typeof state !== "object" || Array.isArray(state)) fail("INVALID_ESCALATION", "escalation must be an object");
+  if (!Number.isInteger(state.count) || state.count < 0 || state.count > routing.maxEscalations) fail("ESCALATION_LIMIT", "escalation limit reached");
   if (!routing.escalationReasons.includes(state.reason)) fail("INVALID_ESCALATION_REASON", "unknown escalation reason");
   const hashes = state.commandHashes || [];
   if (!Array.isArray(hashes) || hashes.some((hash) => typeof hash !== "string")) fail("INVALID_ESCALATION", "commandHashes must be strings");
@@ -90,6 +111,7 @@ function validateEscalation(state, currentMode) {
   if (["RUNTIME_EVIDENCE_REQUIRED", "USER_AUTHORITY_REQUIRED"].includes(state.reason)) {
     return { count: state.count, max: routing.maxEscalations, status: "blocked-needs-user", reason: state.reason };
   }
+  if (state.count === routing.maxEscalations) fail("ESCALATION_LIMIT", "escalation limit reached");
   const index = modeOrder.indexOf(currentMode);
   if (index < 0 || index === modeOrder.length - 1) fail("ESCALATION_LIMIT", "deep mode cannot escalate further");
   return { count: state.count + 1, max: routing.maxEscalations, nextMode: modeOrder[index + 1], reason: state.reason };

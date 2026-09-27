@@ -96,67 +96,24 @@ Observed error path example:
 /.../long_form/ssc_router/ssc_screen | Type not specified (or @-base not found) for control: ssc_screen
 ```
 
-Real cause:
+This is a historical local failure, not proof that cross-namespace inheritance is forbidden inside modifications. The abbreviated log does not establish the client version, complete pack stack or engine parsing order. Adding a `type` may hide the missing base's required behavior; resolve the base first.
 
-- a control inside `modifications[].value[]` used `@another_namespace.something` to inherit its type.
-- Bedrock parses the modification value tree before cross-namespace inheritance is resolved, so the child has no type.
-- adding `"type": "panel"` to the @-extended child is **not** a reliable fix; the engine still rejects it.
+Trace these before changing the screen:
 
-Correct pattern (used by both `references/source-packs/modern-cloud-ui-reference/ui/server_form.json` and `references/source-packs/rpg-server-ui-reference/ui/server_form.json`):
+1. Confirm `_ui_defs.json` registration, namespace and base declaration in the active pack stack.
+2. Check whether the patch uses the same resource path as the target definition.
+3. Identify which declaration owns the target `controls` array. In the pinned Mojang `server_form.json`, `long_form` inherits `common_dialogs.main_panel_no_buttons` and has no own `controls`; insertion into an inherited array is a distinct case.
+4. Reduce the failing insertion to one control, capture the exact client version and fresh Content Log, then restore dependencies one at a time.
 
-- **wholesale-replace** `main_screen_content` (or `long_form`, depending on the reference) instead of inserting via `modifications`.
-- the replacement is a normal control tree, not a modification value, so cross-namespace `@` works inside it.
-- gate visibility with a per-child `#visible` view-binding using a `#title_text` prefix expression.
+Source evidence reviewed on 2026-09-27 contradicts a blanket syntax ban:
 
-Anti-pattern (do not ship):
+- `references/source-packs/modern-cloud-ui-reference/ui/hud_screen.json` lines 9–20 nests three `@scoreboard.*` controls inside a modification value.
+- The pinned `bedrock-core-ui` source (`6977e257cb874087b22cfc506ae9db3440d17bda`) uses `gamepad_cursor@core_ui_common.gamepad_cursor_button` directly in `packages/resource-pack/packs/RP/ui/server_form.json` lines 73–91. Its `core-ui/hosts/form/mount.json` lines 13–18 describes same-path and inherited-array constraints as the author's observations.
+- `references/source-packs/rpg-server-ui-reference/ui/server_form.json` uses a modification to insert its factory. It does not establish that whole-screen replacement is required.
 
-```jsonc
-"long_form": {
-  "modifications": [{
-    "array_name": "controls",
-    "operation": "insert_back",
-    "value": [{
-      "router": {
-        "type": "panel",
-        "controls": [
-          { "screen@other_ns.main_screen_content": {} } // FAILS at runtime
-        ]
-      }
-    }]
-  }]
-}
-```
+These are static examples, not current Bedrock runtime proof. See [pinned source analysis](73-bedrock-source-review.md) for acquisition, revision and reuse boundaries. The local v2 renderer explicitly blocks unsupported cross-file or inherited-array cases; that tool limitation is also not an engine-wide prohibition.
 
-Reference-correct pattern:
-
-```jsonc
-"main_screen_content": {
-  "type": "panel", "size": ["100%", "100%"],
-  "$prefix": "customUI_MyPack_",
-  "controls": [
-    { "my_screen_panel": {
-        "type": "panel", "size": ["100%", "100%"],
-        "controls": [ { "screen@my_pack.main_screen_content": {} } ],
-        "bindings": [
-          { "binding_type": "view",
-            "source_property_name": "(not ((#title_text - $prefix) = #title_text))",
-            "target_property_name": "#visible" }
-        ]
-    } },
-    { "vanilla_long_form_panel": {
-        "type": "panel", "size": ["100%", "100%"],
-        "controls": [ { "vanilla_long_form@server_form.long_form": {} } ],
-        "bindings": [
-          { "binding_type": "view",
-            "source_property_name": "((#title_text - $prefix) = #title_text)",
-            "target_property_name": "#visible" }
-        ]
-    } }
-  ]
-}
-```
-
-Note: wholesale replacing `main_screen_content` always re-emits both `default_long_form_panel` and `default_custom_form_panel` so that vanilla forms keep working when the title prefix does not match.
+If the target client reproduces the failure and a content replacement is needed, preserve the vanilla outer shell, long-form and custom-form routes, close/back behavior and unselected title fallback. Adapt a verified inner-content pattern and test both custom and ordinary forms. Do not replace the screen solely because an inherited control uses a different namespace.
 
 ## HUD value stops updating
 

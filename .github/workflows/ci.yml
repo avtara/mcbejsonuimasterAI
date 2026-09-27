@@ -8,15 +8,19 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20.x"
           cache: "npm"
-      - name: Install (no optional native deps)
-        run: npm install --no-fund --no-audit --omit=optional
+      - name: Install locked dependencies including visual test libraries
+        run: npm ci --no-fund --no-audit
       - name: Setup (vanilla index, env check)
         run: node tools/setup.mjs
       - name: Doctor (quick)

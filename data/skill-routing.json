@@ -28,6 +28,6 @@
     {"skill":"mcbe-json-ui-tools-runner","primaryFor":["run-tools","compile-ir","validate-ir"],"antiTriggers":["concept-only"],"defaultMode":"standard","referencesByNeed":{},"escalateWhen":["blocking tool failure"],"answerProfile":"compact"},
     {"skill":"mcbe-json-ui-vanilla-assets","primaryFor":["vanilla-texture","vanilla-icon","atlas-path"],"antiTriggers":["original-art"],"defaultMode":"quick","referencesByNeed":{},"escalateWhen":["index stale"],"answerProfile":"compact"},
     {"skill":"mcbe-json-ui-vanilla-presets","primaryFor":["vanilla-preset","common-dialog","common-button"],"antiTriggers":["custom-surface-only"],"defaultMode":"standard","referencesByNeed":{},"escalateWhen":["preset unresolved"],"answerProfile":"compact"},
-    {"skill":"mcbe-json-ui-visual-design","primaryFor":["visual-design","spacing","typography","visual-state"],"antiTriggers":["texture-generation-only"],"defaultMode":"standard","referencesByNeed":{},"escalateWhen":["screenshot comparison required"],"answerProfile":"default"}
+    {"skill":"mcbe-json-ui-visual-design","primaryFor":["visual-design","spacing","typography","visual-state","style-selection","game-ui-design","style-selection","game-ui-design"],"antiTriggers":["texture-generation-only"],"defaultMode":"standard","referencesByNeed":{"style-selection":"references/style-selection.md","game-ui-design":"references/style-selection.md","external-design-skill":"references/design-skill-adapters.md"},"escalateWhen":["screenshot comparison required"],"answerProfile":"default"}
   ]
 }

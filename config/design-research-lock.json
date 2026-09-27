@@ -1,0 +1,2860 @@
+{
+  "schema": "mcbe-design-research-lock@1",
+  "reviewedAt": "2026-09-27",
+  "sources": [
+    {
+      "id": "mojang-bedrock-samples",
+      "kind": "github",
+      "url": "https://github.com/Mojang/bedrock-samples",
+      "revision": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+      "revisionDate": "2026-09-16T04:27:23Z",
+      "license": "Mojang-EULA",
+      "files": [
+        {
+          "path": "LICENSE.md",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/LICENSE.md",
+          "sha256": "ca18c0dede68ce24ea1cd6f9df0813579b6f9f979787983a50baec99345f975d",
+          "bytes": 222
+        },
+        {
+          "path": "metadata/script_modules/@minecraft/server-ui_2.1.0.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/metadata/script_modules/@minecraft/server-ui_2.1.0.json",
+          "sha256": "41a82051a8e56981eee028e9c162eca97d9967d3db8f7430027c4408a55f4852",
+          "bytes": 474
+        },
+        {
+          "path": "metadata/script_modules/@minecraft/server-ui_2.2.0.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/metadata/script_modules/@minecraft/server-ui_2.2.0.json",
+          "sha256": "62dc49b29affc97016432eb4f0c405af07a22bd1745531481dab20d5842fd4a4",
+          "bytes": 474
+        },
+        {
+          "path": "metadata/script_modules/@minecraft/server-ui-bindings_2.1.0.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/metadata/script_modules/@minecraft/server-ui-bindings_2.1.0.json",
+          "sha256": "84d0ffb61fce52f80742a5a6ac04e833b7143d9dd4ca5e35d45eb040aa1e9a4b",
+          "bytes": 148561
+        },
+        {
+          "path": "metadata/script_modules/@minecraft/server-ui-bindings_2.2.0.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/metadata/script_modules/@minecraft/server-ui-bindings_2.2.0.json",
+          "sha256": "073b1e108913cf2ecfc583c682b136a0ab7ff4333eac2f6ad1006f3de7d0a7e3",
+          "bytes": 154792
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/README.md",
+          "sha256": "80622dcc831dfcd7fa2c44b524169ec0cfd6e6a0a00a66ff4b30c4b42670a438",
+          "bytes": 709
+        },
+        {
+          "path": "resource_pack/manifest.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/manifest.json",
+          "sha256": "34b9043f027114001feb6e5fa010c98c3899507ef59acce583ef196ec59e0b59",
+          "bytes": 507
+        },
+        {
+          "path": "resource_pack/textures/ui/Black.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/Black.json",
+          "sha256": "97fdfacd4bf3d22a981aceec2cbc74876d7f9166f34064b6ecbdf293de1b7989",
+          "bytes": 60
+        },
+        {
+          "path": "resource_pack/textures/ui/Black.png",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/Black.png",
+          "sha256": "492d761d357b4fbdd29d0bc7a06a6423b5b0842d47c2d069ca90a9746ff5117e",
+          "bytes": 84
+        },
+        {
+          "path": "resource_pack/textures/ui/button_borderless_light.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/button_borderless_light.json",
+          "sha256": "622158df366964d9ddeac5ed9938a43522da68d02c060335b853c9730103ad65",
+          "bytes": 60
+        },
+        {
+          "path": "resource_pack/textures/ui/button_borderless_light.png",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/button_borderless_light.png",
+          "sha256": "313b607889ba3d224cf599420087876ccb3f4572b304dc1ba6c25825f7d2c376",
+          "bytes": 131
+        },
+        {
+          "path": "resource_pack/textures/ui/button_borderless_lighthover.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/button_borderless_lighthover.json",
+          "sha256": "622158df366964d9ddeac5ed9938a43522da68d02c060335b853c9730103ad65",
+          "bytes": 60
+        },
+        {
+          "path": "resource_pack/textures/ui/button_borderless_lighthover.png",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/button_borderless_lighthover.png",
+          "sha256": "e4cdc816ebbfae2bea1e870fbde0c59effd680cdec388ba1e66424645573aea8",
+          "bytes": 85
+        },
+        {
+          "path": "resource_pack/textures/ui/button_borderless_lightpressed.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/button_borderless_lightpressed.json",
+          "sha256": "622158df366964d9ddeac5ed9938a43522da68d02c060335b853c9730103ad65",
+          "bytes": 60
+        },
+        {
+          "path": "resource_pack/textures/ui/button_borderless_lightpressed.png",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/button_borderless_lightpressed.png",
+          "sha256": "47f6ed1760ae8e407cdbb6b7207a5ee45b8a0db861f16f0696c5cf61c9961983",
+          "bytes": 84
+        },
+        {
+          "path": "resource_pack/textures/ui/dialog_background_hollow_3.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/dialog_background_hollow_3.json",
+          "sha256": "36700ca1326d14a269b2052c27d95115200897bee9c27b4d36e75fe893973415",
+          "bytes": 94
+        },
+        {
+          "path": "resource_pack/textures/ui/dialog_background_hollow_3.png",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/ui/dialog_background_hollow_3.png",
+          "sha256": "cf16fa7c6598d90d9b3f43b3ce7779de065c07fb29568d860588694ffe596e5b",
+          "bytes": 260
+        },
+        {
+          "path": "resource_pack/ui/_global_variables.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/_global_variables.json",
+          "sha256": "ea39206de2c7b6f157def5cdf1662767c0ccd9560dfafb1378c3c364b236f69b",
+          "bytes": 20210
+        },
+        {
+          "path": "resource_pack/ui/_ui_defs.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/_ui_defs.json",
+          "sha256": "173e108309a10293b6f099cf6ccbd3a84f1da3bee5fd7573140cff67160f0dde",
+          "bytes": 7547
+        },
+        {
+          "path": "resource_pack/ui/achievement_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/achievement_screen.json",
+          "sha256": "0f596bb9a0cfc964cc07db5d75d9088a7dd276346136d453f668216dd553bdca",
+          "bytes": 843
+        },
+        {
+          "path": "resource_pack/ui/add_external_server_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/add_external_server_screen.json",
+          "sha256": "ef6c5219f79af56fe36c8b77eda0da1fe9d9a1c34fce89805ef7f28c19a4778d",
+          "bytes": 8018
+        },
+        {
+          "path": "resource_pack/ui/adhoc_inprogess_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/adhoc_inprogess_screen.json",
+          "sha256": "737309acd1ecb068b9b9be9cfaedee8c19bf8e0c6e84742e667ba5d470356df4",
+          "bytes": 2180
+        },
+        {
+          "path": "resource_pack/ui/adhoc_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/adhoc_screen.json",
+          "sha256": "20b4851c5a3612cfa802548f8b7feeb287be92dd0271afb2a23067a1329b6683",
+          "bytes": 3331
+        },
+        {
+          "path": "resource_pack/ui/anvil_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/anvil_screen_pocket.json",
+          "sha256": "3bc1f75f609611869429d24db59487318ce4df17a20f65476ef0d38bfdc2c8a0",
+          "bytes": 8695
+        },
+        {
+          "path": "resource_pack/ui/anvil_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/anvil_screen.json",
+          "sha256": "7a94dac7ba6d93917cb5d0c9d3e50056950441d41af2ef75636e83d5800569ae",
+          "bytes": 11893
+        },
+        {
+          "path": "resource_pack/ui/authentication_modals.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/authentication_modals.json",
+          "sha256": "4043fe2831f71b956234da3e9aedd068857c854fc36e64eb71183b5fbfcc303f",
+          "bytes": 5028
+        },
+        {
+          "path": "resource_pack/ui/authentication_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/authentication_screen.json",
+          "sha256": "790ed5b10f03984859114b0255d2519b12eeeb46f98610bfa51d8865a6f561d4",
+          "bytes": 40584
+        },
+        {
+          "path": "resource_pack/ui/auto_save_info_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/auto_save_info_screen.json",
+          "sha256": "31f9db472d79ba0f8e770b4834ef229f1a5a4f7553b5c23a1ebada5c09b8c595",
+          "bytes": 4484
+        },
+        {
+          "path": "resource_pack/ui/beacon_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/beacon_screen_pocket.json",
+          "sha256": "8824eecb1e38b6dc2532bb5907b2a3dbe0a5cf810a653584eaae6745bbbe2730",
+          "bytes": 24702
+        },
+        {
+          "path": "resource_pack/ui/beacon_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/beacon_screen.json",
+          "sha256": "323ea909ba190557da33478435d30e3da35de47e41ca3c4a5f3c20cc4c385c86",
+          "bytes": 18434
+        },
+        {
+          "path": "resource_pack/ui/beta_feedback_qr.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/beta_feedback_qr.json",
+          "sha256": "74f378bdef99c317c665e11403af1cd40bef7b7989cc86d0160d13c7935397f4",
+          "bytes": 4595
+        },
+        {
+          "path": "resource_pack/ui/blast_furnace_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/blast_furnace_screen.json",
+          "sha256": "a3459bf5e6da1ca256b30abb570dca9e4116b897c839f43c665f7efc846f170f",
+          "bytes": 91
+        },
+        {
+          "path": "resource_pack/ui/book_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/book_screen.json",
+          "sha256": "9eab6ae90eeac04aaa17316c2d35882c9d488b02d48212b3504501390fbb03b0",
+          "bytes": 32555
+        },
+        {
+          "path": "resource_pack/ui/brewing_stand_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/brewing_stand_screen_pocket.json",
+          "sha256": "79d0672bae9a17434e44c696b87fb749da6c3feb688d31659947c404ca893148",
+          "bytes": 11340
+        },
+        {
+          "path": "resource_pack/ui/brewing_stand_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/brewing_stand_screen.json",
+          "sha256": "adf574c4f461d05e8fa74187d684d01ae7ab1532c393df64c88ece9ea9788197",
+          "bytes": 9483
+        },
+        {
+          "path": "resource_pack/ui/bundle_purchase_warning_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/bundle_purchase_warning_screen.json",
+          "sha256": "811e95983092d92267b83a031a31700b1ca982930113f765b064aa67da12e9f6",
+          "bytes": 10183
+        },
+        {
+          "path": "resource_pack/ui/cartography_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/cartography_screen_pocket.json",
+          "sha256": "b3b68ec694901dcd6bb57f0ec0a8f58d5d23d294ca1ae37a9e1501cb3c7776ba",
+          "bytes": 13850
+        },
+        {
+          "path": "resource_pack/ui/cartography_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/cartography_screen.json",
+          "sha256": "17b35bb927388fd7decbf7b306320127bfa1bb71d60ed55ded708d575c2f1589",
+          "bytes": 11967
+        },
+        {
+          "path": "resource_pack/ui/chalkboard_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/chalkboard_screen.json",
+          "sha256": "0ee3564e89dd646b13364e56aa4734990fe610b94e70a76687a702bfe799c138",
+          "bytes": 2899
+        },
+        {
+          "path": "resource_pack/ui/chat_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/chat_screen.json",
+          "sha256": "c9af255c5072ee3ee1cc3cd694f401cf7ba78428e869592868755b4c51d979cc",
+          "bytes": 29440
+        },
+        {
+          "path": "resource_pack/ui/chat_settings_menu_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/chat_settings_menu_screen.json",
+          "sha256": "71980d8e51c8a1dfdcf9e00f3565d3dc0162dbd821e2a15538b4e2cef27286b0",
+          "bytes": 14676
+        },
+        {
+          "path": "resource_pack/ui/chest_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/chest_screen.json",
+          "sha256": "421885e0928a2db41a2850dc2fafcd2faba1cf3639eb90eb3e630f0742b78ee5",
+          "bytes": 8642
+        },
+        {
+          "path": "resource_pack/ui/choose_realm_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/choose_realm_screen.json",
+          "sha256": "de48bbd11c9f308e63928c96223204727ba662ece2a6a343864131d125f0cb14",
+          "bytes": 21569
+        },
+        {
+          "path": "resource_pack/ui/coin_purchase_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/coin_purchase_screen.json",
+          "sha256": "5321c0a87a47d45fa5e30d4b27a53ff37e9e27e20306b248413e9c48a6a9173a",
+          "bytes": 57152
+        },
+        {
+          "path": "resource_pack/ui/command_block_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/command_block_screen.json",
+          "sha256": "096add8ce9ced4de5da048411a0fcce42f712da2973d53fe70d9e95dc2a77514",
+          "bytes": 37370
+        },
+        {
+          "path": "resource_pack/ui/confirm_delete_account_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/confirm_delete_account_screen.json",
+          "sha256": "5081db6d95a5c9bb8028abc524fef37ec2612cc30640941914807a9e9813897c",
+          "bytes": 9333
+        },
+        {
+          "path": "resource_pack/ui/content_log_history_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/content_log_history_screen.json",
+          "sha256": "0010749c9a769db6278541b506bd66fa0ef9b1bb108c336952ab6a574b685951",
+          "bytes": 6809
+        },
+        {
+          "path": "resource_pack/ui/content_log.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/content_log.json",
+          "sha256": "af7429af2e7ffd930f9aa5bd4794628f76b5e880d4e4c99c8963513c8e1661dd",
+          "bytes": 2583
+        },
+        {
+          "path": "resource_pack/ui/crafter_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/crafter_screen_pocket.json",
+          "sha256": "8bcfcd0273e6dbd1b0907e77dba65f9d5187cb59779cfaad0e9abbcf09e6ff85",
+          "bytes": 15136
+        },
+        {
+          "path": "resource_pack/ui/create_world_upsell_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/create_world_upsell_screen.json",
+          "sha256": "2dc206c175e4e781988908df3e7448af8e57369ac3bad994339431f265bc0336",
+          "bytes": 16978
+        },
+        {
+          "path": "resource_pack/ui/credits_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/credits_screen.json",
+          "sha256": "9a30b84328cbb6d499f336889456c9148a03e28695308a4f9863770d7baf7ea1",
+          "bytes": 4028
+        },
+        {
+          "path": "resource_pack/ui/csb_purchase_error_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_purchase_error_screen.json",
+          "sha256": "a8c05f2040e472798c9d0d2230e30a9939807361d2203c491f878fa82d724634",
+          "bytes": 3385
+        },
+        {
+          "path": "resource_pack/ui/csb_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_screen.json",
+          "sha256": "ab8b73527883c94e4b01bd6d72f0c443291d2d4ca16c420773c2e8f94892eff5",
+          "bytes": 18160
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/content_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/content_section.json",
+          "sha256": "5aa677edef5b7ad687e5a95aab9d2fda12278ca19046721538b4cc41daf90581",
+          "bytes": 12658
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_banner.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_banner.json",
+          "sha256": "ceea0ed714d000b46bc81ebef64011210e5f45a6f75e78f5c133321b2a074a22",
+          "bytes": 18614
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_buy_now_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_buy_now_screen.json",
+          "sha256": "022a3664a9011ebe6b6ac7c7f6d94b306105428afcccca45b08448ea3638c6c2",
+          "bytes": 12242
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_common.json",
+          "sha256": "20ed2d13f93b1a2d6e23616b7f1d0ae725f468551e391264775cd612a6bc7cef",
+          "bytes": 6604
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_purchase_amazondevicewarning_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_purchase_amazondevicewarning_screen.json",
+          "sha256": "8410388975fce79ae307b8d8b208f8f4a1f93756dd73d38b2af2faf66e1fbfed",
+          "bytes": 2685
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_purchase_warning_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_purchase_warning_screen.json",
+          "sha256": "21427d00719ad15d4dd85fdae7ef4388ef28c2c6c87cd9dd254b95712a879776",
+          "bytes": 2795
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_subscription_panel.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_subscription_panel.json",
+          "sha256": "e0a885e041749c6115a4df207aead40977773d0d84178157af276d3f365817dd",
+          "bytes": 9254
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_upsell_dialog.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_upsell_dialog.json",
+          "sha256": "19c9aa46ff72cde9718b2b576f6f4e1ec23f2d61836ae5e2908c59241c0b955a",
+          "bytes": 19665
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/csb_welcome_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/csb_welcome_screen.json",
+          "sha256": "f9c1e6698218206f2e0f801ee6b1d82abe5f6c0211da0374cd66d88515c2e699",
+          "bytes": 2025
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/faq_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/faq_section.json",
+          "sha256": "6fac89609377d6d16f6afa19d94d5a6912afc49e8343569d039e45030b023014",
+          "bytes": 10490
+        },
+        {
+          "path": "resource_pack/ui/csb_sections/landing_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/csb_sections/landing_section.json",
+          "sha256": "9d0144cc0279b1a23083aeb0e6d188af1cc1a6e3a57158f116af6facecccb61c",
+          "bytes": 13483
+        },
+        {
+          "path": "resource_pack/ui/custom_templates_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/custom_templates_screen.json",
+          "sha256": "bd0568f2d73ce3776a78092504f926451f774e38f6a22a076e04ee4e0aac3191",
+          "bytes": 11090
+        },
+        {
+          "path": "resource_pack/ui/data_driven_container_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/data_driven_container_screen.json",
+          "sha256": "1380f07f7327e11e8d9cf798366818d31f9c30b1575d0dec7b9deb701f033323",
+          "bytes": 6421
+        },
+        {
+          "path": "resource_pack/ui/day_one_experience_intro_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/day_one_experience_intro_screen.json",
+          "sha256": "34618e733e3a621c3ae22fc4dcd03df3b944b032213e9bc9c6618fefb13f88a1",
+          "bytes": 16726
+        },
+        {
+          "path": "resource_pack/ui/day_one_experience_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/day_one_experience_screen.json",
+          "sha256": "9e8064475672ba9508cda8e478f59ea7c216d2fc0318b246682f209a723a7a7d",
+          "bytes": 21135
+        },
+        {
+          "path": "resource_pack/ui/death_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/death_screen.json",
+          "sha256": "36e410160611c9b73f3eb5026858988f82e7821e6e3546df3a026d64825ebf33",
+          "bytes": 5327
+        },
+        {
+          "path": "resource_pack/ui/debug_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/debug_screen.json",
+          "sha256": "be604930eb6a4b3decd1c7af5371f78f442d6343234975d9a59e1dee8b2c4f36",
+          "bytes": 1281
+        },
+        {
+          "path": "resource_pack/ui/dev_console_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/dev_console_screen.json",
+          "sha256": "0be63aaf967b4a9f6a2560f96bea899ffb59b5ceec5e4ce9388e948285004072",
+          "bytes": 7279
+        },
+        {
+          "path": "resource_pack/ui/disconnect_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/disconnect_screen.json",
+          "sha256": "9883f0aff478dd446a65cbdec5b09fb49323465ea36928685895513bfe9aff5e",
+          "bytes": 8105
+        },
+        {
+          "path": "resource_pack/ui/display_logged_error_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/display_logged_error_screen.json",
+          "sha256": "440020017d21f53c023b7ed84482b705649d0ca80d46f5dca239ca76e177a5e5",
+          "bytes": 9790
+        },
+        {
+          "path": "resource_pack/ui/edu_discovery_dialog.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/edu_discovery_dialog.json",
+          "sha256": "d6bc6d9677f1cae23b9949230071148f7d285dc0c0ea87922ef38332cbf5edd3",
+          "bytes": 2450
+        },
+        {
+          "path": "resource_pack/ui/edu_featured.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/edu_featured.json",
+          "sha256": "2885975586618b63a6ff0d62f50da3c9643ddb044050a0b8ef663c8e714cea83",
+          "bytes": 1168
+        },
+        {
+          "path": "resource_pack/ui/edu_pause_screen_pause_button.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/edu_pause_screen_pause_button.json",
+          "sha256": "0a2ea9e54add1b34980aeceb786a44b68028609e8397a05650d5ef65af514531",
+          "bytes": 353
+        },
+        {
+          "path": "resource_pack/ui/emote_wheel_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/emote_wheel_screen.json",
+          "sha256": "86b7fabf7aa1abf92ce5333d67874b325dce537208ec80a7768cc3f0935ad092",
+          "bytes": 9641
+        },
+        {
+          "path": "resource_pack/ui/enchanting_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/enchanting_screen_pocket.json",
+          "sha256": "5717efa61dc9743a4e5546de4d4e15b12f02dd26e618e96a11e3af6ec31a5245",
+          "bytes": 17616
+        },
+        {
+          "path": "resource_pack/ui/enchanting_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/enchanting_screen.json",
+          "sha256": "c6b4ecf0120dd5c1929e855bcf92101ef40379545bf5084208a6c0e9e223e3c2",
+          "bytes": 12644
+        },
+        {
+          "path": "resource_pack/ui/encyclopedia_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/encyclopedia_screen.json",
+          "sha256": "9ef9f18433f85aa9ba9ca5bfe204a142c9c5ff24403a2eb9103a8edd6a2ef438",
+          "bytes": 122940
+        },
+        {
+          "path": "resource_pack/ui/expanded_skin_pack_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/expanded_skin_pack_screen.json",
+          "sha256": "4575653a667f63bcdc4c7467c2d2186d0c34b694f8887b1f718647501c57240b",
+          "bytes": 24152
+        },
+        {
+          "path": "resource_pack/ui/feed_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/feed_common.json",
+          "sha256": "860811a7a111650c9909f73af51fb8d4bfc4b070a08c395ace35ee1f73b734e7",
+          "bytes": 18618
+        },
+        {
+          "path": "resource_pack/ui/file_upload_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/file_upload_screen.json",
+          "sha256": "45c024070ed1ffba06bbdce2111d3c00c5b1e9190faa44cc4ab2f2b3ae845075",
+          "bytes": 10969
+        },
+        {
+          "path": "resource_pack/ui/furnace_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/furnace_screen_pocket.json",
+          "sha256": "018f21671fc8f124e77dca6dc4f19caaa7294b4ff391f0f2aefc640a3f318509",
+          "bytes": 22494
+        },
+        {
+          "path": "resource_pack/ui/furnace_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/furnace_screen.json",
+          "sha256": "ca690949189fc27f1b9169c21ea3757bfd16526ff0908ddac3a89741270fe038",
+          "bytes": 63573
+        },
+        {
+          "path": "resource_pack/ui/game_tip_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/game_tip_screen.json",
+          "sha256": "0edc6f80745257c43eb7fee0f3253947d37a276cc47d1c164dc4fea255b089aa",
+          "bytes": 6347
+        },
+        {
+          "path": "resource_pack/ui/gamepad_disconnected.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/gamepad_disconnected.json",
+          "sha256": "1b19f83dddbbc34bcf2a25a77164066cd478fbef3345d5bd1d4e70651f8aa0fc",
+          "bytes": 2326
+        },
+        {
+          "path": "resource_pack/ui/gamepad_layout_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/gamepad_layout_screen.json",
+          "sha256": "aaeb582e11d0719eaed5edd92397ca9e54d42cf2cbffeedb3e78cca57df3631c",
+          "bytes": 15954
+        },
+        {
+          "path": "resource_pack/ui/gameplay_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/gameplay_common.json",
+          "sha256": "9a27ee200bdc5a048dcf3bb526eaad03db88ddd4415b58feb96f147d8e27df6f",
+          "bytes": 28808
+        },
+        {
+          "path": "resource_pack/ui/gamma_calibration_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/gamma_calibration_screen.json",
+          "sha256": "4469611ecdc849fabb870e93be247b606fb71f9bd6bbb91afcb9a155c7b24d2d",
+          "bytes": 6213
+        },
+        {
+          "path": "resource_pack/ui/global_pause_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/global_pause_screen.json",
+          "sha256": "645f3dd2b52f1fd55e4d57264b1277048363a24a6fe68321ce7e4d6c31c84e35",
+          "bytes": 1398
+        },
+        {
+          "path": "resource_pack/ui/grindstone_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/grindstone_screen_pocket.json",
+          "sha256": "0ec9fb7d01340320483e747647f16ba38909de82cb775fc0be2e3dbe11979cc7",
+          "bytes": 6678
+        },
+        {
+          "path": "resource_pack/ui/grindstone_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/grindstone_screen.json",
+          "sha256": "561147a43e96e7d96a87fbf744275d0c44c6dad4730d3da6bc20b19a08de0992",
+          "bytes": 7888
+        },
+        {
+          "path": "resource_pack/ui/horse_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/horse_screen_pocket.json",
+          "sha256": "66ea66290830f80bc0bcbcab9e87f8b87f67c9e6295f13ae102ffe00111bb42c",
+          "bytes": 18396
+        },
+        {
+          "path": "resource_pack/ui/horse_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/horse_screen.json",
+          "sha256": "026b91b78cadb5ed09b8cd4e4f648f488aae25611edcb1a2762aa81cdfac8e36",
+          "bytes": 8628
+        },
+        {
+          "path": "resource_pack/ui/host_options_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/host_options_screen.json",
+          "sha256": "c531c09f56ae6a6cd35be875b3f8d788655306c16d31bdd39abe7ebaf4bd606c",
+          "bytes": 21824
+        },
+        {
+          "path": "resource_pack/ui/how_to_play_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/how_to_play_common.json",
+          "sha256": "ff0ae4955e73049f58d4baae4dccbe6577b486cd750eab21ff061c1263bd9b2f",
+          "bytes": 17562
+        },
+        {
+          "path": "resource_pack/ui/how_to_play_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/how_to_play_screen.json",
+          "sha256": "22a838e5f49f9ab552d3c882473e016cdfc341139af9ae9f16d75b33001db9cd",
+          "bytes": 49338
+        },
+        {
+          "path": "resource_pack/ui/hud_crosshair_overlay.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/hud_crosshair_overlay.json",
+          "sha256": "d17d4d7476199ae5c0141740d891fbbb8b71df45833ac84e67be20cfdf705591",
+          "bytes": 516
+        },
+        {
+          "path": "resource_pack/ui/hud_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/hud_screen.json",
+          "sha256": "2daad9e78e49ee68042d6d0db9153aad0c33c266ba513a2a737b0818e4cfefe8",
+          "bytes": 118620
+        },
+        {
+          "path": "resource_pack/ui/immersive_reader.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/immersive_reader.json",
+          "sha256": "365fbc4612c86a13839c257f8a01b04bd086905f1a648c14dd85eeb0bc5837d3",
+          "bytes": 6543
+        },
+        {
+          "path": "resource_pack/ui/in_bed_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/in_bed_screen.json",
+          "sha256": "50328e1c646592c82262968468e384059c6b733dd1a88f37619f6285b6e6d22f",
+          "bytes": 3288
+        },
+        {
+          "path": "resource_pack/ui/inventory_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/inventory_screen_pocket.json",
+          "sha256": "2652ac6ea429606650f0e6cbc959e9fdc0bb9d1d7b004faf4d88a1431e585d3d",
+          "bytes": 47497
+        },
+        {
+          "path": "resource_pack/ui/inventory_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/inventory_screen.json",
+          "sha256": "10e72254bac2a95801b61cb229ad43ab793ec585a52aee7e27791e79ab6d9f80",
+          "bytes": 84539
+        },
+        {
+          "path": "resource_pack/ui/invite_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/invite_screen.json",
+          "sha256": "2c7d0ef61efd0f69d8966dc1f5f10b52e0ac8ff740aaa23f4b13fac6cd33e2d0",
+          "bytes": 60750
+        },
+        {
+          "path": "resource_pack/ui/jigsaw_editor_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/jigsaw_editor_screen.json",
+          "sha256": "0b80bfeab1841031a1897227c02d4bbf09b82da0e6d2041dd346be0a5e98d510",
+          "bytes": 10057
+        },
+        {
+          "path": "resource_pack/ui/late_join_pregame_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/late_join_pregame_screen.json",
+          "sha256": "d62c4766765e0a464d0df263f16a311c170cc4d51b4d380f810dec6a15788b80",
+          "bytes": 2416
+        },
+        {
+          "path": "resource_pack/ui/library_modal_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/library_modal_screen.json",
+          "sha256": "a21682d9fdc6655eb29bd5f624c63653c313f0c59447a8f277686d970cfafbe1",
+          "bytes": 6698
+        },
+        {
+          "path": "resource_pack/ui/local_world_picker_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/local_world_picker_screen.json",
+          "sha256": "83ad5fb414eb957b7d53d73024eb59d95e2456239a5d012af0af36f469c84844",
+          "bytes": 1729
+        },
+        {
+          "path": "resource_pack/ui/loom_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/loom_screen_pocket.json",
+          "sha256": "bed7edd30837da2ab14879f986ee5c79948d9a4cdcc278bf32ebb90942c7b8f2",
+          "bytes": 14019
+        },
+        {
+          "path": "resource_pack/ui/loom_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/loom_screen.json",
+          "sha256": "e87bbfbbb771f2b38c259650a2378137edbb8ab23a3204628c2303b4b7e9e73a",
+          "bytes": 28551
+        },
+        {
+          "path": "resource_pack/ui/manifest_validation_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/manifest_validation_screen.json",
+          "sha256": "0bf65eb9846e9d0d7abbf38b21b84c5098e1ccf1788ce20271bd25a7c13f1ecc",
+          "bytes": 35591
+        },
+        {
+          "path": "resource_pack/ui/marketplace_sdl/sdl_content_navigation.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/marketplace_sdl/sdl_content_navigation.json",
+          "sha256": "8617cfb0236b426114ec48df11fdb6d6054cd69889b48acd121dd5c064350df2",
+          "bytes": 12084
+        },
+        {
+          "path": "resource_pack/ui/marketplace_sdl/sdl_dropdowns.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/marketplace_sdl/sdl_dropdowns.json",
+          "sha256": "789dbdb2d7b87755660a4526df3b62351290c4da4a9e54885a7398a1b4ce2a0a",
+          "bytes": 4630
+        },
+        {
+          "path": "resource_pack/ui/marketplace_sdl/sdl_image_row.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/marketplace_sdl/sdl_image_row.json",
+          "sha256": "eb284c539ddd26d9c3081cb9823ed33c86ad74930bc8018b6fbeba4c729e22f5",
+          "bytes": 6547
+        },
+        {
+          "path": "resource_pack/ui/marketplace_sdl/sdl_label.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/marketplace_sdl/sdl_label.json",
+          "sha256": "e1a364b7070d1ff4a5c95b21377cf80d3d83cefeac8e45824604da0abec4c868",
+          "bytes": 3910
+        },
+        {
+          "path": "resource_pack/ui/marketplace_sdl/sdl_text_row.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/marketplace_sdl/sdl_text_row.json",
+          "sha256": "d16f2c1bfe75c7e693a65fb491b2b5aa826bd829e0301347e4a8a17fb15f65ab",
+          "bytes": 11247
+        },
+        {
+          "path": "resource_pack/ui/mob_effect_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/mob_effect_screen.json",
+          "sha256": "d3158915d594fb77fb11a3030f3def35d5cd28fb70e6a277d9e255646f1b26b3",
+          "bytes": 6371
+        },
+        {
+          "path": "resource_pack/ui/non_xbl_user_management_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/non_xbl_user_management_screen.json",
+          "sha256": "23ce8b059e1bb86da0b41ad1ebd2fb22b269581953e150288ad96ab9b6a57e1c",
+          "bytes": 8862
+        },
+        {
+          "path": "resource_pack/ui/npc_interact_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/npc_interact_screen.json",
+          "sha256": "70ade43c1ae88ef6a3ca779bc149c1e4c5f15fa995b526832247aa70ef8a4d58",
+          "bytes": 46878
+        },
+        {
+          "path": "resource_pack/ui/online_safety_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/online_safety_screen.json",
+          "sha256": "443f33a0dc86da365d80aa783a7616cbd2622dc848af9ac22df161306592ec52",
+          "bytes": 8579
+        },
+        {
+          "path": "resource_pack/ui/pack_settings_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/pack_settings_screen.json",
+          "sha256": "708d6eace8d738b8e36d7e9f3925cb440188f8ef10cc75c7c244957a6f68efb7",
+          "bytes": 5700
+        },
+        {
+          "path": "resource_pack/ui/panorama_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/panorama_screen.json",
+          "sha256": "edbb836ef68998b50f9df881fe73f74837809735678017c5327ffd5b3d780567",
+          "bytes": 5279
+        },
+        {
+          "path": "resource_pack/ui/patch_notes_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/patch_notes_screen.json",
+          "sha256": "5aa30291775619045de4d0be4ac2dc642903926d1b33381c3633b04fb2706153",
+          "bytes": 14325
+        },
+        {
+          "path": "resource_pack/ui/pause_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/pause_screen.json",
+          "sha256": "5eedc50f7d45994f2e5c6fe2529919b8e7e7f49b4773a6dbf4821b3e021ae237",
+          "bytes": 76390
+        },
+        {
+          "path": "resource_pack/ui/pdp_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/pdp_screen.json",
+          "sha256": "ae3194e291e0c53efb20afedb7643965f7c96f4144a767bf3524021570b649dc",
+          "bytes": 245727
+        },
+        {
+          "path": "resource_pack/ui/pdp_screenshots_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/pdp_screenshots_section.json",
+          "sha256": "90929251977b158f5a17f6ced9a46e15abc5c66ebaf14e90f328802294e06a3a",
+          "bytes": 6902
+        },
+        {
+          "path": "resource_pack/ui/perf_turtle.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/perf_turtle.json",
+          "sha256": "49add548dde5c611e2283530c37110398fc514a43b97084a62f06dbd0a131f01",
+          "bytes": 1539
+        },
+        {
+          "path": "resource_pack/ui/permissions_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/permissions_screen.json",
+          "sha256": "5b79e3daf11c0dceb1e878e437c52e9eee1f7d76500dcaa7449e18615d3560d8",
+          "bytes": 29167
+        },
+        {
+          "path": "resource_pack/ui/persona_cast_character_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/persona_cast_character_screen.json",
+          "sha256": "b191d99fb3b1e1b53b24cc7579d93265fa2cb6946cde0b5abbee50d7596e9c9d",
+          "bytes": 32762
+        },
+        {
+          "path": "resource_pack/ui/persona_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/persona_common.json",
+          "sha256": "93f347b95b5ce4d893a9ccdf5c01c1599660f0a67acb50df6a3e8cca4b152c3e",
+          "bytes": 28040
+        },
+        {
+          "path": "resource_pack/ui/persona_popups.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/persona_popups.json",
+          "sha256": "139cb21f18cdf1a62ebba1c8334d233a369b93f9c31bd546c90e0d361af504a2",
+          "bytes": 50429
+        },
+        {
+          "path": "resource_pack/ui/persona_SDL.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/persona_SDL.json",
+          "sha256": "1260ed971851a038ed3af0f32a11617182d42835dbf80b7f73b981e95b1c996a",
+          "bytes": 207401
+        },
+        {
+          "path": "resource_pack/ui/play_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/play_screen.json",
+          "sha256": "10b1cab24aeee5cb5a875255bb6ffe266ca4056394c05f1c4d99b8cc56cf805a",
+          "bytes": 246577
+        },
+        {
+          "path": "resource_pack/ui/pocket_containers.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/pocket_containers.json",
+          "sha256": "7fd240f9ea4bb99550bfd5838c5d1ce62dabd44674836010962a47237b2cd352",
+          "bytes": 7855
+        },
+        {
+          "path": "resource_pack/ui/popup_dialog.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/popup_dialog.json",
+          "sha256": "571ad6ff20301043e0d08afa90b868232d6ef6052a213a7b28897a87cc8421e5",
+          "bytes": 27268
+        },
+        {
+          "path": "resource_pack/ui/portfolio_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/portfolio_screen.json",
+          "sha256": "6482640c97b4367f51060c86c283cc3099a8bbde90f21e89691e72af4192a672",
+          "bytes": 26550
+        },
+        {
+          "path": "resource_pack/ui/progress_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/progress_screen.json",
+          "sha256": "2453144b1e4d98bcc56d63c014034dae50172f5e15989589a8dca2676599ee80",
+          "bytes": 72699
+        },
+        {
+          "path": "resource_pack/ui/rating_prompt.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/rating_prompt.json",
+          "sha256": "9929308bbf2c726296e3b88b7fb0617590b1a3a50bc922fba349e7f16c9e745d",
+          "bytes": 3631
+        },
+        {
+          "path": "resource_pack/ui/realms_allowlist.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_allowlist.json",
+          "sha256": "f41b9d5f202b9f5d9fbb8be4b1a41ecee8b0733335afbd455f9de82e5818e606",
+          "bytes": 53266
+        },
+        {
+          "path": "resource_pack/ui/realms_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_common.json",
+          "sha256": "50728eaf7788b5b83a818cadb5c1a35d07fcfd91e3ec32fbf11756d2e1ad6eee",
+          "bytes": 11904
+        },
+        {
+          "path": "resource_pack/ui/realms_create.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_create.json",
+          "sha256": "958a77fed9e6a05e679ff7c099d895ac01315399bd7a36acf6fa29f819622110",
+          "bytes": 17272
+        },
+        {
+          "path": "resource_pack/ui/realms_invite_link_settings_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_invite_link_settings_screen.json",
+          "sha256": "dd23ac7ca39802d5149ad0bd08a5670e52d077e5f52da35d2723ceb8e7f43629",
+          "bytes": 15063
+        },
+        {
+          "path": "resource_pack/ui/realms_pending_invitations.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_pending_invitations.json",
+          "sha256": "e642a15d089720738861b7b70754ceefab77e34e2610f3a1af5deb1f4c0027a5",
+          "bytes": 15765
+        },
+        {
+          "path": "resource_pack/ui/realms_plus_ended_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_plus_ended_screen.json",
+          "sha256": "8f2d5fe832087a636ae9959534c9cbb78a6d1ff68ecc8ea2a296ac7516966256",
+          "bytes": 4562
+        },
+        {
+          "path": "resource_pack/ui/realms_settings_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_settings_screen.json",
+          "sha256": "96ce08194f190c60844f0064120cd60676d097a3dc1a8364f2732d25eaafa3de",
+          "bytes": 122506
+        },
+        {
+          "path": "resource_pack/ui/realms_slots_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_slots_screen.json",
+          "sha256": "60fb3f12d046c449a221d1ba58b848ab8cda6d2ae6d7ccd295b40c6951466949",
+          "bytes": 24774
+        },
+        {
+          "path": "resource_pack/ui/realms_stories_transition_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realms_stories_transition_screen.json",
+          "sha256": "7fa158f0add44fdf4ef349898d3858f981956840a9cef3a033fd64307396b758",
+          "bytes": 348
+        },
+        {
+          "path": "resource_pack/ui/realmsPlus_sections/realmsPlus_purchase_warning_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/realmsPlus_sections/realmsPlus_purchase_warning_screen.json",
+          "sha256": "9293eead01b06745390cb9656fe3b8f33ab80943cf43dd0b986312163d53df65",
+          "bytes": 4894
+        },
+        {
+          "path": "resource_pack/ui/redstone_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/redstone_screen.json",
+          "sha256": "ed88e3fa5d953a0217a8fa3691fb280d55aecfed4bafe64725aac2d4f9a20672",
+          "bytes": 17305
+        },
+        {
+          "path": "resource_pack/ui/resource_packs_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/resource_packs_screen.json",
+          "sha256": "c73819a074d90e63268f9b52e86ce32179f10989288aefdd18a66c6ba394f3ae",
+          "bytes": 122453
+        },
+        {
+          "path": "resource_pack/ui/safe_zone_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/safe_zone_screen.json",
+          "sha256": "cbe8df64f9b486c6067821ab8628f4208fb2bcddc993cfab13a95a8dddc3f762",
+          "bytes": 9410
+        },
+        {
+          "path": "resource_pack/ui/scoreboards.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/scoreboards.json",
+          "sha256": "e8692c69e00bfbfcb721760a8b732b5d8daa5fe129f1035fe8b9d115fa01f422",
+          "bytes": 14637
+        },
+        {
+          "path": "resource_pack/ui/screenshot_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/screenshot_screen.json",
+          "sha256": "123aa4b7cc34f80de987dbed8221045d6a26a6e810a47d863a27ec5b2ec1c810",
+          "bytes": 1201
+        },
+        {
+          "path": "resource_pack/ui/select_world_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/select_world_screen.json",
+          "sha256": "ee927634140ddfea4f34f561cbf43e580a18fee5e2729b15343cff574e6e9132",
+          "bytes": 14042
+        },
+        {
+          "path": "resource_pack/ui/server_form.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/server_form.json",
+          "sha256": "950e97f37ee1770fcd64d43463f5d34585f0fc7a0513b1387b4336dbadf7f7aa",
+          "bytes": 19955
+        },
+        {
+          "path": "resource_pack/ui/settings_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_screen.json",
+          "sha256": "ed3078de32f549220a2ad52b5f05082eb45046be5a3b09da086fbde2e993dd02",
+          "bytes": 35982
+        },
+        {
+          "path": "resource_pack/ui/settings_sections/controls_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_sections/controls_section.json",
+          "sha256": "a21e90f7d63f93e1683858da1d5d51271585d2d7af729c9c5fdaa28d8e68d5f4",
+          "bytes": 55071
+        },
+        {
+          "path": "resource_pack/ui/settings_sections/general_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_sections/general_section.json",
+          "sha256": "2892c03e18f8bfc913605bdb67e214f4fa633ec863e09bd5783f0008fcb91d99",
+          "bytes": 393882
+        },
+        {
+          "path": "resource_pack/ui/settings_sections/realms_world_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_sections/realms_world_section.json",
+          "sha256": "947745493f1f05b79b4e72817f382388d8446f8453e9d15d5085848bc4bba7fa",
+          "bytes": 21925
+        },
+        {
+          "path": "resource_pack/ui/settings_sections/settings_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_sections/settings_common.json",
+          "sha256": "eb224201eed2f77fc4f7391c37c20d69ca54c0c840a7ffa9726aa35791d4fe36",
+          "bytes": 80106
+        },
+        {
+          "path": "resource_pack/ui/settings_sections/social_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_sections/social_section.json",
+          "sha256": "4373a3d14135e2418ec03d6155567012332b7b5b280e3c3bb1894b1e5ddd25b3",
+          "bytes": 7614
+        },
+        {
+          "path": "resource_pack/ui/settings_sections/world_section.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/settings_sections/world_section.json",
+          "sha256": "ab1804bad8013317eda4bbf9ff289bb5f41ca05d1f0e9312131ab6b00ba1f207",
+          "bytes": 123383
+        },
+        {
+          "path": "resource_pack/ui/sidebar_navigation.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/sidebar_navigation.json",
+          "sha256": "f6bcff34e63cfcc4cfd3aa2832ed9c8eaec8567f1696cf707be6e2e440f8a96a",
+          "bytes": 45509
+        },
+        {
+          "path": "resource_pack/ui/sign_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/sign_screen.json",
+          "sha256": "93e8647009c4544d46ddf3453f6a5ee54274e1efdae9fbfdb0d60f3c7895bbc6",
+          "bytes": 4012
+        },
+        {
+          "path": "resource_pack/ui/simple_inprogress_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/simple_inprogress_screen.json",
+          "sha256": "1d84e83822e3bb10be601262951efa48932542ae133067ee8de57a15e66dfe17",
+          "bytes": 2478
+        },
+        {
+          "path": "resource_pack/ui/skin_pack_pdp.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/skin_pack_pdp.json",
+          "sha256": "8d9e1d7e32a957035d2515b4425c2dec265d5a45749c5c6597bda0c876056d53",
+          "bytes": 20438
+        },
+        {
+          "path": "resource_pack/ui/smithing_table_2_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/smithing_table_2_screen_pocket.json",
+          "sha256": "50edc35420140b9f67d155c0757c4eee4b268195f143bd16cc8ae6d68d7b9a9c",
+          "bytes": 17052
+        },
+        {
+          "path": "resource_pack/ui/smithing_table_2_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/smithing_table_2_screen.json",
+          "sha256": "921450b4fe163b56305cc5ff8462d5b15aa4887c451bae35cc3ba737ab7e8a4e",
+          "bytes": 18486
+        },
+        {
+          "path": "resource_pack/ui/smithing_table_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/smithing_table_screen_pocket.json",
+          "sha256": "4655e69d79dff0d3d4e167d64630e4a10d4b42cdab87cf1168d16a7f2128257f",
+          "bytes": 8010
+        },
+        {
+          "path": "resource_pack/ui/smithing_table_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/smithing_table_screen.json",
+          "sha256": "5a79cb66cd8a00716d070bbe856a27d71aba06982eb1f08343ef0bb98d5246d1",
+          "bytes": 9976
+        },
+        {
+          "path": "resource_pack/ui/smoker_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/smoker_screen.json",
+          "sha256": "1cf9ec6cb8b9fb8479fa3430c4b6c373f30828438b52ad0210f9b3c8203c9089",
+          "bytes": 77
+        },
+        {
+          "path": "resource_pack/ui/start_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/start_screen.json",
+          "sha256": "b495adf67aabbfdb8bd10cb9973b5168a9524ec5db24a61b5bcdfa55ba864dda",
+          "bytes": 82562
+        },
+        {
+          "path": "resource_pack/ui/stonecutter_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/stonecutter_screen_pocket.json",
+          "sha256": "c7d4ac5340d9851d0ef18ab7d14f04db6daec51c07a0b79b10eb65ec60c0d423",
+          "bytes": 14008
+        },
+        {
+          "path": "resource_pack/ui/stonecutter_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/stonecutter_screen.json",
+          "sha256": "e1803e769b878cddb627e62a93e99f7454978145b032387ce92fff930d7afe94",
+          "bytes": 26968
+        },
+        {
+          "path": "resource_pack/ui/storage_management_popup.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/storage_management_popup.json",
+          "sha256": "45bb8423325c233e530ae8b179155ab03a07e6706238f02d345e8fcc0a867e3d",
+          "bytes": 11331
+        },
+        {
+          "path": "resource_pack/ui/storage_management.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/storage_management.json",
+          "sha256": "af9ee7e9ddb55a8e85990ea389d568cf701bba31140176d8307f557923e58f76",
+          "bytes": 96900
+        },
+        {
+          "path": "resource_pack/ui/storage_migration_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/storage_migration_common.json",
+          "sha256": "904a36d752bab8de69b39cbad3a681fbf6c1cd25de8434264fc6bf3d0e35b9cf",
+          "bytes": 12762
+        },
+        {
+          "path": "resource_pack/ui/storage_migration_generic_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/storage_migration_generic_screen.json",
+          "sha256": "21cca1184ce993ece6358742b4f21ed0fc89684d5ba36cdc006b7fa86ca49283",
+          "bytes": 5066
+        },
+        {
+          "path": "resource_pack/ui/store_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_common.json",
+          "sha256": "c74bf249d81c43b3c5980eceaa88d47d65d048898b31619d2cbd546ba42174a6",
+          "bytes": 393512
+        },
+        {
+          "path": "resource_pack/ui/store_data_driven_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_data_driven_screen.json",
+          "sha256": "7f20eb12bfd4b8b7d35977f22deff800081f4e3a027744ba4df0bce2235f5f06",
+          "bytes": 33241
+        },
+        {
+          "path": "resource_pack/ui/store_filter_menu_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_filter_menu_screen.json",
+          "sha256": "15dc8507368f44338c61487708e885386024614edbc6886f39c434359e9a22dc",
+          "bytes": 30089
+        },
+        {
+          "path": "resource_pack/ui/store_inventory_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_inventory_screen.json",
+          "sha256": "92ed69134c5fa10faf9ac80876e453108c822c389c3c981de849340e73d2ad7e",
+          "bytes": 50331
+        },
+        {
+          "path": "resource_pack/ui/store_item_list_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_item_list_screen.json",
+          "sha256": "7bbd9eed87d2e34270276fe55eb6b2721c37fd6e5d5ae7b671f619fd5dac6bfc",
+          "bytes": 25843
+        },
+        {
+          "path": "resource_pack/ui/store_progress_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_progress_screen.json",
+          "sha256": "2a2025f5e98b1ddc92c4cecfe0bf71c650c7c547b6b6debe6eab9f9c1f77d4c1",
+          "bytes": 2841
+        },
+        {
+          "path": "resource_pack/ui/store_promo_timeline_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_promo_timeline_screen.json",
+          "sha256": "3461ec21eb13942265432b4408beb1ffab3af21f4aae23fb1cff78bd8981c7c2",
+          "bytes": 140137
+        },
+        {
+          "path": "resource_pack/ui/store_sales_item_list_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_sales_item_list_screen.json",
+          "sha256": "d0c786d0d150f02feba0d91ec4d0f9a41f5defb95c6a48db1763aa62fce8e92a",
+          "bytes": 5328
+        },
+        {
+          "path": "resource_pack/ui/store_search_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_search_screen.json",
+          "sha256": "60acc77993dc33407b85f0d42afb2926274d2aa92794a513e7d6b13b118c3b2e",
+          "bytes": 7730
+        },
+        {
+          "path": "resource_pack/ui/store_sort_menu_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/store_sort_menu_screen.json",
+          "sha256": "2dadda331932f4c8a5a1b443e0693bc7b17f50fd0aa6025de1db88289c01d5b5",
+          "bytes": 8475
+        },
+        {
+          "path": "resource_pack/ui/structure_editor_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/structure_editor_screen.json",
+          "sha256": "4794210e68573a05678797cb708a584bb840bf9106bf5adc8bbe62e80c4de62a",
+          "bytes": 57023
+        },
+        {
+          "path": "resource_pack/ui/submit_feedback_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/submit_feedback_screen.json",
+          "sha256": "bc7bcce51db71e8291f1fb9cd72455a2955166ca1287c7085cd3dcb47fa149ec",
+          "bytes": 4101
+        },
+        {
+          "path": "resource_pack/ui/tabbed_upsell_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/tabbed_upsell_screen.json",
+          "sha256": "c308b95a818abcab9676aff0cd31051ca0e7e8bd6deb48c92518c3aa6661ec74",
+          "bytes": 20161
+        },
+        {
+          "path": "resource_pack/ui/test_anims_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/test_anims_screen.json",
+          "sha256": "eafba79f20c2149be8938ad7ad378dc80dbaeb8fb4008525d0b48415c583e93e",
+          "bytes": 9286
+        },
+        {
+          "path": "resource_pack/ui/thanks_for_testing_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/thanks_for_testing_screen.json",
+          "sha256": "c63375b7f5e0437715c79b5f44a61a5f6d6b68eb047f45a65f5cd240979091f4",
+          "bytes": 20651
+        },
+        {
+          "path": "resource_pack/ui/third_party_store_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/third_party_store_screen.json",
+          "sha256": "41149026a0677c7fdf135860d7f69bef75d62c071b1b073083b5a9c3187d2689",
+          "bytes": 549
+        },
+        {
+          "path": "resource_pack/ui/toast_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/toast_screen.json",
+          "sha256": "41281cd73effc84c03a8f8703a890f7ee8745501618c8098267685278a66cc04",
+          "bytes": 59021
+        },
+        {
+          "path": "resource_pack/ui/token_faq_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/token_faq_screen.json",
+          "sha256": "b9ba02721fde751a4649f43414e50eb7b9ca91108a94ddc65ea8cc339b0470d3",
+          "bytes": 6022
+        },
+        {
+          "path": "resource_pack/ui/trade_2_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/trade_2_screen_pocket.json",
+          "sha256": "12ae7b70662f7a77b22dc65dafb5d4a29d417b91805b02e743a5ff82658b1d09",
+          "bytes": 14792
+        },
+        {
+          "path": "resource_pack/ui/trade_2_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/trade_2_screen.json",
+          "sha256": "1fb70baa7d454160bb2b65de49e724674a4533a883ee951433eaa5d995670ed9",
+          "bytes": 48570
+        },
+        {
+          "path": "resource_pack/ui/trade_screen_pocket.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/trade_screen_pocket.json",
+          "sha256": "aaff91701359ea5eead3ee62b1deafe589bb0459b20df970ce27df330a9df7b1",
+          "bytes": 11089
+        },
+        {
+          "path": "resource_pack/ui/trade_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/trade_screen.json",
+          "sha256": "e4c1a7789ca7401c62ea236c4525977f62443791d5a98eaa118931498164c2ba",
+          "bytes": 16138
+        },
+        {
+          "path": "resource_pack/ui/trial_upsell_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/trial_upsell_screen.json",
+          "sha256": "4c77160026f9af619bec8e79ce369254529f5e1b847dc7a240b4566eda4f730d",
+          "bytes": 5805
+        },
+        {
+          "path": "resource_pack/ui/ugc_viewer_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ugc_viewer_screen.json",
+          "sha256": "06cf78b9540eaa8d04c700007b68ce80e8afda468b6ef4718dbf36bda5cc126e",
+          "bytes": 6670
+        },
+        {
+          "path": "resource_pack/ui/ui_art_assets_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_art_assets_common.json",
+          "sha256": "f6085c9aa28ed04057e1ff83a90620dc024ab43e72166e2949bfde938c1fce3a",
+          "bytes": 6731
+        },
+        {
+          "path": "resource_pack/ui/ui_common_classic.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_common_classic.json",
+          "sha256": "d65eb51c5264b7b9eb8611bfe250736bc48eed8207682b6c26f3ede224277783",
+          "bytes": 3030
+        },
+        {
+          "path": "resource_pack/ui/ui_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_common.json",
+          "sha256": "8c17795cca5b8c56d72976c7176f7c3586b144b55474eb87b146e161d19f817f",
+          "bytes": 243795
+        },
+        {
+          "path": "resource_pack/ui/ui_edu_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_edu_common.json",
+          "sha256": "5d125ff357e7f3fec63e451a2fdb5721c0f18b05e40d59ebc7522ef62b95b210",
+          "bytes": 68229
+        },
+        {
+          "path": "resource_pack/ui/ui_friendsbutton.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_friendsbutton.json",
+          "sha256": "2f61b7a72aca6d1d7ffedc1acc6da99d7bc05fc8b0ec7e6f6e165bd3ff37e49c",
+          "bytes": 14851
+        },
+        {
+          "path": "resource_pack/ui/ui_iconbutton.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_iconbutton.json",
+          "sha256": "6e891bf3f15cf6b17a422c2f2d41b752cc11e91571fcf208d00e00ead3bb267a",
+          "bytes": 2423
+        },
+        {
+          "path": "resource_pack/ui/ui_purchase_common.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_purchase_common.json",
+          "sha256": "39ed0d9f3b17462d84259cd9eb9c692650016192bb66403aaa3e3489dbddb560",
+          "bytes": 10992
+        },
+        {
+          "path": "resource_pack/ui/ui_template_buttons.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_template_buttons.json",
+          "sha256": "3e250faef134965386ced074d73c998d2a363c79fed14ec928668cb7ff70ea96",
+          "bytes": 76484
+        },
+        {
+          "path": "resource_pack/ui/ui_template_dialogs.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_template_dialogs.json",
+          "sha256": "de7b2ec43530715c797ab7ed2476965f9dc53962b88bc8c39a207582bee97264",
+          "bytes": 14238
+        },
+        {
+          "path": "resource_pack/ui/ui_template_tabs.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_template_tabs.json",
+          "sha256": "e4aae0403646ee6a0a4199f0b9eafd89550c301b2683fada406f6f6491b6dc88",
+          "bytes": 16954
+        },
+        {
+          "path": "resource_pack/ui/ui_template_toggles.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/ui_template_toggles.json",
+          "sha256": "efe2bf9fab47aa5e29d7116a2aa705a964a42b0ef86c947c4e46188be9ac2a01",
+          "bytes": 47106
+        },
+        {
+          "path": "resource_pack/ui/update_dimensions.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/update_dimensions.json",
+          "sha256": "46ec54c89696fd18efbf21dd4558dee8ead356fa1b8b9ad8da3125bafa434dd5",
+          "bytes": 6711
+        },
+        {
+          "path": "resource_pack/ui/update_version.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/update_version.json",
+          "sha256": "9b240bb203eff084e6b0568d4b4e965c5c36e195db0d46196680bcf5ca9136bf",
+          "bytes": 3839
+        },
+        {
+          "path": "resource_pack/ui/win10_trial_conversion_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/win10_trial_conversion_screen.json",
+          "sha256": "b24b47daba6ba249930ff84cf8010aed1e7680f045a81d79aadad4fb4a8c4029",
+          "bytes": 12902
+        },
+        {
+          "path": "resource_pack/ui/world_conversion_complete_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/world_conversion_complete_screen.json",
+          "sha256": "5c50d1e60ee6e1ac1d841b3eab948db57ad75a1252d0baa60d6bca633d2fcdb1",
+          "bytes": 9592
+        },
+        {
+          "path": "resource_pack/ui/world_recovery_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/world_recovery_screen.json",
+          "sha256": "1455a835ddfb55f37d5f9ffe824ed530f3481613a7b4f183afcfd30057a85190",
+          "bytes": 2600
+        },
+        {
+          "path": "resource_pack/ui/world_templates_screen.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/world_templates_screen.json",
+          "sha256": "b13c853081c2ea7c6635bfd6c19cbee3bbde0ab9c727939fb72fcf266bdbf0da",
+          "bytes": 38965
+        },
+        {
+          "path": "resource_pack/ui/xbl_console_qr_signin.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/xbl_console_qr_signin.json",
+          "sha256": "4c9e39ec955b7d86cab18574eee9958054ae74229571c37c34783527d6b00cc3",
+          "bytes": 11748
+        },
+        {
+          "path": "resource_pack/ui/xbl_console_signin_succeeded.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/xbl_console_signin_succeeded.json",
+          "sha256": "fb7ff9217a1535ece8c2c0b9384177d755158cc7a5d5ad928aed051c8d362cba",
+          "bytes": 6955
+        },
+        {
+          "path": "resource_pack/ui/xbl_console_signin.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/xbl_console_signin.json",
+          "sha256": "4bcc2976189c3cc2ac42fb6aeacded98b7bb8a9836864df2c86814ca32f77379",
+          "bytes": 4433
+        },
+        {
+          "path": "resource_pack/ui/xbl_immediate_signin.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/ui/xbl_immediate_signin.json",
+          "sha256": "059946b153663dd1f2bd94d9a70d3063b2dc528afc26f53571a3e15c0303bfd6",
+          "bytes": 981
+        }
+      ],
+      "reuse": "analysis-only"
+    },
+    {
+      "id": "mojang-bedrock-schemas",
+      "kind": "github",
+      "url": "https://github.com/Mojang/bedrock-schemas",
+      "revision": "2b842801ce08f42f21d9782543c8dfb868b84eee",
+      "revisionDate": "2026-09-21T18:10:57Z",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "forms/ui/ui_defs.form.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/forms/ui/ui_defs.form.json",
+          "sha256": "e27ba26113ab57d1af7c9a12f5d46003e67a2ee6298e96ef1838362d99bb89a2",
+          "bytes": 1459
+        },
+        {
+          "path": "forms/ui/ui_element.form.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/forms/ui/ui_element.form.json",
+          "sha256": "0db70acac1eaa7a22d25f8edb5e135eeb7f7a7a351bef89120e900969097ce9a",
+          "bytes": 30010
+        },
+        {
+          "path": "forms/ui/ui_global_variables.form.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/forms/ui/ui_global_variables.form.json",
+          "sha256": "9be0f64c5306ab2ac0bce1fe25cf2a7e48d52f6f8ccca14c0c8c008744460be9",
+          "bytes": 3683
+        },
+        {
+          "path": "forms/ui/ui_screen.form.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/forms/ui/ui_screen.form.json",
+          "sha256": "38f774f94f29bd3ac9b7f07f88ffc005237264b253066b085d0843ff1c568489",
+          "bytes": 6034
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/LICENSE",
+          "sha256": "7df20dcdf9197e9945c14858d41c60f11b52b93e5b69e2b63416b874d598d322",
+          "bytes": 1074
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/README.md",
+          "sha256": "319d575e99f7ac018afb8e6c6cf44a692b376aa5fc72276162d038bf1ca4fc38",
+          "bytes": 3470
+        },
+        {
+          "path": "schemas/rp/ui/global_variables.schema.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/schemas/rp/ui/global_variables.schema.json",
+          "sha256": "b21507545c25ff4fad0c2509d38b0ce3adc264571b201c4cbf97659de126bbf4",
+          "bytes": 863
+        },
+        {
+          "path": "schemas/rp/ui/index.schema.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/schemas/rp/ui/index.schema.json",
+          "sha256": "74b79fbf366a2923daacd2faa61bc9585d7ba06435184290c6cad2e045f6f082",
+          "bytes": 563
+        },
+        {
+          "path": "types/rp/ui/index.d.ts",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/types/rp/ui/index.d.ts",
+          "sha256": "2a5c3bf55c8d59f35ffa78bc3fa86364cbf06d8b1f0052dee7ae0e252272ade3",
+          "bytes": 319
+        },
+        {
+          "path": "types/rp/ui/UiDefs.d.ts",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/types/rp/ui/UiDefs.d.ts",
+          "sha256": "82aaa2baa4c089fef21a51a8c6b80f7861e066ebaf77f3234808f221aed89839",
+          "bytes": 1079
+        },
+        {
+          "path": "types/rp/ui/UiElement.d.ts",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/types/rp/ui/UiElement.d.ts",
+          "sha256": "33d508e4d860526bfa40fe6fa876874632b8232862f0034563a83090671a6726",
+          "bytes": 13787
+        },
+        {
+          "path": "types/rp/ui/UiGlobalVariables.d.ts",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/types/rp/ui/UiGlobalVariables.d.ts",
+          "sha256": "64058eef5056faaf38402c072f9eda64d781483f786f971b1cde717f05e13b1c",
+          "bytes": 1460
+        },
+        {
+          "path": "types/rp/ui/UiScreen.d.ts",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/types/rp/ui/UiScreen.d.ts",
+          "sha256": "743672a59bad63ca874f26eedab0f2cad0495ad05777aba758a895919b5ed184",
+          "bytes": 1147
+        }
+      ],
+      "reuse": "reference"
+    },
+    {
+      "id": "herobrine643928-chest-ui",
+      "kind": "github",
+      "url": "https://github.com/Herobrine643928/Chest-UI",
+      "revision": "115d95c8239a0ee2f578a9a7710699a8f6627f26",
+      "revisionDate": "2026-08-14T14:07:02Z",
+      "license": "CC-BY-4.0",
+      "files": [
+        {
+          "path": "BP/manifest.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/manifest.json",
+          "sha256": "18f785d86f8ad647b9408df80067a1e29d3f87d93bb48803df993bb91d93f2a5",
+          "bytes": 940
+        },
+        {
+          "path": "BP/pack_icon.png",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/pack_icon.png",
+          "sha256": "fc8d8ebb0a0b5e90ffda013c170a675dadc42c6e5cb8367009f3aaacf5d18756",
+          "bytes": 107693
+        },
+        {
+          "path": "BP/scripts/extensions/constants.js",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/scripts/extensions/constants.js",
+          "sha256": "d7ec10c4e9bebf2656d200cb2b61f349e3d9323efbfa741b6c43db00a2891280",
+          "bytes": 1903
+        },
+        {
+          "path": "BP/scripts/extensions/forms.d.ts",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/scripts/extensions/forms.d.ts",
+          "sha256": "5ecb258c2d3e3b27c1da1027c86224e1eaa58d760958b3599fb591070bc8fb0d",
+          "bytes": 4204
+        },
+        {
+          "path": "BP/scripts/extensions/forms.js",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/scripts/extensions/forms.js",
+          "sha256": "c917a17910b1e13e194053ed9afb01214a287492fe2bea536845a1c1050a8cfb",
+          "bytes": 8799
+        },
+        {
+          "path": "BP/scripts/extensions/typeIds.js",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/scripts/extensions/typeIds.js",
+          "sha256": "ebac9495809bddcf2a4c68ddf4e27500f421f67c4f09a8ecd8e5c46a71d0b478",
+          "bytes": 95528
+        },
+        {
+          "path": "BP/scripts/index.js",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/BP/scripts/index.js",
+          "sha256": "e578d01e5df2c3e337136ccf1828d90646da0b47a3e552e613b05906c2bd5979",
+          "bytes": 1922
+        },
+        {
+          "path": "License",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/License",
+          "sha256": "f5b745ef98087f531e719ee8ca6a96809444573ecc7173c6fa68eaad39b3cc3f",
+          "bytes": 18658
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/README.md",
+          "sha256": "d7e99d01b00cc00fd595908d0a41368507b44849cb29d0bbb2e4bfd1e3336f01",
+          "bytes": 5757
+        },
+        {
+          "path": "RP/manifest.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/manifest.json",
+          "sha256": "494873ea7a459b1fe71e4b601ac46402dc41122bfa4c98691ba034732061a030",
+          "bytes": 516
+        },
+        {
+          "path": "RP/pack_icon.png",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/pack_icon.png",
+          "sha256": "fc8d8ebb0a0b5e90ffda013c170a675dadc42c6e5cb8367009f3aaacf5d18756",
+          "bytes": 107693
+        },
+        {
+          "path": "RP/textures/ui/d_b.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/textures/ui/d_b.json",
+          "sha256": "bf8dfbfccc397a541a28d783cd9e4f2e27827478af63b6bc9775857c9606cb47",
+          "bytes": 78
+        },
+        {
+          "path": "RP/textures/ui/d_b.png",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/textures/ui/d_b.png",
+          "sha256": "5101db73d6a1463c7ee7b367d0cddc2b765deb6c123a62fc64895936ae05458b",
+          "bytes": 78
+        },
+        {
+          "path": "RP/textures/ui/d_g.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/textures/ui/d_g.json",
+          "sha256": "bf8dfbfccc397a541a28d783cd9e4f2e27827478af63b6bc9775857c9606cb47",
+          "bytes": 78
+        },
+        {
+          "path": "RP/textures/ui/d_g.png",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/textures/ui/d_g.png",
+          "sha256": "143751fc5a2975520bdf9b267ceb7f2d128480140de46e146986a48fbb9a405f",
+          "bytes": 78
+        },
+        {
+          "path": "RP/textures/ui/item_background.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/textures/ui/item_background.json",
+          "sha256": "f9b75ac98c8efc4ccdf602adb3cd814926679060b6ccefc93f63e76fda55a020",
+          "bytes": 54
+        },
+        {
+          "path": "RP/textures/ui/item_background.png",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/textures/ui/item_background.png",
+          "sha256": "4de81014afe3b00f0af5690f0309c6df15fa93682362f8049316cac4848d66dc",
+          "bytes": 107
+        },
+        {
+          "path": "RP/ui/_global_variables.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/ui/_global_variables.json",
+          "sha256": "366193312d58d86dac2153bdee57f767ba722c4ba247a937ed4d3bffebb5df16",
+          "bytes": 729
+        },
+        {
+          "path": "RP/ui/_ui_defs.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/ui/_ui_defs.json",
+          "sha256": "1240f320b6599a2fb4d73f41daf2ef2a3ffe5da90f7b842ee16a8caceac24eba",
+          "bytes": 119
+        },
+        {
+          "path": "RP/ui/chest_inventory_system.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/ui/chest_inventory_system.json",
+          "sha256": "eb4226c5ce987f3a12abff0ab1731fb8306a08aad5286a7fc4a13291af345de1",
+          "bytes": 13531
+        },
+        {
+          "path": "RP/ui/chest_server_form.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/ui/chest_server_form.json",
+          "sha256": "b8f34587b01197252f056ae496fb4f6ddfcbe49b331535d3f70b04bf06c7dfaa",
+          "bytes": 20827
+        },
+        {
+          "path": "RP/ui/furnace_server_form.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/ui/furnace_server_form.json",
+          "sha256": "0285a65af3d35a1641a8fc0a241875c2e172915610ab97bf5f9f332dc8e2ec76",
+          "bytes": 17649
+        },
+        {
+          "path": "RP/ui/server_form.json",
+          "url": "https://raw.githubusercontent.com/Herobrine643928/Chest-UI/115d95c8239a0ee2f578a9a7710699a8f6627f26/RP/ui/server_form.json",
+          "sha256": "cb37200eba622a5e5b41f9efd66adc55fbd16d87189f3c06913ad80c99a6020e",
+          "bytes": 2427
+        }
+      ],
+      "reuse": "reference"
+    },
+    {
+      "id": "islocal-chest-gui",
+      "kind": "github",
+      "url": "https://github.com/IsLocal/Chest-GUI",
+      "revision": "daa618405f49207c2b47630bd171d50f85ca5f0b",
+      "revisionDate": "2023-01-27T14:44:46Z",
+      "license": "NOASSERTION",
+      "files": [
+        {
+          "path": "Behavior/entities/chest_gui.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/entities/chest_gui.json",
+          "sha256": "669bfd83ff6a6d1a3e2000c198adfd0bc90a2560db8bd5cf652c30cf95278fd0",
+          "bytes": 1086
+        },
+        {
+          "path": "Behavior/entities/player.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/entities/player.json",
+          "sha256": "4a280697651fe96b5f4a7bf0e1135b6890fe2d2becfbbb9cbe3c894ce4262251",
+          "bytes": 32288
+        },
+        {
+          "path": "Behavior/entities/pre_own.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/entities/pre_own.json",
+          "sha256": "53dc68da449a7d9352b66ab9fefb2caccbdf6fe2604c54d82ec867c0992e6cd2",
+          "bytes": 430
+        },
+        {
+          "path": "Behavior/manifest.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/manifest.json",
+          "sha256": "ca04aba4d4c303a737b98a4157d716c02efdd704a7bd1239b9c8845009596978",
+          "bytes": 1051
+        },
+        {
+          "path": "Behavior/node_modules/.package-lock.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/node_modules/.package-lock.json",
+          "sha256": "71b4849ef39bd6e718c0b52e053915036b6b45aa08ee33c2668bd2d710fb29d1",
+          "bytes": 443
+        },
+        {
+          "path": "Behavior/node_modules/@minecraft/server/.eslintrc.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/node_modules/@minecraft/server/.eslintrc.json",
+          "sha256": "ae32216c0e00d303b95a98de1932bc01f7fd577d2f28f874d1f03241c61cf4c3",
+          "bytes": 463
+        },
+        {
+          "path": "Behavior/node_modules/@minecraft/server/index.d.ts",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/node_modules/@minecraft/server/index.d.ts",
+          "sha256": "801636a6f5b9ced535ff866af340c0913b47cf3c06cfa67654aed0a2b227378f",
+          "bytes": 458370
+        },
+        {
+          "path": "Behavior/node_modules/@minecraft/server/package.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/node_modules/@minecraft/server/package.json",
+          "sha256": "54caa729ab1b1478e6fa521b52470b73dad1482692a360d0534f4140adfc115d",
+          "bytes": 301
+        },
+        {
+          "path": "Behavior/node_modules/@minecraft/server/tests.ts",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/node_modules/@minecraft/server/tests.ts",
+          "sha256": "313c40ab5b9c83ec0e30d5c3bc48da0e6ce74bab24b4ebaee6803ef7d89d39f3",
+          "bytes": 10606
+        },
+        {
+          "path": "Behavior/node_modules/@minecraft/server/tsconfig.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/node_modules/@minecraft/server/tsconfig.json",
+          "sha256": "f9300de6e46c99e723a246c4517d8cd41418b56dd97fab88600434016d8cb013",
+          "bytes": 424
+        },
+        {
+          "path": "Behavior/pack_icon.png",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/pack_icon.png",
+          "sha256": "5ab98a57bbfcc12a712f2a6ff49cd6052c6fae7825b03ac35d5c9c317ff5957f",
+          "bytes": 16376
+        },
+        {
+          "path": "Behavior/package-lock.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/package-lock.json",
+          "sha256": "d045cb8bb6ddb9a43caa99bc31f97b58f57ebf5968bf6e6146c32d0f3bd744c8",
+          "bytes": 910
+        },
+        {
+          "path": "Behavior/package.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/package.json",
+          "sha256": "0f308024ad1169a6c6b675bd44e2fb9f67404447e3fbee342278ba771731d9ad",
+          "bytes": 89
+        },
+        {
+          "path": "Behavior/scripts/chestGUI.js",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/scripts/chestGUI.js",
+          "sha256": "8cbdc6a61790efeede9854714bb82e979c40633139cbf62db4e1153ad536f76c",
+          "bytes": 21003
+        },
+        {
+          "path": "Behavior/scripts/index.js",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Behavior/scripts/index.js",
+          "sha256": "f14ba54912a7cc2e6cdd3fd809c7a9e5df7ffb50a3d17f3daccc21ea9fa9a744",
+          "bytes": 1888
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/README.md",
+          "sha256": "d3d9cd857ee0a0936d19b2a98465032df198362e64c647dcca7907b4a6709ff3",
+          "bytes": 4066
+        },
+        {
+          "path": "Resource/entity/chest_gui.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Resource/entity/chest_gui.json",
+          "sha256": "ffd93961867ce1d64d0659204cefdd52738d95ade4caf4e2a1c8e35dd4f1834e",
+          "bytes": 454
+        },
+        {
+          "path": "Resource/entity/pre_own.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Resource/entity/pre_own.json",
+          "sha256": "4e8b972cd1941f607cc4549311b9e2966d1fdd562baa0853bf6ffca8109d4224",
+          "bytes": 441
+        },
+        {
+          "path": "Resource/manifest.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Resource/manifest.json",
+          "sha256": "7182501dc9c9a48480b386d72ef621f601a6a0e25e1b43a05fd6b3107ee3bc3e",
+          "bytes": 466
+        },
+        {
+          "path": "Resource/pack_icon.png",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Resource/pack_icon.png",
+          "sha256": "5ab98a57bbfcc12a712f2a6ff49cd6052c6fae7825b03ac35d5c9c317ff5957f",
+          "bytes": 16376
+        },
+        {
+          "path": "Resource/ui/chest_screen.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Resource/ui/chest_screen.json",
+          "sha256": "f6ed3fba71fc03361d46af62f135160504cdd3ada76cd42bf811d714c6916720",
+          "bytes": 11570
+        },
+        {
+          "path": "Resource/ui/ui_template_buttons copy.json",
+          "url": "https://raw.githubusercontent.com/IsLocal/Chest-GUI/daa618405f49207c2b47630bd171d50f85ca5f0b/Resource/ui/ui_template_buttons copy.json",
+          "sha256": "b49e672a0b76cf719dfa667ad50543c0f21429270b3a37389a437551d77a2bcc",
+          "bytes": 2730
+        }
+      ],
+      "reuse": "analysis-only"
+    },
+    {
+      "id": "dryanfth-customserverui",
+      "kind": "github",
+      "url": "https://github.com/DryanFTH/CustomServerUI",
+      "revision": "0b6a60aef8413cb71b3388c601a5d666c4c96c0b",
+      "revisionDate": "2023-04-02T01:05:16Z",
+      "license": "GPL-3.0",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/LICENSE",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "bytes": 35149
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/README.md",
+          "sha256": "5f9baf00e0508190aea673f8b822122a5d9d3a3fc7ef0009901409f073c80fc8",
+          "bytes": 577
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/manifest.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/manifest.json",
+          "sha256": "93fc5173d1845230cf7da4d0a1f6e3c85b59d4915777d1bb493f9b5c61104977",
+          "bytes": 484
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_light_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_light_alt.json",
+          "sha256": "cb2a5231e245f5f1d2d39c13cea44cb8d378e871faca85ab7e21c3b512f38ca8",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_light_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_light_alt.png",
+          "sha256": "cb4cd8c3bc80201f5f8ccc7851c4a291a58a61fb032d0de92e97a6b93473938a",
+          "bytes": 170
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_lighthover_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_lighthover_alt.json",
+          "sha256": "b3e0444b2fa3aefe2aeb7e343791eef22170f53c1a567c076ab9eb7070c4f0c0",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_lighthover_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/button_borderless_lighthover_alt.png",
+          "sha256": "2a160cb920b065d8f44335589463f9492f7d6bafc72ff6c2b6885810aca04404",
+          "bytes": 244
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_default_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_default_compact.png",
+          "sha256": "966a2792ecf523a54d6bd645e0e0e39172181e1b8bd66cd8c74ceb5386ee26df",
+          "bytes": 7089
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_default_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_default_light.png",
+          "sha256": "4159f7ed6e6181ffa660a468add8471b53301c176c5f55f062035a9746a57c6f",
+          "bytes": 5324
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_default.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_default.png",
+          "sha256": "c8aea3005fee3a685ed8a017e3effd3e8c1e195219097951523325bf8a6068bc",
+          "bytes": 5323
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_hover_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_hover_compact.png",
+          "sha256": "3bfa32fccc16b7a89eae4c1ffee03d196c5d55cb596f4052ff2f96a918ae0e75",
+          "bytes": 7141
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_hover_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_hover_light.png",
+          "sha256": "e40839c88a861c586f41f7b97dc8b65c123a0ebe594da13b6f50d6c843c7e4ff",
+          "bytes": 7246
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_hover.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_hover.png",
+          "sha256": "adff099fe7637359a57bcfb742c0e34316ef9f16b4032a56fc64b5342b2467f7",
+          "bytes": 7247
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_pressed_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_pressed_compact.png",
+          "sha256": "d808e38187edbed9e8c1b387c313750f4723d83257e0b7646d5872be57a64f87",
+          "bytes": 7141
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_pressed_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_pressed_light.png",
+          "sha256": "ceca383fbf9110e7fa27e1767f4deba878b8146cd90cbc5edd039d982550e5f8",
+          "bytes": 7247
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/close_button_pressed.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/close_button_pressed.png",
+          "sha256": "91247da43dfb32d0bac0777e7d3bf11ded81713ffe970ab7aaa795a3a65b8f72",
+          "bytes": 7246
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/dialog_background_hollow_3_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/dialog_background_hollow_3_alt.json",
+          "sha256": "36700ca1326d14a269b2052c27d95115200897bee9c27b4d36e75fe893973415",
+          "bytes": 94
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/dialog_background_hollow_3_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/dialog_background_hollow_3_alt.png",
+          "sha256": "a40edf2c5a667444fc969b48feb5d1909e03376be3768bbcdacb8e73493e15a3",
+          "bytes": 151
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_alt.json",
+          "sha256": "e229a268dc866bb975d7014f58a2cac84ecbb551d29222d36b20da96213662ca",
+          "bytes": 91
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_alt.png",
+          "sha256": "8bcad4aa663cdcf3cbfe93acd5c8ba2c4ab5c18032b2f053fea5ebd907c700cf",
+          "bytes": 1638
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_hover.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_hover.json",
+          "sha256": "349d82f6ee418d393b223cfb1fa55e5553180b520586379e125ad89037f854bf",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_hover.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/hud_tip_text_background_hover.png",
+          "sha256": "3e23bfac6ef1b617edf58f4bf09b59d63a91f6e0d8524c0a5ae377aa3f3b174e",
+          "bytes": 129
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/legacy_pocket_close_button_default.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/legacy_pocket_close_button_default.png",
+          "sha256": "79dd259cec0b9dd928d38ca80213e10321a5d6e3e3d2d9a1b2d60e8364251cfc",
+          "bytes": 5322
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/textures/ui/legacy_pocket_close_button_pressed.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/textures/ui/legacy_pocket_close_button_pressed.png",
+          "sha256": "b84beea5df3fb63757da4cfbd080be626436692ba15726ee0a9c4459c2c9b3fa",
+          "bytes": 6886
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-black/ui/server_form.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-black/ui/server_form.json",
+          "sha256": "036daf70baef802aedde46539789d8d636e506ad038831e9a54685ddcb567bb4",
+          "bytes": 26177
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/manifest.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/manifest.json",
+          "sha256": "03cd975661325df515f962a74d48be3c2ad03b3e5ca02fdf5eaaa0543052305b",
+          "bytes": 486
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_light_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_light_alt.json",
+          "sha256": "cb2a5231e245f5f1d2d39c13cea44cb8d378e871faca85ab7e21c3b512f38ca8",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_light_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_light_alt.png",
+          "sha256": "dd735b0bdf9f0a1b0f0698fbefc534ab6803090f03c65b47da1abc692c2aea53",
+          "bytes": 211
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_lighthover_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_lighthover_alt.json",
+          "sha256": "b3e0444b2fa3aefe2aeb7e343791eef22170f53c1a567c076ab9eb7070c4f0c0",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_lighthover_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/button_borderless_lighthover_alt.png",
+          "sha256": "f19e0eb0b0a44c5a398e9971b21b16e0425f7c1dca87aaf3063eb65981917fff",
+          "bytes": 249
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_default_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_default_compact.png",
+          "sha256": "966a2792ecf523a54d6bd645e0e0e39172181e1b8bd66cd8c74ceb5386ee26df",
+          "bytes": 7089
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_default_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_default_light.png",
+          "sha256": "4159f7ed6e6181ffa660a468add8471b53301c176c5f55f062035a9746a57c6f",
+          "bytes": 5324
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_default.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_default.png",
+          "sha256": "c8aea3005fee3a685ed8a017e3effd3e8c1e195219097951523325bf8a6068bc",
+          "bytes": 5323
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_hover_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_hover_compact.png",
+          "sha256": "3bfa32fccc16b7a89eae4c1ffee03d196c5d55cb596f4052ff2f96a918ae0e75",
+          "bytes": 7141
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_hover_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_hover_light.png",
+          "sha256": "e40839c88a861c586f41f7b97dc8b65c123a0ebe594da13b6f50d6c843c7e4ff",
+          "bytes": 7246
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_hover.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_hover.png",
+          "sha256": "adff099fe7637359a57bcfb742c0e34316ef9f16b4032a56fc64b5342b2467f7",
+          "bytes": 7247
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_pressed_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_pressed_compact.png",
+          "sha256": "d808e38187edbed9e8c1b387c313750f4723d83257e0b7646d5872be57a64f87",
+          "bytes": 7141
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_pressed_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_pressed_light.png",
+          "sha256": "ceca383fbf9110e7fa27e1767f4deba878b8146cd90cbc5edd039d982550e5f8",
+          "bytes": 7247
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_pressed.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/close_button_pressed.png",
+          "sha256": "91247da43dfb32d0bac0777e7d3bf11ded81713ffe970ab7aaa795a3a65b8f72",
+          "bytes": 7246
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/dialog_background_hollow_3_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/dialog_background_hollow_3_alt.json",
+          "sha256": "36700ca1326d14a269b2052c27d95115200897bee9c27b4d36e75fe893973415",
+          "bytes": 94
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/dialog_background_hollow_3_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/dialog_background_hollow_3_alt.png",
+          "sha256": "a40edf2c5a667444fc969b48feb5d1909e03376be3768bbcdacb8e73493e15a3",
+          "bytes": 151
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_alt.json",
+          "sha256": "e229a268dc866bb975d7014f58a2cac84ecbb551d29222d36b20da96213662ca",
+          "bytes": 91
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_alt.png",
+          "sha256": "8bcad4aa663cdcf3cbfe93acd5c8ba2c4ab5c18032b2f053fea5ebd907c700cf",
+          "bytes": 1638
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_hover.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_hover.json",
+          "sha256": "349d82f6ee418d393b223cfb1fa55e5553180b520586379e125ad89037f854bf",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_hover.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/hud_tip_text_background_hover.png",
+          "sha256": "3e23bfac6ef1b617edf58f4bf09b59d63a91f6e0d8524c0a5ae377aa3f3b174e",
+          "bytes": 129
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/legacy_pocket_close_button_default.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/legacy_pocket_close_button_default.png",
+          "sha256": "79dd259cec0b9dd928d38ca80213e10321a5d6e3e3d2d9a1b2d60e8364251cfc",
+          "bytes": 5322
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/textures/ui/legacy_pocket_close_button_pressed.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/textures/ui/legacy_pocket_close_button_pressed.png",
+          "sha256": "b84beea5df3fb63757da4cfbd080be626436692ba15726ee0a9c4459c2c9b3fa",
+          "bytes": 6886
+        },
+        {
+          "path": "resource_packs/CustomUIRSP-text-purple/ui/server_form.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP-text-purple/ui/server_form.json",
+          "sha256": "036daf70baef802aedde46539789d8d636e506ad038831e9a54685ddcb567bb4",
+          "bytes": 26177
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/manifest.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/manifest.json",
+          "sha256": "1b7d8582e994502af180d9ccab2766897daa7bf1e32cab47aa983d48f46fac4d",
+          "bytes": 488
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_default_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_default_compact.png",
+          "sha256": "966a2792ecf523a54d6bd645e0e0e39172181e1b8bd66cd8c74ceb5386ee26df",
+          "bytes": 7089
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_default_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_default_light.png",
+          "sha256": "4159f7ed6e6181ffa660a468add8471b53301c176c5f55f062035a9746a57c6f",
+          "bytes": 5324
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_default.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_default.png",
+          "sha256": "c8aea3005fee3a685ed8a017e3effd3e8c1e195219097951523325bf8a6068bc",
+          "bytes": 5323
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_hover_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_hover_compact.png",
+          "sha256": "3bfa32fccc16b7a89eae4c1ffee03d196c5d55cb596f4052ff2f96a918ae0e75",
+          "bytes": 7141
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_hover_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_hover_light.png",
+          "sha256": "e40839c88a861c586f41f7b97dc8b65c123a0ebe594da13b6f50d6c843c7e4ff",
+          "bytes": 7246
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_hover.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_hover.png",
+          "sha256": "adff099fe7637359a57bcfb742c0e34316ef9f16b4032a56fc64b5342b2467f7",
+          "bytes": 7247
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_pressed_compact.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_pressed_compact.png",
+          "sha256": "d808e38187edbed9e8c1b387c313750f4723d83257e0b7646d5872be57a64f87",
+          "bytes": 7141
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_pressed_light.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_pressed_light.png",
+          "sha256": "ceca383fbf9110e7fa27e1767f4deba878b8146cd90cbc5edd039d982550e5f8",
+          "bytes": 7247
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/close_button_pressed.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/close_button_pressed.png",
+          "sha256": "91247da43dfb32d0bac0777e7d3bf11ded81713ffe970ab7aaa795a3a65b8f72",
+          "bytes": 7246
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/dialog_background_hollow_3_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/dialog_background_hollow_3_alt.json",
+          "sha256": "36700ca1326d14a269b2052c27d95115200897bee9c27b4d36e75fe893973415",
+          "bytes": 94
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/dialog_background_hollow_3_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/dialog_background_hollow_3_alt.png",
+          "sha256": "a40edf2c5a667444fc969b48feb5d1909e03376be3768bbcdacb8e73493e15a3",
+          "bytes": 151
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_alt.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_alt.json",
+          "sha256": "e229a268dc866bb975d7014f58a2cac84ecbb551d29222d36b20da96213662ca",
+          "bytes": 91
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_alt.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_alt.png",
+          "sha256": "8bcad4aa663cdcf3cbfe93acd5c8ba2c4ab5c18032b2f053fea5ebd907c700cf",
+          "bytes": 1638
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_hover.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_hover.json",
+          "sha256": "349d82f6ee418d393b223cfb1fa55e5553180b520586379e125ad89037f854bf",
+          "bytes": 93
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_hover.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/hud_tip_text_background_hover.png",
+          "sha256": "3e23bfac6ef1b617edf58f4bf09b59d63a91f6e0d8524c0a5ae377aa3f3b174e",
+          "bytes": 129
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/legacy_pocket_close_button_default.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/legacy_pocket_close_button_default.png",
+          "sha256": "79dd259cec0b9dd928d38ca80213e10321a5d6e3e3d2d9a1b2d60e8364251cfc",
+          "bytes": 5322
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/textures/ui/legacy_pocket_close_button_pressed.png",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/textures/ui/legacy_pocket_close_button_pressed.png",
+          "sha256": "b84beea5df3fb63757da4cfbd080be626436692ba15726ee0a9c4459c2c9b3fa",
+          "bytes": 6886
+        },
+        {
+          "path": "resource_packs/CustomUIRSP/ui/server_form.json",
+          "url": "https://raw.githubusercontent.com/DryanFTH/CustomServerUI/0b6a60aef8413cb71b3388c601a5d666c4c96c0b/resource_packs/CustomUIRSP/ui/server_form.json",
+          "sha256": "4955733ecd6990183abe24a567897cea369784ff6fc125a043f98d277e694b05",
+          "bytes": 25118
+        }
+      ],
+      "reuse": "analysis-only"
+    },
+    {
+      "id": "bedrock-core-ui",
+      "kind": "github",
+      "url": "https://github.com/bedrock-core/ui",
+      "revision": "6977e257cb874087b22cfc506ae9db3440d17bda",
+      "revisionDate": "2026-09-21T17:44:55Z",
+      "license": "MIT-code/mixed-assets",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/LICENSE",
+          "sha256": "e999484cbf6210e264abbc2067d0efa364c1714c8ba1cdfddfb18aabad0c417a",
+          "bytes": 1069
+        },
+        {
+          "path": "packages/ore-styled/README.md",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/ore-styled/README.md",
+          "sha256": "d01a5d42021398fb8c3ecb199599517d3f7ed9874130dc9c776116a01710728c",
+          "bytes": 1501
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/manifest.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/manifest.json",
+          "sha256": "d0b42022e0cb9b24edf783f4e947db9ef618ac2eb933b26fe3a352af8c65c349",
+          "bytes": 476
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/_ui_defs.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/_ui_defs.json",
+          "sha256": "b83ee0354ac67d7ce322549da59dc43f9d65fbbea4ae2448c13f67d5e8572643",
+          "bytes": 2208
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/chest_screen.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/chest_screen.json",
+          "sha256": "9cfe38e4aa650e4dac789fb1a0c79033bc3354f8fc05705915de8cb1495b9b94",
+          "bytes": 3072
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/cell.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/cell.json",
+          "sha256": "60be58ef12bde2ddfbc5557022f60c7d3ebc9523635c5e686ac12b852564a928",
+          "bytes": 15532
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/chrome.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/chrome.json",
+          "sha256": "0707f792ad97b852eef83f2b9e6dcacab7ecf285d251f1cec63a462cc0d2145d",
+          "bytes": 8425
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/router.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/router.json",
+          "sha256": "9f4731d2df5b19cc9ba82d62cff8407be85c1accb3aaaaf2559098db98f5a345",
+          "bytes": 6578
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/text.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/chest/text.json",
+          "sha256": "43558b4e961053575689d5451569084d04237edddeb5f38fcc9a10872049328d",
+          "bytes": 557
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/action_container.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/action_container.json",
+          "sha256": "b6c59a9470ae539aa548b384f007f0503f5b678eb51b528896a23e3be515c5dd",
+          "bytes": 1168
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/animations.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/animations.json",
+          "sha256": "6e6b8e07d7d783c8f7161404971f23bda6d4ee27104462a2aa205f8a87ee9801",
+          "bytes": 556
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/dropdown.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/dropdown.json",
+          "sha256": "18dd9fd50134cef9a578b37f384b12863da270c46828044b0f8b0f27158b27f9",
+          "bytes": 17796
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/form_shared.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/form_shared.json",
+          "sha256": "1d37a5edc7afc08288d9f1fadf934b0d324f5260f4b9e2fd3860365352c5717f",
+          "bytes": 5990
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/inline_select.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/inline_select.json",
+          "sha256": "8525d53f685dc2397f6506dad21478ca6caf366fe96a58efde5ab3db01b62a7d",
+          "bytes": 5454
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/input.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/input.json",
+          "sha256": "198d28419d9fe980f7699d6a7852a07b90fb62dc22d4ef2a449caad1980206ed",
+          "bytes": 8437
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/slider.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/slider.json",
+          "sha256": "cd815ac3db429856fb253a48a78571b0208a22d07b7039ad97a8f644293c31ee",
+          "bytes": 15733
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/toggle.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/components/toggle.json",
+          "sha256": "9e5ed470f89d70c7c0b6ece93ebc17aae7ddb7bb8d10307cf56c27e595c4ef60",
+          "bytes": 5723
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/control.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/control.json",
+          "sha256": "defc8461da241e9755ce808ef9f9cfb5ed42210ef5c61c38c3518d979a12b17c",
+          "bytes": 304
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/cursor.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/cursor.json",
+          "sha256": "ac3dfe9939ee6472008c25806a18703ecba7d3169c1cc1effb8e803a8b637a79",
+          "bytes": 1754
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/modal_container.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/modal_container.json",
+          "sha256": "51de3344267249eb26b4f1d0f549ce9aeef2af457a3d938d20c64b9a413b910f",
+          "bytes": 3322
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/mount.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/mount.json",
+          "sha256": "9d5815f8023b3d70ff26ab9cf79bae08ef2cb51807ad33e2dad4fe09902f5519",
+          "bytes": 2820
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/state.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/state.json",
+          "sha256": "7fb90b647484ac24afa71e265eb5f00217d51240d81c07db6e2a5a9a98d5659a",
+          "bytes": 1309
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/text.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/hosts/form/text.json",
+          "sha256": "c9520df5aba17774771c8eaf30ef8e42c6ff91ea89ad2ea04765d7f7a2bd0df6",
+          "bytes": 9342
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/core-ui/shapes/scroll.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/core-ui/shapes/scroll.json",
+          "sha256": "31f466338dcc5002c93ec0d6afc6205a1b9af65bdf3e96d01aeb04be504ab712",
+          "bytes": 5011
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/data_driven_container_screen.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/data_driven_container_screen.json",
+          "sha256": "dd5401f9a39964ff9a698ff53ad9b5881358bb6935ba567df1cc674414e18834",
+          "bytes": 3703
+        },
+        {
+          "path": "packages/resource-pack/packs/RP/ui/server_form.json",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/resource-pack/packs/RP/ui/server_form.json",
+          "sha256": "19dbea2407a2b4f83f54fde16a7c7fe53482bfed54eda723349ffea65813dd15",
+          "bytes": 3222
+        },
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/README.md",
+          "sha256": "152d9e57632afebb2d5969569b0cb4c7d8d359d15dad54cbafec6675e89fe341",
+          "bytes": 1787
+        },
+        {
+          "path": "packages/ui-compiler/src/hosts/form/emit.ts",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/ui-compiler/src/hosts/form/emit.ts",
+          "sha256": "748bd04ecec08bef83a72ca1b151015038d241e7b83eccf4623f6e835d981896",
+          "bytes": 17252
+        },
+        {
+          "path": "packages/ui-runtime/src/hosts/form/contract.ts",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/ui-runtime/src/hosts/form/contract.ts",
+          "sha256": "5b9a2fd2b1a30da251462f3335835cc96a2a4a41068af3dfb077641d992d3977",
+          "bytes": 5096
+        },
+        {
+          "path": "packages/ui-runtime/src/hosts/form/runtime.ts",
+          "url": "https://raw.githubusercontent.com/bedrock-core/ui/6977e257cb874087b22cfc506ae9db3440d17bda/packages/ui-runtime/src/hosts/form/runtime.ts",
+          "sha256": "c8d4e713128789c675be570ea4e08ec1612aad2b14974554c27526dfbbd0f315",
+          "bytes": 7781
+        }
+      ],
+      "reuse": "analysis-only"
+    },
+    {
+      "id": "bedrock-oss-bedrock-wiki",
+      "kind": "github",
+      "url": "https://github.com/Bedrock-OSS/bedrock-wiki",
+      "revision": "73d2c4116fad3865a14f63367c038c2f6aba78a9",
+      "revisionDate": "2026-09-25T12:00:11Z",
+      "license": "per-page-unresolved",
+      "files": [
+        {
+          "path": "docs/.vitepress/theme/node/data/licenses/licenses.data.ts",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/.vitepress/theme/node/data/licenses/licenses.data.ts",
+          "sha256": "377eff5901d235dd70a4cb579884007a8cabebbaf0fe2e4d5653855af757d155",
+          "bytes": 633
+        },
+        {
+          "path": "docs/json-ui/add-hud-elements.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/add-hud-elements.md",
+          "sha256": "5cb700bb24e9444baae5a75823afb2cea890e13d0f397c9bb25ca7c3411c5e04",
+          "bytes": 3230
+        },
+        {
+          "path": "docs/json-ui/aseprite-animations.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/aseprite-animations.md",
+          "sha256": "2cb88ef3f5024a9f08f08870b56890881bb90f34aac7c29d1db519ff9c5e3977",
+          "bytes": 2641
+        },
+        {
+          "path": "docs/json-ui/best-practices.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/best-practices.md",
+          "sha256": "a42828191e6a4e2b091195f8360f36195f139466ec2331e7455f3191301cb720",
+          "bytes": 16174
+        },
+        {
+          "path": "docs/json-ui/buttons-and-toggles.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/buttons-and-toggles.md",
+          "sha256": "d27aa351107442b13c587c3f1073cfa649c03df24d68e8903217d620ca0c6398",
+          "bytes": 5360
+        },
+        {
+          "path": "docs/json-ui/dynamic-content-generation.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/dynamic-content-generation.md",
+          "sha256": "712d8a85f2a3ed6670700d2ebc823a989053e91708418abea40e5a446d82d84e",
+          "bytes": 12885
+        },
+        {
+          "path": "docs/json-ui/json-ui-documentation.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/json-ui-documentation.md",
+          "sha256": "9a5bb2f8b228fdbe6480a52829963e8ef28d7af17e999b5ed88ef7d65834450f",
+          "bytes": 191930
+        },
+        {
+          "path": "docs/json-ui/json-ui-intro.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/json-ui-intro.md",
+          "sha256": "d0fe468570f903e26d43aec35ff5d993f9bf0e6c88e6d9e4c7851333293e1e04",
+          "bytes": 39340
+        },
+        {
+          "path": "docs/json-ui/modifying-server-forms.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/modifying-server-forms.md",
+          "sha256": "eb93c08c3c464cd5d930b8b969c9df50cbc04e019545df5dbcac1a875c10439a",
+          "bytes": 14822
+        },
+        {
+          "path": "docs/json-ui/preserve-title-texts.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/preserve-title-texts.md",
+          "sha256": "d9e50ceaa5245ca7ddf3ef5497488af3f08b26a68a9a4f3b141676ee31d84d05",
+          "bytes": 5106
+        },
+        {
+          "path": "docs/json-ui/type-conversion.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/json-ui/type-conversion.md",
+          "sha256": "b3f162e23604682431ffde1e40b7fbe9d76ebd65a463ed61f393ba6554310739",
+          "bytes": 5067
+        },
+        {
+          "path": "docs/licenses/CC-BY-4.0.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/licenses/CC-BY-4.0.md",
+          "sha256": "9cc003f77b0bc47581d9f4fb32f5c4a7ff0281a06f9a5c1a26bd7723909c200a",
+          "bytes": 17087
+        },
+        {
+          "path": "docs/licenses/MIT.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/73d2c4116fad3865a14f63367c038c2f6aba78a9/docs/licenses/MIT.md",
+          "sha256": "37d8e42157503d5705bc65d43e40bd8255b4b345b7ca8d21ffaf86f4111bee78",
+          "bytes": 1176
+        }
+      ],
+      "reuse": "reference-only"
+    },
+    {
+      "id": "kenney-ui-pack-pixel-adventure",
+      "kind": "asset-archive",
+      "url": "https://kenney.nl/assets/ui-pack-pixel-adventure",
+      "revision": "sha256:0b0ed4802ebcfff5e44e370f394baa1d751862a5a4a7612ac4ce84e85faa0627",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "source.zip",
+          "url": "https://kenney.nl/media/pages/assets/ui-pack-pixel-adventure/405ba5278a-1729196257/kenney_ui-pack-pixel-adventure.zip",
+          "sha256": "0b0ed4802ebcfff5e44e370f394baa1d751862a5a4a7612ac4ce84e85faa0627",
+          "bytes": 317032
+        }
+      ],
+      "reuse": "optional-reuse"
+    },
+    {
+      "id": "kenney-ui-pack-adventure",
+      "kind": "asset-archive",
+      "url": "https://kenney.nl/assets/ui-pack-adventure",
+      "revision": "sha256:982e8ab66842509ee9214f9c2038e594cbe029f19d1dc177fecaad3b41a67ed3",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "source.zip",
+          "url": "https://kenney.nl/media/pages/assets/ui-pack-adventure/9a877376bc-1723597274/kenney_ui-pack-adventure.zip",
+          "sha256": "982e8ab66842509ee9214f9c2038e594cbe029f19d1dc177fecaad3b41a67ed3",
+          "bytes": 577463
+        }
+      ],
+      "reuse": "optional-reuse"
+    },
+    {
+      "id": "kenney-ui-pack",
+      "kind": "asset-archive",
+      "url": "https://kenney.nl/assets/ui-pack",
+      "revision": "sha256:a8a14a234911eb648c062622915c93e79e94e97cb7f9f375a70f6617f1174318",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "source.zip",
+          "url": "https://kenney.nl/media/pages/assets/ui-pack/f651646eab-1718203990/kenney_ui-pack.zip",
+          "sha256": "a8a14a234911eb648c062622915c93e79e94e97cb7f9f375a70f6617f1174318",
+          "bytes": 1229750
+        }
+      ],
+      "reuse": "optional-reuse"
+    },
+    {
+      "id": "kenney-tiny-town",
+      "kind": "asset-archive",
+      "url": "https://kenney.nl/assets/tiny-town",
+      "revision": "sha256:9768692dccff1d706408a5aedd6ca4f6cd1409506cbc84cb2f862919764be977",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "source.zip",
+          "url": "https://kenney.nl/media/pages/assets/tiny-town/a415fbeb49-1735736916/kenney_tiny-town.zip",
+          "sha256": "9768692dccff1d706408a5aedd6ca4f6cd1409506cbc84cb2f862919764be977",
+          "bytes": 182243
+        }
+      ],
+      "reuse": "optional-reuse"
+    },
+    {
+      "id": "kenney-fantasy-ui-borders",
+      "kind": "asset-archive",
+      "url": "https://kenney.nl/assets/fantasy-ui-borders",
+      "revision": "sha256:59532da3bd61195a425585455b40baa6cbf1eda8227c42adcef31a535a737769",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "source.zip",
+          "url": "https://kenney.nl/media/pages/assets/fantasy-ui-borders/ab29cd0165-1701602367/kenney_fantasy-ui-borders.zip",
+          "sha256": "59532da3bd61195a425585455b40baa6cbf1eda8227c42adcef31a535a737769",
+          "bytes": 358780
+        }
+      ],
+      "reuse": "optional-reuse"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "kind": "github",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "823b0a14d3539b5d78c0efb614426a4fab5983ec",
+      "revisionDate": "2026-09-26T13:32:23Z",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/LICENSE",
+          "sha256": "738f69dfa83db5c347c678fb9d90e560877059f0de93a327c39001bff92dc014",
+          "bytes": 1075
+        },
+        {
+          "path": ".claude/skills/ui-ux-pro-max/SKILL.md",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/.claude/skills/ui-ux-pro-max/SKILL.md",
+          "sha256": "ea087c341bfb5b23195c7302027268ede86da802554c18a5c4896a6017b439f9",
+          "bytes": 15969
+        },
+        {
+          "path": "src/ui-ux-pro-max/data/styles.csv",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/src/ui-ux-pro-max/data/styles.csv",
+          "sha256": "a93a4d9d7025856575d7b7583bda020be9043013432c5af7c58af9dbdfb206b7",
+          "bytes": 149478
+        },
+        {
+          "path": "src/ui-ux-pro-max/data/colors.csv",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/src/ui-ux-pro-max/data/colors.csv",
+          "sha256": "8162429222bce22df62b564085946a30d07cc9722c58d0a3a494bd0d1d00841c",
+          "bytes": 37940
+        },
+        {
+          "path": "src/ui-ux-pro-max/data/ux-guidelines.csv",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/src/ui-ux-pro-max/data/ux-guidelines.csv",
+          "sha256": "ff81ec613f70ba9fc3fcce52dbe4ae35d44b2079dbe6dc066d2d6e38c28facd5",
+          "bytes": 27516
+        },
+        {
+          "path": ".claude/skills/ui-ux-pro-max/references/quick-reference.md",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/.claude/skills/ui-ux-pro-max/references/quick-reference.md",
+          "sha256": "0609bc7c89dacb40472465d8fc14257b56b2c43439660fc8d6fa3b8c022e1876",
+          "bytes": 24526
+        },
+        {
+          "path": ".claude/skills/ui-ux-pro-max/references/pro-rules.md",
+          "url": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/823b0a14d3539b5d78c0efb614426a4fab5983ec/.claude/skills/ui-ux-pro-max/references/pro-rules.md",
+          "sha256": "d28442d61c310b49c054a4ea736f89fb3008beebdbbc38c4b3a540b8f7fadf23",
+          "bytes": 10909
+        }
+      ],
+      "reuse": "reference"
+    },
+    {
+      "id": "game-ui-ux",
+      "kind": "github",
+      "url": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills",
+      "revision": "d4b0e35550c55ae70bdfcab4ef5a0e94610438a9",
+      "revisionDate": "2026-09-27T02:25:26Z",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/gamedev-skills/awesome-gamedev-agent-skills/d4b0e35550c55ae70bdfcab4ef5a0e94610438a9/LICENSE",
+          "sha256": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+          "bytes": 11395
+        },
+        {
+          "path": "skills/disciplines/game-ui-ux/SKILL.md",
+          "url": "https://raw.githubusercontent.com/gamedev-skills/awesome-gamedev-agent-skills/d4b0e35550c55ae70bdfcab4ef5a0e94610438a9/skills/disciplines/game-ui-ux/SKILL.md",
+          "sha256": "8a094c84a377503aa8f4c40df676d1c6b6fc07d36ff95554ce06467f1614397e",
+          "bytes": 8436
+        },
+        {
+          "path": "skills/disciplines/game-ui-ux/references/layout-and-flow.md",
+          "url": "https://raw.githubusercontent.com/gamedev-skills/awesome-gamedev-agent-skills/d4b0e35550c55ae70bdfcab4ef5a0e94610438a9/skills/disciplines/game-ui-ux/references/layout-and-flow.md",
+          "sha256": "000d944db77155ebf97fde035a3d4fbe69ef0ae348e9dbcaff48c5ea134d7d69",
+          "bytes": 5413
+        },
+        {
+          "path": "NOTICE",
+          "url": "https://raw.githubusercontent.com/gamedev-skills/awesome-gamedev-agent-skills/d4b0e35550c55ae70bdfcab4ef5a0e94610438a9/NOTICE",
+          "sha256": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8",
+          "bytes": 883
+        }
+      ],
+      "reuse": "reference"
+    },
+    {
+      "id": "game-ui-design",
+      "kind": "github",
+      "url": "https://github.com/jeremylongworth-source/AgentSkills",
+      "revision": "45f314d2a3d3201dd5a0304a3a4f3a5f23a905a2",
+      "revisionDate": "2026-09-23T07:35:48Z",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/jeremylongworth-source/AgentSkills/45f314d2a3d3201dd5a0304a3a4f3a5f23a905a2/LICENSE",
+          "sha256": "11f5e60786b82e616ba07f5abe671291f23916f60d197babde5ea46353c441a3",
+          "bytes": 1073
+        },
+        {
+          "path": "skills/game-ui-design/SKILL.md",
+          "url": "https://raw.githubusercontent.com/jeremylongworth-source/AgentSkills/45f314d2a3d3201dd5a0304a3a4f3a5f23a905a2/skills/game-ui-design/SKILL.md",
+          "sha256": "3291770337d611d6fc6425e1d273c4dffdc6d5a8634eac8a2c23459f356c303a",
+          "bytes": 3816
+        },
+        {
+          "path": "skills/game-ui-design/references/game-ui-checklist.md",
+          "url": "https://raw.githubusercontent.com/jeremylongworth-source/AgentSkills/45f314d2a3d3201dd5a0304a3a4f3a5f23a905a2/skills/game-ui-design/references/game-ui-checklist.md",
+          "sha256": "e996d7c0ff61bc2e5900810457d8cbd18f2171a2c40edc6a7a836ecc1c974a7a",
+          "bytes": 1624
+        }
+      ],
+      "reuse": "reference"
+    },
+    {
+      "id": "frontend-design",
+      "kind": "github",
+      "url": "https://github.com/anthropics/skills",
+      "revision": "33375500bcea98d610eb30ce10ac4e59b89c390d",
+      "revisionDate": "2026-09-24T16:20:35Z",
+      "license": "Apache-2.0",
+      "files": [
+        {
+          "path": "skills/frontend-design/LICENSE.txt",
+          "url": "https://raw.githubusercontent.com/anthropics/skills/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/frontend-design/LICENSE.txt",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+          "bytes": 10174
+        },
+        {
+          "path": "skills/frontend-design/SKILL.md",
+          "url": "https://raw.githubusercontent.com/anthropics/skills/33375500bcea98d610eb30ce10ac4e59b89c390d/skills/frontend-design/SKILL.md",
+          "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3",
+          "bytes": 9390
+        }
+      ],
+      "reuse": "reference"
+    },
+    {
+      "id": "dbinky-claude-fairy-pixel-art",
+      "kind": "github",
+      "url": "https://github.com/dbinky/claude-fairy-pixel-art",
+      "revision": "4de3ba0be118ebbc158afb0983d642e6c2818e48",
+      "revisionDate": "2026-04-02T12:56:51Z",
+      "license": "MIT",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/dbinky/claude-fairy-pixel-art/4de3ba0be118ebbc158afb0983d642e6c2818e48/README.md",
+          "bytes": 12242,
+          "sha256": "ce5ac3f365c3d4a5f9872931f0df8b04cd81cb9da63fc0e632af37d7ba293976"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/dbinky/claude-fairy-pixel-art/4de3ba0be118ebbc158afb0983d642e6c2818e48/LICENSE",
+          "bytes": 1063,
+          "sha256": "647133845974383d3c1fce518f59042f1ed7b36aaed1c7c9de2db1883935efb2"
+        },
+        {
+          "path": "generate-art.py",
+          "url": "https://raw.githubusercontent.com/dbinky/claude-fairy-pixel-art/4de3ba0be118ebbc158afb0983d642e6c2818e48/generate-art.py",
+          "bytes": 93569,
+          "sha256": "ae4d7c39b924bde3d5aecc97f66d2199c4b769f2eacc32b49196cff0ed7f54e2"
+        },
+        {
+          "path": "graphics-assets.md",
+          "url": "https://raw.githubusercontent.com/dbinky/claude-fairy-pixel-art/4de3ba0be118ebbc158afb0983d642e6c2818e48/graphics-assets.md",
+          "bytes": 23366,
+          "sha256": "70af56abe6424ab0909893ede25e023089a40d0b1fdbbee83d9abe1b0218f4bb"
+        },
+        {
+          "path": "pixel-editor.jsx",
+          "url": "https://raw.githubusercontent.com/dbinky/claude-fairy-pixel-art/4de3ba0be118ebbc158afb0983d642e6c2818e48/pixel-editor.jsx",
+          "bytes": 21276,
+          "sha256": "ebf3bb47d7ad6d0077faab4aed1f4895c40c3b396b4b04621bee5236abae37b7"
+        }
+      ]
+    },
+    {
+      "id": "gamezxz-pixel-art-studio",
+      "kind": "github",
+      "url": "https://github.com/Gamezxz/pixel-art-studio",
+      "revision": "f8c246635c4621a6c2b427833149afdc3dc3c719",
+      "revisionDate": "2026-07-11T16:29:08Z",
+      "license": "MIT",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/README.md",
+          "bytes": 9798,
+          "sha256": "c590f9007ee4620a3d0f5196fe53da76b2d50bc47c0484882e0486248bc28d74"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/LICENSE",
+          "bytes": 1064,
+          "sha256": "02356246e8a18ae2afe5d156ad52b6d5c6fce527ba86bddbcd7d588097af391a"
+        },
+        {
+          "path": "SKILL.md",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/SKILL.md",
+          "bytes": 9451,
+          "sha256": "3aea3d2fb63a1027ce0cd3f7e8c857e07897c58662536a71489ce19eba0d9296"
+        },
+        {
+          "path": "references/export.md",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/references/export.md",
+          "bytes": 2270,
+          "sha256": "0d054ef3375c39159ff062b15d63951d25ed653844c69f846a551bb5c3a9fc5d"
+        },
+        {
+          "path": "references/validations.md",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/references/validations.md",
+          "bytes": 2333,
+          "sha256": "d31b5826fcdb0125ceec6683067377db1543a366883557b789cc50cfaf75d0c3"
+        },
+        {
+          "path": "references/palettes.md",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/references/palettes.md",
+          "bytes": 2428,
+          "sha256": "eb714644acc92eaaed8901eecf78956071e04fc545569623194e462e7dd48567"
+        },
+        {
+          "path": "scripts/pixelpipe.py",
+          "url": "https://raw.githubusercontent.com/Gamezxz/pixel-art-studio/f8c246635c4621a6c2b427833149afdc3dc3c719/scripts/pixelpipe.py",
+          "bytes": 9119,
+          "sha256": "282f7f67ef5c742f84f1bbf38f5bda3b29aead6eae2acdbc92f6de1410d5760c"
+        }
+      ]
+    },
+    {
+      "id": "orama-interactive-pixelorama",
+      "kind": "github",
+      "url": "https://github.com/Orama-Interactive/Pixelorama",
+      "revision": "da7b68f97806c461abde615d1d847af91921c37b",
+      "revisionDate": "2026-09-15T13:11:47Z",
+      "license": "MIT",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Orama-Interactive/Pixelorama/da7b68f97806c461abde615d1d847af91921c37b/README.md",
+          "bytes": 7770,
+          "sha256": "85981766d1069403a1c342ac15fa6e75e9ee73055c35199d1ccc62e1367c718a"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Orama-Interactive/Pixelorama/da7b68f97806c461abde615d1d847af91921c37b/LICENSE",
+          "bytes": 1099,
+          "sha256": "07ddf85025568856f9b92fb7193589dd055c749c563aa9b2d4e943eb53ef61f9"
+        },
+        {
+          "path": "src/Autoload/Export.gd",
+          "url": "https://raw.githubusercontent.com/Orama-Interactive/Pixelorama/da7b68f97806c461abde615d1d847af91921c37b/src/Autoload/Export.gd",
+          "bytes": 41336,
+          "sha256": "883a39455d0f0332a1f5794535a26d95f6cd3e96e20ae9c125364d324e9788a6"
+        }
+      ]
+    },
+    {
+      "id": "joangeldelarosa-pxlkit",
+      "kind": "github",
+      "url": "https://github.com/Joangeldelarosa/pxlkit",
+      "revision": "8e735fa3404a2b4a067e6904a4759a50b1af5bb7",
+      "revisionDate": "2026-08-09T16:38:45Z",
+      "license": "MIT (code/docs); Pxlkit Asset License (restricted icons/assets)",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Joangeldelarosa/pxlkit/8e735fa3404a2b4a067e6904a4759a50b1af5bb7/README.md",
+          "bytes": 29121,
+          "sha256": "c0e964291e1293198d752250297d3c7608867dc28e209d7cf5f2a9e235ccbf8c"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Joangeldelarosa/pxlkit/8e735fa3404a2b4a067e6904a4759a50b1af5bb7/LICENSE",
+          "bytes": 1649,
+          "sha256": "eeeff748777424bf07cfd5a25da44f8c222cbd8d616b0f3c5ad64c533d7cb1c4"
+        },
+        {
+          "path": "LICENSE-CODE",
+          "url": "https://raw.githubusercontent.com/Joangeldelarosa/pxlkit/8e735fa3404a2b4a067e6904a4759a50b1af5bb7/LICENSE-CODE",
+          "bytes": 1310,
+          "sha256": "781f3cfc93fb2b823a9725f6a6c9e3a238dbd93c622a8de9021045a38ceafa4a"
+        },
+        {
+          "path": "LICENSE-ASSETS",
+          "url": "https://raw.githubusercontent.com/Joangeldelarosa/pxlkit/8e735fa3404a2b4a067e6904a4759a50b1af5bb7/LICENSE-ASSETS",
+          "bytes": 2454,
+          "sha256": "210d24b582bee204f95bea9debd499dd5d2c0d913efadf220d9c90e937a0bf46"
+        },
+        {
+          "path": "packages/core/src/types.ts",
+          "url": "https://raw.githubusercontent.com/Joangeldelarosa/pxlkit/8e735fa3404a2b4a067e6904a4759a50b1af5bb7/packages/core/src/types.ts",
+          "bytes": 15593,
+          "sha256": "4b24d4ac8d196b19000c775c6559fe2629f32e2f741c5e4c69d5638f29956a5a"
+        },
+        {
+          "path": "plugins/pxlkit/skills/icon/SKILL.md",
+          "url": "https://raw.githubusercontent.com/Joangeldelarosa/pxlkit/8e735fa3404a2b4a067e6904a4759a50b1af5bb7/plugins/pxlkit/skills/icon/SKILL.md",
+          "bytes": 5875,
+          "sha256": "63407fb5b477734a369c5a438e795260b45b34a1ed661a6675953d4467b06124"
+        }
+      ]
+    },
+    {
+      "id": "vollkorn-games-aseprite-mcp",
+      "kind": "github",
+      "url": "https://github.com/Vollkorn-Games/aseprite-mcp",
+      "revision": "28900e757d7e5c18515ad0a95558acde1865aad2",
+      "revisionDate": "2026-09-02T16:53:46Z",
+      "license": "MIT",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/Vollkorn-Games/aseprite-mcp/28900e757d7e5c18515ad0a95558acde1865aad2/README.md",
+          "bytes": 11752,
+          "sha256": "b5a2480107cc7259822bdce028331442b3b64c4c0eeca03e97d8222f1441bf0b"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/Vollkorn-Games/aseprite-mcp/28900e757d7e5c18515ad0a95558acde1865aad2/LICENSE",
+          "bytes": 1071,
+          "sha256": "024dd561f37ddb665e99552c961039f81b2cdb3c3326a930643663c2f112825a"
+        },
+        {
+          "path": "src/tool-definitions.ts",
+          "url": "https://raw.githubusercontent.com/Vollkorn-Games/aseprite-mcp/28900e757d7e5c18515ad0a95558acde1865aad2/src/tool-definitions.ts",
+          "bytes": 64455,
+          "sha256": "fabc4f086953511c7f50ad832173c16829a84642d1c270e30a3c8a3799910ff9"
+        },
+        {
+          "path": "src/handlers/export-handlers.ts",
+          "url": "https://raw.githubusercontent.com/Vollkorn-Games/aseprite-mcp/28900e757d7e5c18515ad0a95558acde1865aad2/src/handlers/export-handlers.ts",
+          "bytes": 7054,
+          "sha256": "05f048eecc85e21f6455b5d20643d4fbe5a3cc64fd6eef7f6dd93aa5fee3ce66"
+        }
+      ]
+    }
+  ]
+}

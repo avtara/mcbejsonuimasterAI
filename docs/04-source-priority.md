@@ -1,10 +1,10 @@
 # Source Priority
 
-Use sources in this order when answering MCBE JSON UI questions.
+Choose authority by claim, then record its revision. For documented property/type names use Microsoft Learn and cross-check pinned Mojang schemas/samples. For actual rendering/input use the target client and Content Log. The source groups below supply different kinds of evidence, not one unconditional ranking.
 
 ## 1. Included local packs
 
-Use the included source packs first when the task is about real implementation patterns:
+Use the included source packs when the task is about their implementation patterns:
 
 - `references/source-packs/modern-cloud-ui-reference/`
 - `references/source-packs/farm-ui-variants/`
@@ -12,7 +12,7 @@ Use the included source packs first when the task is about real implementation p
 
 Reason:
 
-- they show working Bedrock pack structure
+- they show concrete Bedrock pack structure; current runtime compatibility still needs evidence
 - they reflect the user's target workflow
 - they are best for pattern reuse and reverse engineering
 
@@ -44,7 +44,7 @@ Do not treat Bedrock Wiki as a substitute for confirming current vanilla file pa
 
 ## 4. Ztech vanilla resource pack
 
-Use `ZtechNetwork/MCBVanillaResourcePack` as the primary authority for vanilla asset lookup.
+Use `ZtechNetwork/MCBVanillaResourcePack` as a versioned comparison mirror for vanilla asset lookup. Cross-check the actual target and official Mojang resources; it is not official authority.
 
 Primary upstream:
 
@@ -55,11 +55,13 @@ Use this for:
 - `textures/ui/*`
 - `textures/item_texture.json`
 - `textures/terrain_texture.json`
-- current vanilla `ui/*.json` files
+- versioned vanilla `ui/*.json` comparisons
 
 ## Hard rules
 
 - Do not invent vanilla texture paths.
 - Do not treat an old note or screenshot as stronger than an upstream file tree.
-- For asset verification, prefer Ztech over any local handwritten icon list.
-- For behavior and screen rules, prefer Mojang samples and Bedrock Wiki over guesswork.
+- For asset verification, prefer actual target resources and pinned official Mojang evidence over handwritten lists or third-party mirrors.
+- For behavior and screen rules, distinguish documented names, pinned implementation evidence, community observations and actual runtime checks. Report official-source disagreements as `unresolved-conflict`.
+- Readable source is not redistribution permission. Separate code licenses from bundled Minecraft-derived art.
+- For visual guidance use [the selective design library](72-design-library.md); for dated RP/BP traces see [source analysis](73-bedrock-source-review.md). Design guidance never establishes a supported JSON UI property.

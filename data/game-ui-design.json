@@ -1,0 +1,68 @@
+{
+  "schema": "mcbe-game-ui-design@1",
+  "principles": [
+    "가장 자주 하는 행동 하나를 먼저 정하고 정보·보상·행동의 순서를 정한다.",
+    "UI의 선택/스크롤 상태와 BP의 구매/보상/재고 상태를 분리한다. RP를 게임 상태의 권위로 쓰지 않는다.",
+    "default, hover/focus, pressed, selected, disabled, empty, loading, error 중 실제 가능한 상태만 명시하고 서로 구별한다.",
+    "한글 긴 이름, 영어 공백 없는 식별자, 숫자 자릿수 증가를 실제 대상 라벨과 실제 배율에서 검사한다.",
+    "색상 외에 윤곽·아이콘·텍스트로 상태를 전달한다. GUI 단위에 웹 px 권장값을 그대로 대입하지 않는다."
+  ],
+  "inputs": {
+    "keyboard": [
+      "탭/방향키 이동 순서, 보이는 초점, Enter/Back 동작을 점검한다."
+    ],
+    "gamepad": [
+      "첫 초점과 화면 복귀 초점을 정한다. 스크롤 밖 항목·비활성 컨트롤에서 초점이 막히지 않게 검사한다."
+    ],
+    "touch": [
+      "hover에 정보/행동을 숨기지 않는다. 손가락 타깃과 스크롤 오작동을 실제 기기 GUI scale에서 점검한다."
+    ],
+    "mixed": [
+      "키보드·게임패드·터치 중 현재 입력 방식의 힌트를 보여주고 초점을 보존한다.",
+      "터치에서는 hover 없이도 상태와 행동이 보여야 한다."
+    ]
+  },
+  "roles": {
+    "inventory": [
+      "슬롯 인덱스와 BP 선택값의 일대일 대응, 빈 슬롯/잠금 슬롯/마지막 행을 확인한다.",
+      "아이콘·이름·수량·가격·희귀도 영역을 분리하고 긴 이름에서도 주 행동을 고정한다."
+    ],
+    "shop": [
+      "가격·잔액·수량·품절과 구매 결과를 BP 실제 상태로 확인한다. 실패 후 초점/선택 항목을 보존한다."
+    ],
+    "quest": [
+      "목표·현재 진행·보상·수령 가능 여부를 구분하고 수령 중 중복 요청을 BP에서 막는다."
+    ],
+    "settings": [
+      "설정값·즉시 적용/확인 적용·되돌리기를 구분하고 선택 상태와 포커스를 분리한다."
+    ],
+    "hud": [
+      "월드 시야·전투 가독성·safe area를 우선하며 급하지 않은 알림은 같은 위치에 묶는다."
+    ],
+    "reward": [
+      "결과·수량·닫기/다음 행동이 애니메이션 종료 없이도 읽히도록 한다."
+    ],
+    "character": [
+      "장착 중/미리보기/잠금 상태를 분리하고 스탯 비교 증감에 색 외의 기호를 추가한다."
+    ],
+    "menu": [
+      "현재 위치·다음 행동·뒤로가기를 정하고 모달을 닫을 때 이전 선택/초점을 복원한다."
+    ]
+  },
+  "review": [
+    "hierarchy",
+    "readability",
+    "spacing",
+    "state-distinction",
+    "input-reachability",
+    "asset-consistency",
+    "motion-restraint"
+  ],
+  "evidence": "제안→측정→정적 렌더→Bedrock 런타임을 별도 기록한다. 미관 점수만으로 기능 완료를 선언하지 않는다.",
+  "references": [
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101",
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112",
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/113",
+    "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/117"
+  ]
+}

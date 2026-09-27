@@ -28,10 +28,25 @@ export async function loadIr(path) {
   return ir;
 }
 
+export function validateElementIds(elements) {
+  const reserved = new Set(["namespace", "root_panel", "__root__", "__screen__", "__proto__"]);
+  const seen = new Set();
+  const errors = [];
+  for (const [index, element] of elements.entries()) {
+    const id = element.id;
+    const message = reserved.has(id) ? 'reserved element id "' + id + '"'
+      : seen.has(id) ? 'duplicate element id "' + id + '"' : null;
+    if (message) errors.push({ instancePath: '/elements/' + index + '/id', keyword: "uniqueElementId", message });
+    seen.add(id);
+  }
+  return errors;
+}
+
 export async function validateIr(ir) {
   const validate = await getValidator();
-  const ok = validate(ir);
-  return { ok, errors: ok ? [] : validate.errors || [] };
+  if (!validate(ir)) return { ok: false, errors: validate.errors || [] };
+  const errors = validateElementIds(ir.elements);
+  return { ok: errors.length === 0, errors };
 }
 
 function estimateTextWidth(text, fontSize = "normal", scale = 1) {

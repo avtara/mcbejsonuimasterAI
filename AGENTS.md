@@ -37,7 +37,7 @@ Pick the layer **based on what the user asked for**, not by default.
 | "analyze the whole local JSON UI archive" | `corpus:inventory` -> local recipe catalog -> `design:search`; keep raw names and paths in ignored local maps only |
 | "design/generate a button, panel, slot, icon, or nine-slice texture" | `mcbe-json-ui-texture-design` -> `asset:catalog` -> `asset:context`; generate only original art and only when explicitly requested |
 | "final RP를 실제 화면처럼 검사", "hover/pressed 위치와 텍스트가 맞는지 확인", "Bedrock screenshot과 비교" | `mcbe-json-ui-final-rp-inspection` -> v2 `final-rp:render`/MCP/Inspector; IR preview만으로 판정하지 않음 |
-| "실제 RP로 완성", "production-ready", "skills 기반으로 마감" | **Two-stage**: tools for coords, then hand-finish the JSON UI per `docs/46-tools-output-to-handcrafted-ui.md` (3-state buttons, vanilla nineslice, modification-only routing). **MD docs and `references/source-packs/*` are authoritative; tool `ok=true` is not sufficient — see `docs/26` and `docs/46` Authority order.** |
+| "실제 RP로 완성", "production-ready", "skills 기반으로 마감" | **Two-stage**: tools for coords, then hand-finish the JSON UI per `docs/46-tools-output-to-handcrafted-ui.md`. Cross-check versioned patterns and verify the target client; tool `ok=true` alone is insufficient. See `docs/04-source-priority.md` for authority by claim. |
 
 If unsure, ask the user one short question to disambiguate. Do not silently switch layers.
 
@@ -85,10 +85,10 @@ Use the existing routing already in this repo. Suggested entry points:
 
 ## 4. Safety and operational rules
 
-- **Authority order: `docs/*.md` > `references/source-packs/*` > `tools/*` output.** When a tool says `ok=true` but no documented pattern matches, the file is **not** done. See `docs/46-tools-output-to-handcrafted-ui.md` "Why this doc binds the AI".
+- Choose authority by claim: official documentation and pinned samples establish documented names and versioned examples; the target client and Content Log establish runtime behavior. Local docs and source packs provide patterns, and tools provide bounded structural/layout evidence. Resolve conflicts using the underlying versioned evidence, not an unconditional document ranking. See `docs/04-source-priority.md`.
 - Never invent vanilla texture paths. Verify against `references/upstreams/MCBVanillaResourcePack` (mirror) or `vanilla-index/textures.json`.
 - Never invent bindings or hardcoded names. Verify against `docs/19` and `docs/34`.
-- Never put `@another_namespace.base` inside a `modifications[].value[]` tree. See `docs/26` "`Type not specified` inside a modification". Use wholesale-replace + `#visible` gating instead.
+- For `Type not specified` inside a modification, trace the registered base, matching resource path, target array ownership and inheritance before choosing a workaround. Cross-namespace `@` alone is not a proven cause. Preserve the vanilla form shell and both form routes; see `docs/26-common-failure-modes.md`.
 - Never bulk-rewrite `ui.json` if a small patch works.
 - Label claims in your reply per `docs/22-ai-response-quality.md`.
 - Do not run network installers, do not call sudo, do not change global Node/npm settings during bootstrap.

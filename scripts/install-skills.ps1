@@ -16,6 +16,12 @@ $resolvedSource = [IO.Path]::GetFullPath($sourceBase)
 $resolvedTarget = [IO.Path]::GetFullPath($TargetBase)
 if ($resolvedSource -eq $resolvedTarget -or [IO.Path]::GetPathRoot($resolvedTarget) -eq $resolvedTarget) { throw 'TargetBase must be a distinct, non-root directory.' }
 
+function Assert-ChildPath([string]$Path, [string]$Root) {
+    $fullPath = [IO.Path]::GetFullPath($Path)
+    $prefix = [IO.Path]::GetFullPath($Root).TrimEnd([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+    if (-not $fullPath.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)) { throw "Path escapes its managed directory: $fullPath" }
+}
+
 function Get-TreeHash([string]$Path) {
     if (-not (Test-Path -LiteralPath $Path)) { return $null }
     $records = foreach ($file in Get-ChildItem -LiteralPath $Path -File -Recurse | Sort-Object FullName) {
@@ -61,8 +67,10 @@ $stageRoot = Join-Path $targetParent ('.skill-stage-' + [guid]::NewGuid().ToStri
 $backupRoot = Join-Path $targetParent ('.skill-backup-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $stageRoot | Out-Null
 New-Item -ItemType Directory -Path $backupRoot | Out-Null
-$promoted = [Collections.Generic.List[string]]::new()
-$pruned = [Collections.Generic.List[string]]::new()
+$journal = [Collections.Generic.List[object]]::new()
+$appliedCount = 0
+$completed = $false
+$rollbackCompleted = $false
 try {
     foreach ($entry in $plan | Where-Object { $_.action -in @('install', 'update-reviewed') }) {
         $stage = Join-Path $stageRoot $entry.skill
@@ -74,28 +82,63 @@ try {
     New-Item -ItemType Directory -Force -Path $resolvedTarget | Out-Null
     foreach ($entry in $plan | Where-Object { $_.action -in @('install', 'update-reviewed') }) {
         $target = Join-Path $resolvedTarget $entry.skill
-        if (Test-Path -LiteralPath $target) { Move-Item -LiteralPath $target -Destination (Join-Path $backupRoot $entry.skill) }
-        Move-Item -LiteralPath (Join-Path $stageRoot $entry.skill) -Destination $target
-        $promoted.Add($entry.skill)
+        $backup = Join-Path $backupRoot $entry.skill
+        $stage = Join-Path $stageRoot $entry.skill
+        Assert-ChildPath $target $resolvedTarget
+        Assert-ChildPath $backup $backupRoot
+        Assert-ChildPath $stage $stageRoot
+        $change = [pscustomobject]@{ skill = $entry.skill; target = $target; backup = $backup; hadTarget = (Test-Path -LiteralPath $target); promotionStarted = $false }
+        # Journal the original before either move; promotion can fail after backup succeeds.
+        $journal.Add($change)
+        if ($change.hadTarget) { Move-Item -LiteralPath $target -Destination $backup }
+        $change.promotionStarted = $true
+        Move-Item -LiteralPath $stage -Destination $target
+        $appliedCount++
     }
-    if ($Prune) { foreach ($name in $installedOnly) { Move-Item -LiteralPath (Join-Path $resolvedTarget $name) -Destination (Join-Path $backupRoot $name); $pruned.Add($name) } }
-    Write-Output "Applied $($promoted.Count) Skill(s)."
+    if ($Prune) {
+        foreach ($name in $installedOnly) {
+            $target = Join-Path $resolvedTarget $name
+            $backup = Join-Path $backupRoot $name
+            Assert-ChildPath $target $resolvedTarget
+            Assert-ChildPath $backup $backupRoot
+            $journal.Add([pscustomobject]@{ skill = $name; target = $target; backup = $backup; hadTarget = $true; promotionStarted = $false })
+            Move-Item -LiteralPath $target -Destination $backup
+        }
+    }
+    $completed = $true
+    Write-Output "Applied $appliedCount Skill(s)."
 }
 catch {
-    foreach ($name in @($pruned) | Select-Object -Reverse) {
-        $backup = Join-Path $backupRoot $name
-        $target = Join-Path $resolvedTarget $name
-        if ((Test-Path -LiteralPath $backup) -and -not (Test-Path -LiteralPath $target)) { Move-Item -LiteralPath $backup -Destination $target }
+    $operationError = $_
+    $rollbackErrors = [Collections.Generic.List[string]]::new()
+    for ($index = $journal.Count - 1; $index -ge 0; $index--) {
+        $change = $journal[$index]
+        try {
+            Assert-ChildPath $change.target $resolvedTarget
+            Assert-ChildPath $change.backup $backupRoot
+            if (Test-Path -LiteralPath $change.backup) {
+                if (Test-Path -LiteralPath $change.target) {
+                    if (-not $change.promotionStarted) { throw 'Original target and backup both exist; preserve both for recovery.' }
+                    Remove-Item -Recurse -Force -LiteralPath $change.target
+                }
+                Move-Item -LiteralPath $change.backup -Destination $change.target
+            }
+            elseif (-not $change.hadTarget -and $change.promotionStarted) {
+                if (Test-Path -LiteralPath $change.target) { Remove-Item -Recurse -Force -LiteralPath $change.target }
+            }
+            elseif ($change.hadTarget -and -not (Test-Path -LiteralPath $change.target)) {
+                throw 'Original target and backup are both missing.'
+            }
+        }
+        catch { $rollbackErrors.Add("$($change.skill): $($_.Exception.Message)") }
     }
-    foreach ($name in @($promoted) | Select-Object -Reverse) {
-        $target = Join-Path $resolvedTarget $name
-        if (Test-Path -LiteralPath $target) { Remove-Item -Recurse -Force -LiteralPath $target }
-        $backup = Join-Path $backupRoot $name
-        if (Test-Path -LiteralPath $backup) { Move-Item -LiteralPath $backup -Destination $target }
-    }
-    throw
+    $rollbackCompleted = $rollbackErrors.Count -eq 0
+    if (-not $rollbackCompleted) { throw "Install failed: $($operationError.Exception.Message). Rollback incomplete; preserved backup: $backupRoot. $($rollbackErrors -join '; ')" }
+    throw $operationError
 }
 finally {
+    Assert-ChildPath $stageRoot $targetParent
+    Assert-ChildPath $backupRoot $targetParent
     if (Test-Path -LiteralPath $stageRoot) { Remove-Item -Recurse -Force -LiteralPath $stageRoot }
-    if (Test-Path -LiteralPath $backupRoot) { Remove-Item -Recurse -Force -LiteralPath $backupRoot }
+    if (($completed -or $rollbackCompleted) -and (Test-Path -LiteralPath $backupRoot)) { Remove-Item -Recurse -Force -LiteralPath $backupRoot }
 }

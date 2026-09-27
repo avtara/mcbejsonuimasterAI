@@ -41,10 +41,21 @@
     "preview/preview.png",
     "preview/measurement-overlay.png"
   ],
-  "stringCases": {
-    "baseline": "A measured three by two server-form button grid.",
-    "koreanLong": "오늘의 보상 목록은 화면 폭이 좁아져도 카드 간격과 버튼 정렬을 유지하며, 긴 한국어 설명이 지정된 영역을 벗어나지 않아야 합니다.",
-    "englishLong": "This deliberately extended English validation sentence checks that labels remain inside their measured regions without shifting adjacent controls or button states."
+  "textCoverage": {
+    "version": 1,
+    "scope": "static-solved-labels",
+    "hasBody": false,
+    "policy": "Cover every authored label with a solved rectangle at its original scale. Role fixtures exercise these static examples; they do not certify arbitrary runtime values or nested button-state text.",
+    "targets": [
+      {
+        "id": "title",
+        "role": "title",
+        "fixtures": [
+          "source",
+          "server_form_grid_title_ko"
+        ]
+      }
+    ]
   },
   "checks": {
     "jsonParse": "passed",

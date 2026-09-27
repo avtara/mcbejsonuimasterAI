@@ -25,10 +25,13 @@ If `data/skill-tool-profiles.json` exists, read only the `mcbe-json-ui-logic` en
    - title or actionbar protocol
    - visibility condition
 3. Explain which control owns the source property and where the derived value is used.
-4. If exact property names are needed, escalate to `vanilla-assets` only for textures, otherwise answer from source evidence.
+4. For packed strings, write the complete sender/receiver framing table before editing slice expressions: prefix, ordered fields, width unit, padding, sentinel, escaping, and maximum observed total length.
+5. Test emitted bytes and slice boundaries with ASCII, Korean, section-sign, PUA/emoji, empty, numeric-only, exact-boundary, and over-boundary fixtures.
+6. If exact property names are needed, escalate to `vanilla-assets` only for textures, otherwise answer from source evidence.
 
 ## Output rules
 
 - Use short JSON snippets only when needed.
 - State the protocol string exactly when one exists.
 - Distinguish view-binding derived values from direct `binding_name` values.
+- Do not equate JavaScript string length or substring offsets with Bedrock's observed `%.Ns` width. Keep target-version behavior as measured evidence, not a universal byte-limit claim.

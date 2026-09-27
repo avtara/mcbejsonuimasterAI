@@ -65,7 +65,8 @@ async function exists(path) { try { await access(path); return true; } catch { r
 
 async function resolveTexture(uiFile, texture) {
   if (typeof texture !== "string" || texture.startsWith("#") || texture.includes("$")) return null;
-  const rel = texture.replaceAll("/", "\\") + (extname(texture) ? "" : ".png");
+  const normalized = texture.replaceAll("\\", "/");
+  const rel = normalized + (extname(normalized) ? "" : ".png");
   let base = dirname(resolve(uiFile));
   for (let i = 0; i < 5; i += 1) {
     const candidate = resolve(base, rel);
@@ -97,12 +98,48 @@ function drawNineSlice(ctx, image, x, y, w, h, insets, destinationScale = 1) {
   }
 }
 
-function transformRect(rect, base, viewport) {
+export function transformRect(rect, base, viewport) {
   const scale = Math.min(viewport[0] / base[0], viewport[1] / base[1]);
   return { x: (viewport[0] - base[0] * scale) / 2 + rect.x * scale, y: (viewport[1] - base[1] * scale) / 2 + rect.y * scale, w: rect.w * scale, h: rect.h * scale, scale };
 }
 
 function buttonColor(state) { return state === "pressed" ? "#4a6070" : state === "hover" ? "#6f9abb" : "#526d82"; }
+
+// Uses the same system-font approximation as the standalone preview, without fitting text by shrinking it.
+export function layoutPreviewText(ctx, node, rect, text = String(node.text ?? "")) {
+  const scaleFactor = Number(node.font_scale_factor) || 1;
+  const baseFont = node.font_size === "large" ? 12 : node.font_size === "small" ? 8 : 10;
+  const px = Math.max(8, baseFont * scaleFactor * rect.scale);
+  ctx.font = px + "px sans-serif";
+  const maxWidth = Math.max(1, rect.w - 8), lines = [];
+  for (const paragraph of text.split(/\r?\n/)) {
+    let line = "";
+    for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+      const candidate = line ? line + " " + word : word;
+      if (line && ctx.measureText(candidate).width > maxWidth) { lines.push(line); line = word; }
+      else line = candidate;
+    }
+    lines.push(line);
+  }
+  const lineWidths = lines.map((part) => ctx.measureText(part).width);
+  const lineHeight = px * 1.2;
+  return { text, fontPx: px, fontScaleFactor: scaleFactor, lines, lineWidths, measuredWidth: Math.max(0, ...lineWidths), maxWidth, lineHeight, requiredHeight: lines.length * lineHeight };
+}
+
+export function drawPreviewText(ctx, node, rect, layout, { clip = true } = {}) {
+  const color = Array.isArray(node.color) ? node.color : [1, 1, 1];
+  const align = node.text_alignment || "left";
+  ctx.fillStyle = "rgba(" + color.slice(0, 3).map((v) => Math.round(v * 255)).join(",") + "," + (color[3] ?? 1) + ")";
+  ctx.font = layout.fontPx + "px sans-serif";
+  ctx.textBaseline = "middle";
+  ctx.textAlign = align === "center" ? "center" : align === "right" ? "right" : "left";
+  const tx = align === "center" ? rect.x + rect.w / 2 : align === "right" ? rect.x + rect.w - 4 : rect.x + 4;
+  ctx.save();
+  if (clip) { ctx.beginPath(); ctx.rect(rect.x, rect.y, rect.w, rect.h); ctx.clip(); }
+  const firstY = rect.y + (rect.h - layout.requiredHeight) / 2 + layout.lineHeight / 2;
+  layout.lines.forEach((part, index) => ctx.fillText(part, tx, firstY + index * layout.lineHeight));
+  ctx.restore();
+}
 
 export async function renderProfile({ canvasMod, ui, uiFile, flat, profile, state, outputPath }) {
   const { createCanvas, loadImage } = canvasMod;
@@ -123,19 +160,12 @@ export async function renderProfile({ canvasMod, ui, uiFile, flat, profile, stat
         if (insets) drawNineSlice(ctx, image, rect.x, rect.y, rect.w, rect.h, insets, rect.scale); else ctx.drawImage(image, rect.x, rect.y, rect.w, rect.h);
       }
     } else if (type === "label") {
-      const scaleFactor = Number(node.font_scale_factor) || 1, baseFont = node.font_size === "large" ? 12 : node.font_size === "small" ? 8 : 10;
-      const px = Math.max(8, baseFont * scaleFactor * rect.scale), text = String(node.text ?? sourceRect.id), color = Array.isArray(node.color) ? node.color : [1, 1, 1];
-      ctx.fillStyle = `rgba(${color.slice(0, 3).map((v) => Math.round(v * 255)).join(",")},${color[3] ?? 1})`; ctx.font = `${px}px sans-serif`; ctx.textBaseline = "middle";
-      const measured = ctx.measureText(text).width, align = node.text_alignment || "left", maxWidth = Math.max(1, rect.w - 8), words = text.split(/\s+/), lines = [];
-      let line = "";
-      for (const word of words) { const candidate = line ? `${line} ${word}` : word; if (line && ctx.measureText(candidate).width > maxWidth) { lines.push(line); line = word; } else line = candidate; }
-      if (line) lines.push(line);
-      ctx.textAlign = align === "center" ? "center" : align === "right" ? "right" : "left";
-      const tx = align === "center" ? rect.x + rect.w / 2 : align === "right" ? rect.x + rect.w - 4 : rect.x + 4;
-      const lineHeight = px * 1.2, requiredHeight = lines.length * lineHeight;
-      if (requiredHeight > rect.h) diagnostics.push({ control: sourceRect.id, kind: "text_overflow", measuredWidth: Math.round(measured), lines: lines.length, requiredHeight: Math.round(requiredHeight), available: [Math.round(maxWidth), Math.round(rect.h)], text });
-      ctx.save(); ctx.beginPath(); ctx.rect(rect.x, rect.y, rect.w, rect.h); ctx.clip();
-      const firstY = rect.y + (rect.h - requiredHeight) / 2 + lineHeight / 2; lines.forEach((part, index) => ctx.fillText(part, tx, firstY + index * lineHeight, maxWidth)); ctx.restore();
+      const text = String(node.text ?? sourceRect.id);
+      const layout = layoutPreviewText(ctx, node, rect, text);
+      if (layout.requiredHeight > rect.h || layout.measuredWidth > layout.maxWidth) {
+        diagnostics.push({ control: sourceRect.id, kind: "text_overflow", measuredWidth: layout.measuredWidth, lines: layout.lines.length, requiredHeight: layout.requiredHeight, available: [layout.maxWidth, rect.h], text });
+      }
+      drawPreviewText(ctx, node, rect, layout);
     } else {
       ctx.fillStyle = type === "button" ? buttonColor(state) : type === "grid" ? "#7bd88f25" : type === "stack_panel" ? "#c693f025" : "#5fb3ff20";
       ctx.fillRect(rect.x, rect.y, rect.w, rect.h);

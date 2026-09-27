@@ -30,7 +30,7 @@ export const MCP_UI_TOOLS = Object.freeze([
   },
   {
     name: "mcbe_ui_resolve_screen",
-    description: "Resolve a final-RP control tree, including inheritance, variables, collections and a server-form fixture.",
+    description: "Resolve a final-RP control tree and layout, including inheritance, variables, collections and a server-form fixture. Render preparation blockers are reported separately in renderPreparation; ok does not establish visual correctness.",
     inputSchema: objectSchema({
       ...projectProperties,
       control: { type: "string" },

@@ -1,6 +1,12 @@
 {
   "schema": "mcbe-jsonui-ai-kit/test-manifest@1",
   "tests": [
+    {"id":"design-board","argv":["tests/design-board.mjs"],"timeoutMs":120000},
+    {"id":"design-library","argv":["tests/design-library.mjs"],"timeoutMs":120000},
+    {"id":"skill-installer-rollback","argv":["tests/skill-installer-rollback.mjs"],"timeoutMs":120000},
+    {"id":"final-rp-review-regressions","argv":["tests/final-rp-review-regressions.mjs"],"timeoutMs":120000},
+    {"id":"offline-text-regressions","argv":["tests/offline-text-regressions.mjs"],"timeoutMs":120000},
+    {"id":"ir-pipeline-regressions","argv":["tests/ir-pipeline-regressions.mjs"],"timeoutMs":120000},
     { "id": "run-context", "argv": ["tests/test-run-context.mjs"] },
     { "id": "test-orchestration", "argv": ["tests/test-orchestration.mjs"] },
     { "id": "core-runner", "argv": ["tests/run-all.mjs"], "timeoutMs": 180000 },

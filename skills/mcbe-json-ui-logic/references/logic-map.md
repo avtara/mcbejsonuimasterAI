@@ -26,3 +26,7 @@
 - Java Locate Command parsing shows how `chat_screen.json` can parse `The nearest ... is at block ...` locate messages into coordinates and a `/tp @s` edit-box command; see `references/topics/logic/java-locate-command-bindings.md`
 - progress bars often depend on preserved text panels
 - binding dumps and dynamic form library examples are useful for discovering names and reusable search/slice expressions
+
+## Packed-string acceptance table
+
+Before reusing `%.Ns`, require one table with the actual sender payload, UTF-8 byte offsets, RP slice expressions, and expected visible values. Include empty, numeric-only, Korean, `§` formatting, PUA/emoji, exact-boundary, and overflow rows. Increasing field width without recomputing the total framing contract is not a fix.

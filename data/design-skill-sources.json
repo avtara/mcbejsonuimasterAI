@@ -1,0 +1,166 @@
+{
+  "schema": "mcbe-design-skill-sources@1",
+  "reviewedAt": "2026-09-27",
+  "policy": {
+    "mode": "reference-adapters",
+    "defaultLoad": "selected-card-only",
+    "executeSourceCode": false,
+    "installExternalSkills": false,
+    "sourceAuthority": "design guidance only; Bedrock contracts remain local and target-version verified"
+  },
+  "sources": [
+    {
+      "id": "ui-ux-pro-max",
+      "title": "UI UX Pro Max",
+      "kind": "external-skill",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "823b0a14d3539b5d78c0efb614426a4fab5983ec",
+      "revisionDate": "2026-09-26T13:32:23Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "reuse": "reference",
+      "treatment": "adapt",
+      "role": "style-catalog",
+      "summary": "스타일·색상 후보 검색과 짧은 질의 설계를 선택적으로 적용한다. 웹·네이티브 구현 규칙은 Bedrock 속성 근거로 사용하지 않는다.",
+      "adopt": [
+        "시각 스타일, 색상 역할, 정보 밀도를 별도 축으로 선택한다.",
+        "한 번에 한 의도로 검색하고 결과의 플랫폼 적합성을 확인한다."
+      ],
+      "doNotPort": [
+        "CSS blur·GSAP·SVG 전용 규칙·Google Fonts 및 웹 프레임워크 코드",
+        "44 CSS px 터치 크기나 16px 본문 값을 Bedrock GUI 단위로 직접 대입"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-texture-design"
+      ],
+      "evidence": [
+        {
+          "path": ".claude/skills/ui-ux-pro-max/SKILL.md",
+          "lineStart": 51,
+          "lineEnd": 63,
+          "sha256": "ea087c341bfb5b23195c7302027268ede86da802554c18a5c4896a6017b439f9"
+        }
+      ],
+      "fileCount": 7,
+      "bytes": 267413,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "game-ui-ux",
+      "title": "Game UI/UX",
+      "kind": "external-skill",
+      "url": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills",
+      "revision": "d4b0e35550c55ae70bdfcab4ef5a0e94610438a9",
+      "revisionDate": "2026-09-27T02:25:26Z",
+      "license": "Apache-2.0",
+      "licensePath": "LICENSE",
+      "noticePath": "NOTICE",
+      "reuse": "reference",
+      "treatment": "adapt",
+      "role": "game-navigation",
+      "summary": "안전 영역·입력별 초점·화면 복귀·상태 갱신 시점의 설계 자료로 적용한다. Godot와 Unity 코드는 참조 전용이다.",
+      "adopt": [
+        "화면 열기·닫기·복귀 때 초점과 입력 소유자를 명시한다.",
+        "화면 비율과 안전 영역 정책을 먼저 정하고 대상 장치에서 확인한다."
+      ],
+      "doNotPort": [
+        "절대 픽셀 금지를 이 저장소의 px 기반 IR에 적용",
+        "Godot signal·Control 및 Unity CanvasScaler API를 JSON UI 속성으로 변환"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-server-forms"
+      ],
+      "evidence": [
+        {
+          "path": "skills/disciplines/game-ui-ux/SKILL.md",
+          "lineStart": 35,
+          "lineEnd": 52,
+          "sha256": "8a094c84a377503aa8f4c40df676d1c6b6fc07d36ff95554ce06467f1614397e"
+        }
+      ],
+      "fileCount": 4,
+      "bytes": 26127,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "game-ui-design",
+      "title": "Game UI Design",
+      "kind": "external-skill",
+      "url": "https://github.com/jeremylongworth-source/AgentSkills",
+      "revision": "45f314d2a3d3201dd5a0304a3a4f3a5f23a905a2",
+      "revisionDate": "2026-09-23T07:35:48Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "reuse": "reference",
+      "treatment": "adapt",
+      "role": "game-design-brief",
+      "summary": "플레이어의 다음 행동, 전투와 메뉴의 정보 밀도, 전체 상태와 장르에 맞는 시각 방향을 정하는 기본 설계 자료다.",
+      "adopt": [
+        "주 행동과 긴급도에 따라 HUD·메뉴 정보량을 정한다.",
+        "빈 상태·잠금·선택·오류·쿨다운 등 실제 가능한 상태만 설계한다."
+      ],
+      "doNotPort": [
+        "드래그·드롭이나 입력 재매핑을 검증 없이 Bedrock 폼 기능으로 약속",
+        "이벤트 기반 갱신 제안을 실제 Script API 가용성 검증 없이 구현"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-server-forms"
+      ],
+      "evidence": [
+        {
+          "path": "skills/game-ui-design/SKILL.md",
+          "lineStart": 11,
+          "lineEnd": 17,
+          "sha256": "3291770337d611d6fc6425e1d273c4dffdc6d5a8634eac8a2c23459f356c303a"
+        }
+      ],
+      "fileCount": 3,
+      "bytes": 6513,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "frontend-design",
+      "title": "Frontend Design",
+      "kind": "external-skill",
+      "url": "https://github.com/anthropics/skills",
+      "revision": "33375500bcea98d610eb30ce10ac4e59b89c390d",
+      "revisionDate": "2026-09-24T16:20:35Z",
+      "license": "Apache-2.0",
+      "licensePath": "skills/frontend-design/LICENSE.txt",
+      "reuse": "reference",
+      "treatment": "reference-only",
+      "role": "visual-critique",
+      "summary": "주제에 맞는 시각 선택과 디자인 비평만 참고한다. 웹 화면 구조나 임의 글꼴 도입은 Bedrock 기본 작업 흐름에 포함하지 않는다.",
+      "adopt": [
+        "색상·문자 역할·구조·강조점을 짧게 정한 뒤 사용자 참조와 비교한다.",
+        "장식보다 정보 관계를 보여주고 화면마다 필요한 구조 차이를 검토한다."
+      ],
+      "doNotPort": [
+        "웹 hero·CSS 선택자·웹 글꼴·모바일 breakpoint 구현",
+        "사용자 참조보다 독창성이나 유행 회피를 우선"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-texture-design"
+      ],
+      "evidence": [
+        {
+          "path": "skills/frontend-design/SKILL.md",
+          "lineStart": 30,
+          "lineEnd": 32,
+          "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3"
+        }
+      ],
+      "fileCount": 2,
+      "bytes": 19564,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    }
+  ]
+}

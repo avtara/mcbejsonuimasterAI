@@ -243,22 +243,29 @@ async function auditDeclaredRepositoryPaths() {
 
   const dataFiles = await listFiles(resolve(PATHS.root, "data"), (path) => extname(path).toLowerCase() === ".json");
   const indexedPaths = [];
-  function visit(value, filePath) {
+  function visit(value, filePath, skillRoot = null, pathScope = "repository") {
     if (typeof value === "string") {
+      // Upstream evidence paths resolve against their pinned source, not this checkout.
+      if (pathScope === "upstream") return;
       if (!/^(?:docs|data|references|schemas|templates|skills)\//.test(value) || !isCheckableRepositoryPath(value)) return;
-      indexedPaths.push({ filePath, value });
+      indexedPaths.push({ filePath, value, skillRoot });
       return;
     }
     if (Array.isArray(value)) {
-      for (const item of value) visit(item, filePath);
+      for (const item of value) visit(item, filePath, skillRoot, pathScope);
       return;
     }
     if (!value || typeof value !== "object") return;
-    for (const item of Object.values(value)) visit(item, filePath);
+    const nestedSkillRoot = filePath === "data/skill-routing.json" && typeof value.skill === "string"
+      ? resolve(PATHS.root, "skills", value.skill)
+      : skillRoot;
+    const nestedScope = value.pathScope === "upstream" ? "upstream" : pathScope;
+    for (const item of Object.values(value)) visit(item, filePath, nestedSkillRoot, nestedScope);
   }
   for (const file of dataFiles) visit(await readJson(file), portable(relative(PATHS.root, file)));
   for (const indexed of indexedPaths) {
     if (await exactCaseExists(resolve(PATHS.root, indexed.value))) continue;
+    if (indexed.skillRoot && await exactCaseExists(resolve(indexed.skillRoot, indexed.value))) continue;
     issues.push({
       severity: "error",
       path: indexed.filePath,

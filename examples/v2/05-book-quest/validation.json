@@ -41,10 +41,51 @@
     "preview/preview.png",
     "preview/measurement-overlay.png"
   ],
-  "stringCases": {
-    "baseline": "Two-page quest book with explicit title and body text regions.",
-    "koreanLong": "오늘의 보상 목록은 화면 폭이 좁아져도 카드 간격과 버튼 정렬을 유지하며, 긴 한국어 설명이 지정된 영역을 벗어나지 않아야 합니다.",
-    "englishLong": "This deliberately extended English validation sentence checks that labels remain inside their measured regions without shifting adjacent controls or button states."
+  "textCoverage": {
+    "version": 1,
+    "scope": "static-solved-labels",
+    "hasBody": true,
+    "policy": "Cover every authored label with a solved rectangle at its original scale. Role fixtures exercise these static examples; they do not certify arbitrary runtime values or nested button-state text.",
+    "targets": [
+      {
+        "id": "quest_title",
+        "role": "title",
+        "fixtures": [
+          "source",
+          "book_quest_title_ko"
+        ]
+      },
+      {
+        "id": "quest_body",
+        "role": "body",
+        "fixtures": [
+          "source",
+          "long_ko_130",
+          "long_en",
+          "unbroken_token"
+        ],
+        "presentation": {
+          "mode": "break-long-tokens",
+          "maxTokenCodePoints": 16
+        }
+      },
+      {
+        "id": "objectives",
+        "role": "caption",
+        "fixtures": [
+          "source",
+          "objectives_ko"
+        ]
+      },
+      {
+        "id": "objective_list",
+        "role": "instructions",
+        "fixtures": [
+          "source",
+          "book_instructions_ko"
+        ]
+      }
+    ]
   },
   "checks": {
     "jsonParse": "passed",

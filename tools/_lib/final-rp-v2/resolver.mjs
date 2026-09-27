@@ -1,4 +1,5 @@
 import { materializeEnvironment } from "./expression.mjs";
+import { applyModifications } from "./modifications.mjs";
 
 const clone = value => value == null ? value : structuredClone(value);
 const object = value => value && typeof value === "object" && !Array.isArray(value);
@@ -6,36 +7,82 @@ const escapePointer = value => value.replaceAll("~", "~0").replaceAll("/", "~1")
 
 export function resolveControl(index, reference, options = {}) {
   const unresolved = [...index.unresolved], maxDepth = options.maxDepth ?? 96;
-  function resolveOne(name, inline = {}, namespace = options.namespace, env = options.environment || {}, ancestry = [], path = "", inlineEvidence = {}) {
-    const ref = splitReference(name, namespace), record = index.controls.get(`${ref.namespace}.${ref.id}`);
+  function resolveOne(name, inline = {}, namespace = options.namespace, env = options.environment || {}, ancestry = [], path = "", inlineEvidence = {}, recordOverride = null, inheritedNode = null) {
+    const ref = splitReference(name, namespace), record = recordOverride || index.controls.get(`${ref.namespace}.${ref.id}`);
     if (ancestry.length >= maxDepth) return failure("max_depth", name, path);
     if (record && ancestry.includes(record.qualified)) return failure("inheritance_cycle", record.qualified, path);
-    let base = record?.value || {}, baseProvenance = record ? resolvedEvidence(record.value, record, path) : {}, inheritedControls = [];
-    const inheritedEnvironment = collectVariables(base, inline, env);
-    if (!record && !inline.type) unresolved.push({ kind: "unresolved_control", control: `${ref.namespace}.${ref.id}`, path });
+    let base = record?.value || inheritedNode?.props || {}, baseProvenance = record ? resolvedEvidence(record.value, record, path) : rebaseEvidence(inheritedNode?.provenance, inheritedNode?.pointer ?? path, path), inheritedControls = inheritedNode?.controls || [];
+    let modificationArrayOrigins = { ...inheritedNode?.modificationArrayOrigins };
+    for (const key of ["controls", "bindings"]) if (Array.isArray(base[key])) modificationArrayOrigins[key] = "own";
+    if (record?.modificationBoundary) unresolved.push({ kind: "unresolved_modification", impact: "blocking", control: record.qualified, pointer: `${path}/modifications`, reason: record.modificationBoundary });
+    let inheritedEnvironment = collectVariables(base, inline, { ...inheritedNode?.variables, ...env });
+    if (!record && !inline.type && !inheritedNode) unresolved.push({ kind: "unresolved_control", control: `${ref.namespace}.${ref.id}`, path });
+    if (record?.overlayBase) {
+      const inherited = resolveOne(name, {}, record.namespace, inheritedEnvironment, ancestry, path, {}, record.overlayBase);
+      if (inherited) {
+        modificationArrayOrigins = { ...inherited.modificationArrayOrigins, ...modificationArrayOrigins };
+        const overlayMerge = mergeWithEvidence(inherited.props, base, inherited.provenance, baseProvenance, path);
+        base = overlayMerge.value; baseProvenance = overlayMerge.provenance; inheritedControls = inherited.controls;
+        inheritedEnvironment = { ...inherited.variables, ...inheritedEnvironment };
+      }
+    }
     if (record?.baseRef) {
       const inherited = resolveOne(record.baseRef, {}, record.namespace, inheritedEnvironment, [...ancestry, record.qualified], `${path}/@base`);
       if (inherited) {
-        const inheritedMerge = mergeWithEvidence(inherited.props, base, inherited.provenance, resolvedEvidence(record.value, record, path), path);
-        base = inheritedMerge.value; baseProvenance = inheritedMerge.provenance; inheritedControls = inherited.controls;
+        for (const key of Object.keys(inherited.modificationArrayOrigins || {})) modificationArrayOrigins[key] ??= "inherited";
+        const inheritedMerge = mergeWithEvidence(inherited.props, base, rebaseEvidence(inherited.provenance, inherited.pointer, path), resolvedEvidence(record.value, record, path), path);
+        base = inheritedMerge.value; baseProvenance = inheritedMerge.provenance; inheritedControls = mergeResolvedChildren(inherited.controls, inheritedControls);
       }
     }
     const variables = collectVariables(base, inline, inheritedEnvironment);
-    const merged = mergeWithEvidence(record ? stripVariables(base) : {}, stripVariables(inline), baseProvenance, inlineEvidence, path);
+    const merged = mergeWithEvidence(record || inheritedNode ? stripVariables(base) : {}, stripVariables(inline), baseProvenance, inlineEvidence, path);
     const evaluated = materializeEnvironment(merged.value, variables, { control: record?.qualified || name });
     unresolved.push(...evaluated.unresolved);
     const props = applyConditionalVariables(evaluated.value), ownChildren = [];
+    for (const key of ["controls", "bindings"]) if (Array.isArray(inline[key])) modificationArrayOrigins[key] = "own";
+    const inheritedOnlyModifications = (Array.isArray(props.modifications) ? props.modifications : []).flatMap((entry, ordinal) => {
+      const array = entry?.array_name || (entry?.control_name ? "controls" : null);
+      return modificationArrayOrigins[array] === "inherited" ? [{ kind: "unresolved_modification", impact: "blocking", control: record?.qualified || name, pointer: `${path}/modifications/${ordinal}`, reason: "inherited_array_modification_unsupported", array }] : [];
+    });
+    unresolved.push(...inheritedOnlyModifications);
+    if (props.modifications && !props.type && !record?.baseRef && !record?.overlayBase && !inheritedNode) unresolved.push({ kind: "unresolved_modification", impact: "blocking", control: record?.qualified || name, pointer: `${path}/modifications`, reason: "base_control_not_found" });
     for (const [entryIndex, entry] of (props.controls || []).entries()) for (const [childName, childInline] of Object.entries(entry)) {
       const childPath=`${path}/controls/${ownChildren.length}`,declarationPath=`${path}/controls/${entryIndex}/${escapePointer(childName)}`;
-      ownChildren.push(resolveOne(materializeControlDeclaration(childName, variables), childInline, record?.namespace || namespace, variables, record ? [...ancestry, record.qualified] : ancestry, childPath, rebaseEvidence(merged.provenance,declarationPath,childPath)));
+      ownChildren.push(resolveOne(materializeControlDeclaration(childName, variables), childInline, record?.namespace || namespace, variables, record ? [...ancestry, record.qualified] : ancestry, childPath, rebaseEvidence(merged.provenance,declarationPath,childPath), null, inheritedControls.find(child => child.id === childName.split("@")[0])));
     }
     materializeFormButtonChildren(props, ownChildren, variables, record?.namespace || namespace, record ? [...ancestry, record.qualified] : ancestry, path, options.fixture, resolveOne);
+    const modified = applyModifications(inheritedOnlyModifications.length ? { ...props, modifications: [] } : props, mergeResolvedChildren(inheritedControls, ownChildren.filter(Boolean), true), {
+      control: record?.qualified || name, pointer: path,
+      resolveChildren(entries, ordinal) {
+        return entries.flatMap((entry, at) => Object.entries(entry).map(([childName, childInline]) => {
+          const valueIndex = Array.isArray(props.modifications[ordinal].value) ? `/${at}` : "";
+          const sourcePath = `${path}/modifications/${ordinal}/value${valueIndex}/${escapePointer(childName)}`;
+          return resolveOne(materializeControlDeclaration(childName, variables), childInline, record?.namespace || namespace, variables, record ? [...ancestry, record.qualified] : ancestry, sourcePath, rebaseEvidence(merged.provenance, sourcePath, sourcePath));
+        })).filter(Boolean);
+      }
+    });
+    unresolved.push(...modified.unresolved);
+    if (modified.bindingOrigins) {
+      const origins = {};
+      modified.bindingOrigins.forEach((source, ordinal) => Object.assign(origins, rebaseEvidence(merged.provenance, source, `${path}/bindings/${ordinal}`)));
+      for (const key of Object.keys(merged.provenance)) if (key.startsWith(`${path}/bindings/`)) delete merged.provenance[key];
+      Object.assign(merged.provenance, origins);
+    }
     delete props.controls;
-    return { id: String(name).split("@")[0] || ref.id, qualified: record?.qualified || null, namespace: record?.namespace || namespace, props, variables, provenance: merged.provenance, source: record ? { file: record.file, relative: record.relative, hash: record.hash, layer: record.layer } : null, controls: mergeResolvedChildren(inheritedControls, ownChildren.filter(Boolean)) };
+    delete props.modifications;
+    return { id: String(name).split("@")[0] || ref.id, qualified: record?.qualified || inheritedNode?.qualified || null, namespace: record?.namespace || inheritedNode?.namespace || namespace, pointer: path, props, variables, provenance: merged.provenance, modificationArrayOrigins, source: record ? { file: record.file, relative: record.relative, hash: record.hash, layer: record.layer } : inheritedNode?.source || null, controls: modified.controls };
   }
   function failure(kind, control, path) { unresolved.push({ kind, control, path }); return null; }
   const environment = { ...(index.globals || {}), ...(options.environment || {}) };
-  return { tree: resolveOne(reference, options.overrides || {}, options.namespace, environment), unresolved };
+  const tree = resolveOne(reference, options.overrides || {}, options.namespace, environment);
+  function assignFinalPointers(node, pointer = "") {
+    if (!node) return;
+    node.provenance = rebaseEvidence(node.provenance, node.pointer, pointer);
+    node.pointer = pointer;
+    node.controls.forEach((child, ordinal) => assignFinalPointers(child, `${pointer}/controls/${ordinal}`));
+  }
+  assignFinalPointers(tree);
+  return { tree, unresolved };
 }
 function applyConditionalVariables(props) {
   if (!props || !Array.isArray(props.variables)) return props;
@@ -93,12 +140,13 @@ function collectVariables(base, inline, inherited) {
   return result;
 }
 function stripVariables(value) { return Object.fromEntries(Object.entries(value || {}).filter(([key]) => !key.startsWith("$"))); }
-function mergeResolvedChildren(base, override) {
+function mergeResolvedChildren(base, override, completeOverrides = false) {
   const result = base.map(clone), positions = new Map(result.map((child, index) => [child.id, index]));
   for (const child of override) {
     if (!positions.has(child.id)) { positions.set(child.id, result.length); result.push(child); continue; }
     const at = positions.get(child.id), inherited = result[at];
-    result[at] = { ...inherited, ...child, props: deepMerge(inherited.props, child.props), variables: { ...inherited.variables, ...child.variables }, provenance: { ...inherited.provenance, ...child.provenance }, controls: mergeResolvedChildren(inherited.controls || [], child.controls || []) };
+    if (completeOverrides) { result[at] = clone(child); continue; }
+    result[at] = { ...inherited, ...child, props: deepMerge(inherited.props, child.props), variables: { ...inherited.variables, ...child.variables }, provenance: { ...rebaseEvidence(inherited.provenance, inherited.pointer, child.pointer), ...child.provenance }, controls: mergeResolvedChildren(inherited.controls || [], child.controls || []) };
   }
   return result;
 }
@@ -158,8 +206,11 @@ function mergeControlDeclarations(base, override) {
 export function resolveRoute(index, fixture, control = "server_form.main_screen_content") {
   const record = index.controls.get(control), title = String(fixture?.title || ""), matches = [];
   if (!record) return { route: null, unresolved: [{ kind: "unresolved_control", control }] };
-  for (const entry of record.value.controls || []) for (const [name, value] of Object.entries(entry)) {
+  const resolved = record.overlayBase || record.modificationBoundary || record.value.modifications ? resolveControl(index, control, { fixture }) : null;
+  const declarations = resolved ? (resolved.tree?.controls || []).map(child => ({ [child.id]: child.variables })) : record.value.controls || [];
+  for (const entry of declarations) for (const [name, value] of Object.entries(entry)) {
     if (typeof value?.$form_type === "string" && title.includes(value.$form_type) && value.$factory_control_ids?.long_form) matches.push({ name, token: value.$form_type, target: value.$factory_control_ids.long_form });
   }
-  return matches.length === 1 ? { route: matches[0], unresolved: [] } : { route: matches[0] || null, unresolved: [{ kind: matches.length ? "ambiguous_route" : "route_not_found", title, matches: matches.length }] };
+  const diagnostics = resolved?.unresolved.filter(item => item.kind === "unresolved_modification") || [];
+  return matches.length === 1 ? { route: matches[0], unresolved: diagnostics } : { route: matches[0] || null, unresolved: [...diagnostics, { kind: matches.length ? "ambiguous_route" : "route_not_found", title, matches: matches.length }] };
 }

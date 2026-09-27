@@ -49,6 +49,24 @@ It is written in Minecraft Bedrock addon, RP/BP, Script API, and server-protocol
 - `mcbe-json-ui-tooling`
 - `mcbe-json-ui-vanilla-presets`
 - `mcbe-json-ui-self-bootstrap`
+- `mcbe-json-ui-custom-toggles`
+- `mcbe-json-ui-final-rp-inspection`
+- `mcbe-json-ui-texture-design`
+
+### Optional design and source library
+
+Six selectable pixel/game UI directions, four reviewed external design Skill adapters, and pinned official/community/art sources are available through small local queries. Raw downloads stay in the ignored workspace; they are never executed or installed automatically.
+
+```text
+node tools/design-library.mjs styles
+node tools/design-library.mjs context --style cozy-vanilla-16 --role inventory,shop --input mixed
+node tools/design-library.mjs skills
+node tools/design-library.mjs methods
+node tools/design-library.mjs method --method ui-kit-spec-first --style cozy16
+node tools/design-board.mjs --styles cozy16,fantasy-rpg,clean-pixel --out workspace/style-review
+```
+
+See [design library and reuse policy](docs/72-design-library.md) and [Bedrock source analysis](docs/73-bedrock-source-review.md). This improves reference selection and design review; it does not train model weights or prove Bedrock runtime behavior.
 
 ### Local pack references
 
@@ -76,16 +94,7 @@ It is written in Minecraft Bedrock addon, RP/BP, Script API, and server-protocol
 
 ## Source policy
 
-This repository uses a strict source priority model:
-
-1. included local working packs in `references/source-packs/`
-2. official verified sample source `bedrock-samples`
-3. community reference docs JSON UI pages
-4. `vanilla resource mirror` for vanilla asset truth
-
-For vanilla texture validation, the canonical upstream authority is:
-
-- <https://github.com/ZtechNetwork/MCBVanillaResourcePack>
+Choose authority by claim: Microsoft Learn documents exact names; pinned Mojang samples provide versioned implementation/asset evidence; the target client and Content Log establish runtime behavior. Local packs and community guides supply patterns. Third-party vanilla mirrors are versioned comparisons and must be cross-checked against official evidence. Design sources do not establish JSON UI property support or redistribution rights.
 
 See:
 
