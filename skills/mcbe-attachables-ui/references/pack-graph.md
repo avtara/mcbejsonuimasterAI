@@ -8,6 +8,8 @@ Use verified vanilla files for inherited resources. `controller.animation.*` is 
 
 JSONC is common in sample packs. Preserve comments and formatting when editing. The inspector accepts JSON comments and trailing commas as input; this is parser compatibility, not a complete engine schema check.
 
+Object roots are required for manifests, `.material` files and graph-owned definition folders (RP attachables, client entities, models, animations/controllers and materials; BP items/entities). Other JSON, such as an RP flipbook array, is syntax-parsed without that root restriction; `NON_GRAPH_DOCUMENT` identifies non-object data whose pack-specific schema was not validated. This allowance does not certify arbitrary BP language files or unrelated pack schemas.
+
 ## Tool contract
 
 `tools/attachable-inspect.mjs --rp DIR [--bp DIR] [--vanilla DIR] [--max-chars 1000..64000] [--report NEW_FILE] --json`
@@ -19,6 +21,7 @@ JSONC is common in sample packs. Preserve comments and formatting when editing. 
 - Exit 0: no structural errors; 1: structural errors; 2: bad arguments, unavailable roots, resource bound or report-write failure.
 - The optional report uses exclusive creation. Input packs are never rewritten.
 - Built-in material names without supplied definitions remain external-unverified. Dynamic expressions are recorded, not executed. Referenced array members can resolve while the selected index remains dynamic.
+- Render-controller selector shapes follow the pinned Mojang schema: geometry expression string, texture expression list and material mapping list. Invalid shapes produce `RESOURCE_SELECTOR`; the single texture string found in older official examples is scanned with compatibility left dynamic. Bare nested array cycles also remain dynamic because finite expansion is unproven.
 - Definition and state bodies must be objects. Conditional references accept nonempty expression strings or primitive number/boolean literals; null, arrays and objects are structural errors. This is a shape check, not proof of Molang validity or evaluation.
 - Material parents are followed through supplied RP/vanilla definitions; a cyclic inheritance chain is a structural error. Shader behavior still requires a separate material audit and target-client evidence.
 - Modern geometry arrays and legacy top-level `geometry.child:geometry.parent` keys are indexed by the child identifier. Legacy parent references and cycles are checked through supplied RP/vanilla files; bone merging, reset/inflate semantics and the resulting shape remain unverified.

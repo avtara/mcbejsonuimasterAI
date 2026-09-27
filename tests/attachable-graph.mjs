@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { inspectAttachableGraph, boundedAttachableReport } from '../tools/_lib/attachable-graph.mjs';
+import { stripJsonComments, stripJsonTrailingCommas } from '../tools/_lib/jsonc.mjs';
 
 const repo = fileURLToPath(new URL('../', import.meta.url));
 const temp = await mkdtemp(join(tmpdir(), 'attachable-graph-'));
@@ -72,6 +73,35 @@ try {
   report = await inspectAttachableGraph({ rp, bp, vanilla }); assert.equal(report.complete, true);
   assert.ok(report.edges.some(e => e.to === 'vanilla:material:entity_alphatest'));
   const completeInspect = () => inspectAttachableGraph({ rp, bp, vanilla });
+  await write(rp, 'texts/languages.json', ['en_US', 'ko_KR']);
+  assert.equal((await completeInspect()).complete, true, 'The resource-pack language list has an array root');
+  await write(vanilla, 'texts/languages.json', ['en_US']);
+  assert.equal((await completeInspect()).complete, true, 'The same language-list contract applies to the vanilla fallback');
+  await write(rp, 'manifest.json', []);
+  assert.ok(codes(await completeInspect()).includes('JSON_PARSE'), 'Language-list allowance does not weaken the manifest object root');
+  await rm(join(rp, 'manifest.json'));
+  for (const languages of [42, ['en_US', 3]]) {
+    await write(rp, 'texts/languages.json', languages);
+    assert.ok(codes(await completeInspect()).includes('JSON_PARSE'));
+  }
+  await write(rp, 'texts/languages.json', ['en_US', 'ko_KR']);
+  // Mojang bedrock-samples 46ba6ea resource_pack/textures/flipbook_textures.json
+  // is a valid non-graph JSON array. Do not turn its presence into a pack error.
+  await write(rp, 'textures/flipbook_textures.json', [{ flipbook_texture: 'textures/inspection/panel', atlas_tile: 'inspection_panel', ticks_per_frame: 2 }]);
+  await write(bp, 'texts/languages.json', ['en_US']);
+  await write(rp, 'other-tool-notes.json', [1, 2]);
+  report = await completeInspect(); assert.equal(report.complete, true);
+  for (const file of ['rp/textures/flipbook_textures.json', 'bp/texts/languages.json', 'rp/other-tool-notes.json']) assert.ok(report.diagnostics.some(d => d.code === 'NON_GRAPH_DOCUMENT' && d.file === file), 'Non-graph syntax parsing does not claim a pack-specific schema pass');
+  for (const [root, file] of [[rp, 'manifest.json'], [rp, 'models/root.json'], [rp, 'attachables/root.json'], [rp, 'render_controllers/root.json'], [rp, 'extra.material'], [bp, 'manifest.json'], [bp, 'items/root.json'], [bp, 'entities/root.json']]) {
+    for (const value of [null, []]) {
+      await write(root, file, value); report = await completeInspect(); assert.equal(report.ok, false);
+      assert.ok(codes(report).includes('JSON_PARSE'), 'Graph-owned definition paths still require object roots');
+    }
+    await rm(join(root, file));
+  }
+  await writeFile(join(rp, 'textures/flipbook_textures.json'), '[invalid');
+  assert.ok(codes(await completeInspect()).includes('JSON_PARSE'), 'Non-graph JSON still requires valid syntax');
+  await rm(join(rp, 'textures/flipbook_textures.json'));
   const stringItem = structuredClone(owner);
   stringItem['minecraft:attachable'].description.identifier = 'inspection:panel.variant';
   stringItem['minecraft:attachable'].description.item = 'inspection:panel';
@@ -114,6 +144,113 @@ try {
   await write(rp, 'animation_controllers/panel.json', { animation_controllers: { 'controller.animation.inspection.panel': { initial_state: false, states: { default: {} } } } });
   assert.ok(codes(await completeInspect()).includes('CONTROLLER_INITIAL_STATE'));
   await write(rp, 'animation_controllers/panel.json', acOriginal);
+  const transitionCases = ['default', { default: null }, { default: {} }, { default: '', other: '1' }];
+  for (const transition of transitionCases) {
+    const bad = structuredClone(acOriginal);
+    bad.animation_controllers['controller.animation.inspection.panel'].states.default.transitions = [transition];
+    await write(rp, 'animation_controllers/panel.json', bad); report = await completeInspect();
+    assert.equal(report.complete, false); assert.ok(codes(report).includes('REFERENCE_ENTRY'), 'Each state transition needs a target and a condition');
+  }
+  const ordered = structuredClone(acOriginal);
+  ordered.animation_controllers['controller.animation.inspection.panel'].states.default.transitions = [{ default: 'q.life_time > 1' }, { default: '0' }];
+  await write(rp, 'animation_controllers/panel.json', ordered); report = await completeInspect();
+  assert.equal(report.complete, true);
+  assert.deepEqual(report.edges.filter(e => e.kind === 'controller-state' && e.path.includes('/transitions/')).map(e => e.path.split('/').at(-1)), ['0', '1'], 'Transition order is preserved; conditions are not executed');
+  await write(rp, 'animation_controllers/panel.json', acOriginal);
+  const inspectRc = async body => {
+    await write(rp, 'render_controllers/panel.json', { ...rc, render_controllers: { [rcId]: body } });
+    return completeInspect();
+  };
+  for (const [field, value] of [['geometry', 'Texture.default'], ['textures', ['Geometry.default']], ['materials', [{ '*': 'Texture.default' }]]]) {
+    report = await inspectRc({ ...rc.render_controllers[rcId], [field]: value });
+    assert.equal(report.ok, false); assert.ok(codes(report).includes('RESOURCE_TYPE'), 'Resolved aliases still have resource types');
+  }
+  for (const [field, values] of [
+    ['geometry', [null, 0, false, [], {}, '']],
+    ['textures', [null, 0, false, {}, [3], [null], [['Texture.default']], ['']]],
+    ['materials', [null, 0, {}, ['Material.default'], [null], [{ '*': 3 }], [{ '*': null }], [{ '*': { value: 'Material.default' } }], [{ '': 'Material.default' }]]],
+  ]) for (const value of values) {
+    report = await inspectRc({ ...rc.render_controllers[rcId], [field]: value });
+    assert.equal(report.ok, false); assert.ok(codes(report).includes('RESOURCE_SELECTOR'), `Invalid ${field} cannot disappear from the string walker`);
+  }
+  report = await inspectRc({ ...rc.render_controllers[rcId], textures: 'Texture.default' });
+  assert.equal(report.ok, true, 'Older official documentation includes the single-string texture form');
+  assert.equal(report.complete, false, 'A legacy texture shape is scanned without a current-schema compatibility claim');
+  assert.ok(report.edges.some(e => e.kind === 'texture-alias' && e.status === 'resolved'));
+  report = await inspectRc({ ...rc.render_controllers[rcId], materials: [{ '*': 'Material.default', root: 'Material.default' }] });
+  assert.equal(report.complete, true, 'The schema allows multiple bone mappings in one material object');
+  const nestedArrays = { geometries: { 'Array.frames': ['Array.base', 'Geometry.default'], 'Array.base': ['Geometry.default'] } };
+  const nestedRc = { ...rc.render_controllers[rcId], arrays: nestedArrays, geometry: 'Array.frames[q.life_time]' };
+  report = await inspectRc(nestedRc); assert.equal(report.ok, true); assert.equal(report.complete, false);
+  assert.ok(report.edges.some(e => e.kind === 'resource-array' && e.target === 'array.base' && e.status === 'resolved'), 'Bare nested arrays are traversed without evaluating the index');
+  for (const index of ['-1', '9999']) {
+    report = await inspectRc({ ...nestedRc, geometry: `Array.frames[${index}]` });
+    assert.equal(report.ok, true, 'Molang array indices clamp or wrap; no out-of-bounds error is invented');
+    assert.equal(report.complete, false);
+  }
+  report = await inspectRc({ ...nestedRc, geometry: 'Array.frames' });
+  assert.equal(report.complete, false, 'A bare array in a resource selector does not prove a single resource result');
+  for (const entries of [
+    { 'Array.loop': ['Array.loop'] },
+    { 'Array.one': ['Array.two'], 'Array.two': ['Array.one'] },
+    { 'Array.parent': ['Array.one'], 'Array.one': ['Array.two'], 'Array.two': ['Array.one', 'Geometry.default'] },
+  ]) {
+    report = await inspectRc({ ...rc.render_controllers[rcId], arrays: { geometries: entries } });
+    assert.equal(report.ok, true, 'Cycle expansion is unverified rather than an asserted engine error');
+    assert.equal(report.complete, false);
+    assert.ok(report.edges.some(e => e.kind === 'resource-array-cycle' && e.status === 'dynamic'), 'Even unused cyclic declarations cannot claim finite expansion');
+  }
+  report = await inspectRc({ ...rc.render_controllers[rcId], arrays: { geometries: { 'Array.one': ['Array.leaf'], 'Array.two': ['Array.leaf'], 'Array.leaf': ['Geometry.default'] }, textures: { 'Array.one': ['Texture.default'] } } });
+  assert.equal(report.complete, true, 'Shared acyclic descendants and equal names in different resource groups are not cycles');
+  for (const arrays of [
+    { textures: { 'Array.frames': ['Texture.default'] } },
+    { geometries: { 'Array.frames': ['Array.missing'] } },
+    { geometries: { 'Array.frames': ['Array.base'] }, textures: { 'Array.base': ['Texture.default'] } }
+  ]) {
+    report = await inspectRc({ ...nestedRc, arrays });
+    assert.equal(report.ok, false); assert.ok(report.edges.some(e => e.kind === 'resource-array' && e.status === 'unresolved'), 'Array references resolve only against their declared resource type');
+  }
+  report = await inspectRc({ ...nestedRc, arrays: { geometries: { 'Array.frames': ['Texture.default'] } } });
+  assert.ok(codes(report).includes('RESOURCE_TYPE'));
+  for (const arrays of [[], { geometries: [] }, { geometries: { 'Array.frames': 'Geometry.default' } }, { geometries: { 'Array.frames': [null] } }]) {
+    report = await inspectRc({ ...nestedRc, arrays }); assert.equal(report.ok, false);
+    assert.ok(codes(report).some(code => ['RESOURCE_ARRAYS', 'RESOURCE_ARRAY_MEMBERS'].includes(code)));
+  }
+  report = await inspectRc({ ...nestedRc, arrays: { geometries: { 'Array.frames': ['Geometry.default'], 'array.FRAMES': ['Geometry.default'] } } });
+  assert.ok(codes(report).includes('RESOURCE_ARRAY_DUPLICATE'));
+  report = await inspectRc({ ...rc.render_controllers[rcId], geometry: "'Texture.not_an_alias' == 'Array.not_an_array' ? Geometry.default : Geometry.default" });
+  assert.equal(report.ok, true); assert.equal(report.complete, false, 'Compound result typing is outside the scanner');
+  assert.ok(!report.edges.some(e => /not_an_/.test(e.target) && ['texture-alias', 'resource-array'].includes(e.kind)), 'Quoted strings are not resource references');
+  report = await inspectRc({ ...rc.render_controllers[rcId], geometry: 'v.texture.not_an_alias = 1; return Geometry.default;' });
+  assert.equal(report.ok, true, 'A variable struct member is not a resource alias');
+  for (const expression of ["Geometry.default /* Texture.not_an_alias */", "Geometry.default // Array.not_an_array\n", "Geometry.default + 'unterminated"]) {
+    report = await inspectRc({ ...rc.render_controllers[rcId], geometry: expression });
+    assert.equal(report.ok, true); assert.equal(report.complete, false);
+    assert.ok(report.edges.some(e => e.kind === 'molang-expression' && e.status === 'dynamic'), 'Unsupported lexical boundaries remain unverified');
+  }
+  await write(rp, 'render_controllers/panel.json', rc);
+  const geometryOriginal = await readFile(join(rp, 'models/panel.geo.json'), 'utf8');
+  const propertyGeometry = JSON.parse(stripJsonTrailingCommas(stripJsonComments(geometryOriginal)));
+  propertyGeometry['minecraft:geometry'][0].bones[0].binding = "q.property('inspection:binding')";
+  const client = { 'minecraft:client_entity': { description: structuredClone(description) } };
+  await write(rp, 'attachables/panel.json', client);
+  const propertyBp = { 'minecraft:entity': { description: { identifier: description.identifier, properties: { 'inspection:binding': { type: 'enum', values: ['root'], default: 'root', client_sync: false } } } } };
+  await write(bp, 'entities/property.json', propertyBp);
+  await write(rp, 'models/panel.geo.json', propertyGeometry); report = await completeInspect();
+  assert.equal(report.ok, false);
+  assert.ok(report.edges.some(e => e.from === 'rp:geometry:geometry.inspection.panel' && e.kind === 'entity-property' && e.status === 'unresolved'), 'Geometry bindings participate in BP client_sync checks');
+  propertyBp['minecraft:entity'].description.properties['inspection:binding'].client_sync = true;
+  await write(bp, 'entities/property.json', propertyBp); assert.equal((await completeInspect()).complete, true);
+  client['minecraft:client_entity'].description.scripts.pre_animation = ["{\n v.binding = q.property('inspection:binding');\n v.text = 'query.property';\n}"];
+  await write(rp, 'attachables/panel.json', client); report = await completeInspect();
+  assert.equal(report.complete, true, 'References inside multiline brace scopes remain visible');
+  client['minecraft:client_entity'].description.scripts.pre_animation = ["v.actor -> q.property('inspection:elsewhere')"];
+  await write(rp, 'attachables/panel.json', client); report = await completeInspect();
+  assert.equal(report.ok, true); assert.equal(report.complete, false);
+  assert.ok(report.edges.some(e => e.target === 'inspection:elsewhere' && e.status === 'external-unverified'), 'An actor dereference does not incorrectly require the local BP property');
+  await writeFile(join(rp, 'models/panel.geo.json'), geometryOriginal);
+  await write(rp, 'attachables/panel.json', owner);
+  await rm(join(bp, 'entities/property.json'));
   const materialOriginal = JSON.parse(await readFile(join(rp, 'materials/panel.material'), 'utf8'));
   for (const materials of [{ 'inspection_panel:inspection_panel': {} }, { 'inspection_panel:loop': {}, 'loop:inspection_panel': {} }]) {
     await write(rp, 'materials/panel.material', { materials }); report = await completeInspect();

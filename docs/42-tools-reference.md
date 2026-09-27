@@ -173,6 +173,12 @@ Therefore:
 
 Actual Bedrock verification is performed only when the user requests that stage.
 
+## Geometry UI inspection
+
+`node tools/geoui-inspect.mjs --input FILE.geoui.json [--max-chars 1000..64000] [--report NEW_FILE] --json` checks a saved GeouiStudio v6 project before export. The 6,000-character default includes the final newline; a full report is created exclusively after output checks. Exit 0 means no static error, 1 means project diagnostics include errors, and 2 means arguments or I/O failed. `complete` and `runtimeVerified` are separate from `ok`. Media decoding, browser execution, pack generation and Bedrock runtime remain outside this command.
+
+`node tools/design-library.mjs patterns --source ID --max-chars 6000 --json` retrieves only one pinned source's authored patterns and provenance. A smaller budget may omit whole patterns with an explicit count. It never loads upstream code. See [pack workflows](77-resource-pack-skills.md) for the resource graph and material inspectors.
+
 ## Repository safety
 
 - Tools do not install system software, elevate privileges, or modify global configuration.

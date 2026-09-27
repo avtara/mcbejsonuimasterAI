@@ -216,7 +216,7 @@ export function boundedJson(value, maxChars=7500) {
   const result=structuredClone(value);
   // Remove optional whole cards only. Never truncate evidence, licenses, strings or JSON.
   let text=JSON.stringify(result);
-  while (text.length>maxChars && result.patterns?.length) {
+  while (text.length+1>maxChars && result.patterns?.length) {
     result.patterns.pop(); result.omittedPatterns=(result.omittedPatterns??0)+1;
     // Keep provenance for the retained style/cards, without paying for removed cards.
     if(result.schema==='mcbe-design-context@1'){
@@ -225,7 +225,7 @@ export function boundedJson(value, maxChars=7500) {
     }
     text=JSON.stringify(result);
   }
-  if (text.length>maxChars) throw new Error(`OUTPUT_BUDGET_TOO_SMALL: requires ${text.length} characters; select fewer sources or increase max-chars (max 16000)`);
+  if (text.length+1>maxChars) throw new Error(`OUTPUT_BUDGET_TOO_SMALL: requires ${text.length+1} characters including the final newline; select fewer sources or increase max-chars (max 16000)`);
   return text;
 }
 

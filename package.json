@@ -68,6 +68,7 @@
     "design:board": "node tools/design-board.mjs",
     "test:design-board": "node tests/design-board.mjs",
     "attachable:inspect": "node tools/attachable-inspect.mjs",
+    "geoui:inspect": "node tools/geoui-inspect.mjs",
     "material:audit": "node tools/material-audit.mjs",
     "asset:learn": "node tools/local-asset-learn.mjs",
     "research:context": "node tools/research-context.mjs"

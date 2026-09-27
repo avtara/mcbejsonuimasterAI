@@ -1,0 +1,18 @@
+{
+  "v": 6,
+  "meta": { "name": "Original GeoUI planning fixture", "ns": "demo_geo", "version": [1, 0, 0], "minEngine": [1, 21, 100] },
+  "screen": { "unitsPerScreenH": 176, "uiPxPerUnit": 1.364, "uiAspect": 1.7777777777777777, "autoAspect": false, "centerAuto": false, "ruler": false, "followHud": true },
+  "timing": { "mode": "loop", "fps": 20, "duration": 5, "loop": true },
+  "triggers": { "ipc": false, "onJoin": false, "chatCommand": false, "forms": false },
+  "build": { "rpOnly": true, "palette": "rgba", "readme": true },
+  "maxDim": 2048,
+  "scenes": [],
+  "startScene": -1,
+  "layers": [{
+    "id": "panel_1", "name": "Original cream panel", "type": "shape", "enabled": true,
+    "fit": "custom", "heightPct": 20, "widthPct": 40, "anchor": "center", "pivot": "center",
+    "x": 0, "y": 0, "z": 0, "scale": 1, "opacity": 0.85, "blend": "blend", "scene": -1,
+    "shape": { "kind": "solid", "w": 64, "h": 32, "color": "#fff0d3", "radius": 2 },
+    "keys": { "x": [], "y": [], "scale": [], "rotX": [], "rotY": [], "rotZ": [], "opacity": [] }
+  }]
+}

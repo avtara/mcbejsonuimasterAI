@@ -11,6 +11,8 @@ Choose this surface when the display belongs to an equipped item. An attachable 
 
 - Item/geometry/texture references or invisible models: [pack graph](references/pack-graph.md).
 - First/third person, offhand, input or state changes: [perspective and state](references/perspective-and-state.md).
+- Creating a held/worn display, selecting its rig or diagnosing flat panels: [authoring recipes](references/authoring-recipes.md).
+- Equipment replacement, delayed input and multiplayer cleanup: [input and lifecycle](references/input-and-lifecycle.md).
 - `live_player_renderer`, `player.entity.json` or GeouiStudio scenes: use `mcbe-geo-ui`.
 
 Resolve item identifier/explicit `item` selector → attachable → geometry/material/texture aliases → render controller and animation/controller before changing a pose. Retain the source pack and authored geometry. A design-only request ends with the design and inspection result; it does not authorize modifying a pack or launching the game.

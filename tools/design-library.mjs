@@ -2,9 +2,9 @@ import { loadDesignLibrary, designContext, pixelArtMethod, chestContext, bounded
 
 async function main() {
   const argv=process.argv.slice(2);
-  if(argv.includes('--help')) {console.log('Usage: node tools/design-library.mjs styles | chest-topics | chest --topic ID | context --style ID [--role menu|inventory|shop|quest|settings|hud|reward|character] [--input mixed|keyboard|gamepad|touch] [--limit 0..3] | methods | method --method ID [--style ID] | sources [--source ID] | skills | verify\ncontext, method, sources and skills accept --max-chars 1500..16000. --role accepts up to three comma-separated roles, e.g. inventory,shop. All commands accept --json; JSON output is always compact. No network, pack edits, or upstream execution.');return;}
+  if(argv.includes('--help')) {console.log('Usage: node tools/design-library.mjs styles | chest-topics | chest --topic ID | context --style ID [--role menu|inventory|shop|quest|settings|hud|reward|character] [--input mixed|keyboard|gamepad|touch] [--limit 0..3] | methods | method --method ID [--style ID] | sources [--source ID] | patterns --source ID | skills | verify\ncontext, method, sources, patterns and skills accept --max-chars 1500..16000. --role accepts up to three comma-separated roles, e.g. inventory,shop. All commands accept --json; JSON output is always compact. No network, pack edits, or upstream execution.');return;}
   const command=argv.shift()??'styles';
-  const allowed={styles:[],context:['style','role','input','limit','max-chars'],methods:[],method:['method','style','max-chars'],'chest-topics':[],chest:['topic','max-chars'],sources:['source','max-chars'],skills:['max-chars'],verify:[]};
+  const allowed={styles:[],context:['style','role','input','limit','max-chars'],methods:[],method:['method','style','max-chars'],'chest-topics':[],chest:['topic','max-chars'],sources:['source','max-chars'],patterns:['source','max-chars'],skills:['max-chars'],verify:[]};
   if(!Object.hasOwn(allowed,command))throw new Error(`Unknown command ${command}`);
   const opts=parseOptions(argv,allowed[command]);
   const db=await loadDesignLibrary(); let out;
@@ -19,6 +19,12 @@ async function main() {
     out={reviewedAt:db.reviewedAt,sources:db.sources.filter(s=>!opts.source||s.id===opts.source).map(s=>opts.source?s:({id:s.id,kind:s.kind,license:s.license,reuse:s.reuse,url:s.url}))};
   }
   if(command==='skills')out={sources:db.skills};
+  if(command==='patterns'){
+    const source=db.sources.find(s=>s.id===opts.source);
+    if(!source)throw new Error('Select one known --source ID using sources');
+    const {id,url,revision,license,reuse,runtime}=source;
+    out={schema:'mcbe-source-pattern-context@1',runtimeVerified:false,sources:[{id,url,revision,license,reuse,runtime}],patterns:db.patterns.filter(p=>p.sourceId===id)};
+  }
   if(command==='verify'){
     out={ok:true,styles:db.styles.length,sources:db.sources.length,skills:db.skills.length,patterns:db.patterns.length,files:db.lock.reduce((n,s)=>n+s.files.length,0),runtime:'unverified'};
   }

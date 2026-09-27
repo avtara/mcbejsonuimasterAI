@@ -1,0 +1,12 @@
+{
+  "resource_pack_name": "kit_demo_quest_map",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "kit_demo:quest_map_pending": {
+      "textures": "textures/items/quest_map_pending"
+    },
+    "kit_demo:quest_map_ready": {
+      "textures": "textures/items/quest_map_ready"
+    }
+  }
+}

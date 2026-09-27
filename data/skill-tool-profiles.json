@@ -401,10 +401,11 @@
       "toolSelections": [
         { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Trace equipment and render resources." },
         { "id": "material.audit", "phase": "inspect", "required": false, "when": [ "render-materials" ], "optIn": true, "reason": "Inspect the selected material path." },
-        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve local attachable patterns." }
+        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve local attachable patterns." },
+        { "id": "design.library", "phase": "inspect", "required": false, "when": [ "source-patterns" ], "optIn": true, "reason": "Read patterns from one explicitly selected source." }
       ],
-      "workflow": [ "attachable.inspect", "material.audit", "asset.learn" ],
-      "contextByNeed": { "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ] },
+      "workflow": [ "attachable.inspect", "material.audit", "asset.learn", "design.library" ],
+      "contextByNeed": { "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ], "source-patterns": [ "design.library" ] },
       "successCriteria": [ "The actual surface, data owner and source version remain explicit.", "Unresolved static and runtime evidence are reported separately." ],
       "boundaries": [ "A source pattern or structurally valid graph does not prove Bedrock appearance or interaction.", "Load the next needed reference/tool only." ]
     },
@@ -415,10 +416,12 @@
       "toolSelections": [
         { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Trace player-renderer GeoUI dependencies." },
         { "id": "material.audit", "phase": "inspect", "required": false, "when": [ "render-materials" ], "optIn": true, "reason": "Inspect material and texture-set structure." },
-        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve geometry and UI source patterns." }
+        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve geometry and UI source patterns." },
+        { "id": "geoui.project", "phase": "inspect", "required": false, "when": [ "geoui-project" ], "optIn": true, "reason": "Inspect native project restoration and export risks before building packs." },
+        { "id": "design.library", "phase": "inspect", "required": false, "when": [ "source-patterns" ], "optIn": true, "reason": "Read patterns from one explicitly selected source." }
       ],
-      "workflow": [ "attachable.inspect", "material.audit", "asset.learn" ],
-      "contextByNeed": { "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ] },
+      "workflow": [ "attachable.inspect", "material.audit", "asset.learn", "geoui.project", "design.library" ],
+      "contextByNeed": { "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ], "geoui-project": [ "geoui.project" ], "source-patterns": [ "design.library" ] },
       "successCriteria": [ "The actual surface, data owner and source version remain explicit.", "Unresolved static and runtime evidence are reported separately." ],
       "boundaries": [ "A source pattern or structurally valid graph does not prove Bedrock appearance or interaction.", "Load the next needed reference/tool only." ]
     }

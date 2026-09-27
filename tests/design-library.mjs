@@ -42,6 +42,10 @@ for(const args of [{style:'unknown'},{style:'cozy',role:'webpage'},{style:'cozy'
 const oversized={sources:[{license:'retained'}],patterns:[{summary:'x'.repeat(3000)},{summary:'y'.repeat(3000)}]};
 const bounded=JSON.parse(boundedJson(oversized,1500));assert.equal(bounded.omittedPatterns,2);assert.equal(bounded.sources[0].license,'retained');
 assert.throws(()=>boundedJson({sources:['x'.repeat(3000)]},1500),/BUDGET/);
+const exactBudget={value:'x'.repeat(1488)};
+assert.equal(JSON.stringify(exactBudget).length,1500);
+assert.throws(()=>boundedJson(exactBudget,1500),/requires 1501/);
+assert.equal(boundedJson(exactBudget,1501).length+1,1501);
 // A smaller context keeps all required style provenance, not sources belonging only to omitted cards.
 const compact=JSON.parse(boundedJson(mixed,2600));
 assert.equal(compact.patterns.length,0);assert.equal(compact.omittedPatterns,mixed.patterns.length);
@@ -157,6 +161,25 @@ for(const args of [['styles'],['context','--style','cozy','--role','inventory','
 }
 const plan=spawnSync(process.execPath,['tools/design-source-sync.mjs','--source','kenney-tiny-town'],{cwd:ROOT,encoding:'utf8'});
 assert.equal(plan.status,0,plan.stderr);assert.equal(JSON.parse(plan.stdout).mode,'plan');
+for(const sourceId of ['au12jp-geoui-studio','microsoftdocs-minecraft-creator','mirzahilmi-3d-totem']){
+  const selected=spawnSync(process.execPath,['tools/design-library.mjs','patterns','--source',sourceId,'--max-chars','16000'],{cwd:ROOT,encoding:'utf8'});
+  assert.equal(selected.status,0,selected.stderr);
+  const value=JSON.parse(selected.stdout);
+  assert.equal(value.schema,'mcbe-source-pattern-context@1');assert.equal(value.runtimeVerified,false);
+  assert.deepEqual(value.sources.map(s=>s.id),[sourceId]);
+  assert.ok(value.sources[0].revision&&value.sources[0].license&&value.sources[0].reuse);
+  assert.deepEqual(value.patterns,db.patterns.filter(p=>p.sourceId===sourceId));
+  assert.ok(!Object.hasOwn(value,'styles')&&!Object.hasOwn(value,'skills'));
+  const small=spawnSync(process.execPath,['tools/design-library.mjs','patterns','--source',sourceId,'--max-chars','1500'],{cwd:ROOT,encoding:'utf8'});
+  assert.equal(small.status,0,small.stderr);const reduced=JSON.parse(small.stdout);
+  assert.ok(small.stdout.length<=1500);assert.deepEqual(reduced.sources,value.sources);
+  assert.equal(reduced.patterns.length+(reduced.omittedPatterns??0),value.patterns.length);
+}
+const allVanilla=spawnSync(process.execPath,['tools/design-library.mjs','patterns','--source','mojang-bedrock-samples','--max-chars','16000'],{cwd:ROOT,encoding:'utf8'});
+assert.equal(allVanilla.status,0,allVanilla.stderr);
+const oneLess=spawnSync(process.execPath,['tools/design-library.mjs','patterns','--source','mojang-bedrock-samples','--max-chars',String(allVanilla.stdout.length-1)],{cwd:ROOT,encoding:'utf8'});
+assert.equal(oneLess.status,0,oneLess.stderr);assert.ok(oneLess.stdout.length<allVanilla.stdout.length);
+assert.ok(JSON.parse(oneLess.stdout).omittedPatterns>0,'Whole-card omission must include console newline budget');
 for(const [tool,args,expected] of [
   ['design-source-sync',['--source','kenney-tiny-town','--json','--json'],/Duplicate option/],
   ['design-source-sync',['--source','--verify'],/Missing value/],
@@ -168,6 +191,9 @@ for(const [tool,args,expected] of [
   ['design-library',['styles','--json','--json'],/Duplicate option/],
   ['design-library',['context','--style','cozy','--style','fantasy'],/Duplicate option/],
   ['design-library',['sources','--source','unknown'],/Unknown source/],
+  ['design-library',['patterns'],/known --source/],
+  ['design-library',['patterns','--source','unknown'],/known --source/],
+  ['design-library',['patterns','--source','au12jp-geoui-studio','--style','cozy'],/Unknown option/],
   ['design-library',['method'],/Unknown method/],
   ['design-library',['method','--method','unknown'],/Unknown method/],
   ['design-library',['method','--method','ui-kit-spec-first','--style','unknown'],/Unknown style/],

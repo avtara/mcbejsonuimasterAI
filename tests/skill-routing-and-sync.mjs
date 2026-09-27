@@ -42,6 +42,7 @@ for (const [surface,kind,owner,reference] of [
   ["resource-pack","texture-set","mcbe-resource-pack-rendering","references/texture-sets.md"],
   ["attachables-ui","first-person-model","mcbe-attachables-ui","references/perspective-and-state.md"],
   ["geo-ui","geoui-studio","mcbe-geo-ui","references/geoui-contract.md"],
+  ["geo-ui","geoui-project","mcbe-geo-ui","references/project-inspection.md"],
   ["json-ui","chest-form","mcbe-json-ui-chest-gui","references/action-form.md"],
   ["resource-pack","local-asset-learning","mcbe-json-ui-samples","references/local-asset-learning.md"],
 ]) {

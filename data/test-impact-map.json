@@ -7,6 +7,8 @@
     "tools/test-impact.mjs", "tools/benchmark-agent-path.mjs", "data/test-impact-map.json", "data/test-manifest.json"
   ],
   "rules": [
+    { "paths": ["tools/geoui-inspect.mjs", "tools/_lib/geoui-project.mjs", "examples/geoui/**"], "tests": ["geoui-project", "ai-tool-contracts"] },
+    { "paths": ["tools/attachable-inspect.mjs", "tools/_lib/attachable-graph.mjs", "examples/attachables/**"], "tests": ["attachable-graph", "attachable-recipe"] },
     { "paths": ["tools/final-rp-v2-*.mjs", "tools/final-rp-render.mjs", "tools/_lib/final-rp-v2/**", "data/device-profiles.json", "data/vanilla-screen-profiles.json"], "tests": ["final-rp-v2", "final-rp-v2-expression", "final-rp-v2-state-merge", "final-rp-v2-renderer", "final-rp-v2-cache", "final-rp-v2-font", "final-rp-v2-vanilla", "final-rp-v2-device", "final-rp-interaction", "device-profile-provenance", "font-hard-gate", "overlap-detector"] },
     { "paths": ["tools/_lib/final-rp-engine.mjs", "tools/_lib/final-rp-resolver.mjs", "tools/_lib/final-rp-renderer.mjs", "tools/_lib/screenshot-compare.mjs"], "tests": ["final-rp-v1", "final-rp-renderer", "screenshot", "mcp", "mcp-v2"] },
     { "paths": ["tools/preview.mjs", "tools/render.mjs", "tools/diff.mjs", "tools/_lib/preview-engine.mjs", "tools/_lib/preview-cli.mjs"], "tests": ["preview-engine", "cli-result-contracts", "screenshot"] },

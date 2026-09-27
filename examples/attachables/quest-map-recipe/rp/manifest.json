@@ -1,0 +1,29 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Quest Map Authoring Recipe RP",
+    "description": "Original sample; poses and gameplay integration require target-client verification.",
+    "uuid": "f4baa344-86e5-4bcd-88e0-82842b0ed49a",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      100
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "cb91f866-f504-44cf-883e-0eb58a22a4da",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}
