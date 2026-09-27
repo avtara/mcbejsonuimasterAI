@@ -1,0 +1,516 @@
+{
+  "schema": "mcbe-chest-contract@1",
+  "id": "sample-native-chest",
+  "revision": "1",
+  "transport": "native-container",
+  "grid": {
+    "columns": 9,
+    "rows": 6
+  },
+  "initialPage": "main",
+  "nativeContainer": {
+    "collections": [
+      {
+        "name": "container_items",
+        "size": 54
+      }
+    ],
+    "events": [
+      "button.menu_exit"
+    ],
+    "closeEvent": "button.menu_exit"
+  },
+  "pages": [
+    {
+      "id": "main",
+      "slots": [
+        {
+          "index": 0,
+          "role": "slot",
+          "semanticId": "storage-0",
+          "source": {
+            "collection": "container_items",
+            "index": 0
+          }
+        },
+        {
+          "index": 1,
+          "role": "slot",
+          "semanticId": "storage-1",
+          "source": {
+            "collection": "container_items",
+            "index": 1
+          }
+        },
+        {
+          "index": 2,
+          "role": "slot",
+          "semanticId": "storage-2",
+          "source": {
+            "collection": "container_items",
+            "index": 2
+          }
+        },
+        {
+          "index": 3,
+          "role": "slot",
+          "semanticId": "storage-3",
+          "source": {
+            "collection": "container_items",
+            "index": 3
+          }
+        },
+        {
+          "index": 4,
+          "role": "slot",
+          "semanticId": "storage-4",
+          "source": {
+            "collection": "container_items",
+            "index": 4
+          }
+        },
+        {
+          "index": 5,
+          "role": "slot",
+          "semanticId": "storage-5",
+          "source": {
+            "collection": "container_items",
+            "index": 5
+          }
+        },
+        {
+          "index": 6,
+          "role": "slot",
+          "semanticId": "storage-6",
+          "source": {
+            "collection": "container_items",
+            "index": 6
+          }
+        },
+        {
+          "index": 7,
+          "role": "slot",
+          "semanticId": "storage-7",
+          "source": {
+            "collection": "container_items",
+            "index": 7
+          }
+        },
+        {
+          "index": 8,
+          "role": "slot",
+          "semanticId": "storage-8",
+          "source": {
+            "collection": "container_items",
+            "index": 8
+          }
+        },
+        {
+          "index": 9,
+          "role": "slot",
+          "semanticId": "storage-9",
+          "source": {
+            "collection": "container_items",
+            "index": 9
+          }
+        },
+        {
+          "index": 10,
+          "role": "slot",
+          "semanticId": "storage-10",
+          "source": {
+            "collection": "container_items",
+            "index": 10
+          }
+        },
+        {
+          "index": 11,
+          "role": "slot",
+          "semanticId": "storage-11",
+          "source": {
+            "collection": "container_items",
+            "index": 11
+          }
+        },
+        {
+          "index": 12,
+          "role": "slot",
+          "semanticId": "storage-12",
+          "source": {
+            "collection": "container_items",
+            "index": 12
+          }
+        },
+        {
+          "index": 13,
+          "role": "slot",
+          "semanticId": "storage-13",
+          "source": {
+            "collection": "container_items",
+            "index": 13
+          }
+        },
+        {
+          "index": 14,
+          "role": "slot",
+          "semanticId": "storage-14",
+          "source": {
+            "collection": "container_items",
+            "index": 14
+          }
+        },
+        {
+          "index": 15,
+          "role": "slot",
+          "semanticId": "storage-15",
+          "source": {
+            "collection": "container_items",
+            "index": 15
+          }
+        },
+        {
+          "index": 16,
+          "role": "slot",
+          "semanticId": "storage-16",
+          "source": {
+            "collection": "container_items",
+            "index": 16
+          }
+        },
+        {
+          "index": 17,
+          "role": "slot",
+          "semanticId": "storage-17",
+          "source": {
+            "collection": "container_items",
+            "index": 17
+          }
+        },
+        {
+          "index": 18,
+          "role": "slot",
+          "semanticId": "storage-18",
+          "source": {
+            "collection": "container_items",
+            "index": 18
+          }
+        },
+        {
+          "index": 19,
+          "role": "slot",
+          "semanticId": "storage-19",
+          "source": {
+            "collection": "container_items",
+            "index": 19
+          }
+        },
+        {
+          "index": 20,
+          "role": "slot",
+          "semanticId": "storage-20",
+          "source": {
+            "collection": "container_items",
+            "index": 20
+          }
+        },
+        {
+          "index": 21,
+          "role": "slot",
+          "semanticId": "storage-21",
+          "source": {
+            "collection": "container_items",
+            "index": 21
+          }
+        },
+        {
+          "index": 22,
+          "role": "slot",
+          "semanticId": "storage-22",
+          "source": {
+            "collection": "container_items",
+            "index": 22
+          }
+        },
+        {
+          "index": 23,
+          "role": "slot",
+          "semanticId": "storage-23",
+          "source": {
+            "collection": "container_items",
+            "index": 23
+          }
+        },
+        {
+          "index": 24,
+          "role": "slot",
+          "semanticId": "storage-24",
+          "source": {
+            "collection": "container_items",
+            "index": 24
+          }
+        },
+        {
+          "index": 25,
+          "role": "slot",
+          "semanticId": "storage-25",
+          "source": {
+            "collection": "container_items",
+            "index": 25
+          }
+        },
+        {
+          "index": 26,
+          "role": "slot",
+          "semanticId": "storage-26",
+          "source": {
+            "collection": "container_items",
+            "index": 26
+          }
+        },
+        {
+          "index": 27,
+          "role": "slot",
+          "semanticId": "storage-27",
+          "source": {
+            "collection": "container_items",
+            "index": 27
+          }
+        },
+        {
+          "index": 28,
+          "role": "slot",
+          "semanticId": "storage-28",
+          "source": {
+            "collection": "container_items",
+            "index": 28
+          }
+        },
+        {
+          "index": 29,
+          "role": "slot",
+          "semanticId": "storage-29",
+          "source": {
+            "collection": "container_items",
+            "index": 29
+          }
+        },
+        {
+          "index": 30,
+          "role": "slot",
+          "semanticId": "storage-30",
+          "source": {
+            "collection": "container_items",
+            "index": 30
+          }
+        },
+        {
+          "index": 31,
+          "role": "slot",
+          "semanticId": "storage-31",
+          "source": {
+            "collection": "container_items",
+            "index": 31
+          }
+        },
+        {
+          "index": 32,
+          "role": "slot",
+          "semanticId": "storage-32",
+          "source": {
+            "collection": "container_items",
+            "index": 32
+          }
+        },
+        {
+          "index": 33,
+          "role": "slot",
+          "semanticId": "storage-33",
+          "source": {
+            "collection": "container_items",
+            "index": 33
+          }
+        },
+        {
+          "index": 34,
+          "role": "slot",
+          "semanticId": "storage-34",
+          "source": {
+            "collection": "container_items",
+            "index": 34
+          }
+        },
+        {
+          "index": 35,
+          "role": "slot",
+          "semanticId": "storage-35",
+          "source": {
+            "collection": "container_items",
+            "index": 35
+          }
+        },
+        {
+          "index": 36,
+          "role": "slot",
+          "semanticId": "storage-36",
+          "source": {
+            "collection": "container_items",
+            "index": 36
+          }
+        },
+        {
+          "index": 37,
+          "role": "slot",
+          "semanticId": "storage-37",
+          "source": {
+            "collection": "container_items",
+            "index": 37
+          }
+        },
+        {
+          "index": 38,
+          "role": "slot",
+          "semanticId": "storage-38",
+          "source": {
+            "collection": "container_items",
+            "index": 38
+          }
+        },
+        {
+          "index": 39,
+          "role": "slot",
+          "semanticId": "storage-39",
+          "source": {
+            "collection": "container_items",
+            "index": 39
+          }
+        },
+        {
+          "index": 40,
+          "role": "slot",
+          "semanticId": "storage-40",
+          "source": {
+            "collection": "container_items",
+            "index": 40
+          }
+        },
+        {
+          "index": 41,
+          "role": "slot",
+          "semanticId": "storage-41",
+          "source": {
+            "collection": "container_items",
+            "index": 41
+          }
+        },
+        {
+          "index": 42,
+          "role": "slot",
+          "semanticId": "storage-42",
+          "source": {
+            "collection": "container_items",
+            "index": 42
+          }
+        },
+        {
+          "index": 43,
+          "role": "slot",
+          "semanticId": "storage-43",
+          "source": {
+            "collection": "container_items",
+            "index": 43
+          }
+        },
+        {
+          "index": 44,
+          "role": "slot",
+          "semanticId": "storage-44",
+          "source": {
+            "collection": "container_items",
+            "index": 44
+          }
+        },
+        {
+          "index": 45,
+          "role": "slot",
+          "semanticId": "storage-45",
+          "source": {
+            "collection": "container_items",
+            "index": 45
+          }
+        },
+        {
+          "index": 46,
+          "role": "slot",
+          "semanticId": "storage-46",
+          "source": {
+            "collection": "container_items",
+            "index": 46
+          }
+        },
+        {
+          "index": 47,
+          "role": "slot",
+          "semanticId": "storage-47",
+          "source": {
+            "collection": "container_items",
+            "index": 47
+          }
+        },
+        {
+          "index": 48,
+          "role": "slot",
+          "semanticId": "storage-48",
+          "source": {
+            "collection": "container_items",
+            "index": 48
+          }
+        },
+        {
+          "index": 49,
+          "role": "slot",
+          "semanticId": "storage-49",
+          "source": {
+            "collection": "container_items",
+            "index": 49
+          }
+        },
+        {
+          "index": 50,
+          "role": "slot",
+          "semanticId": "storage-50",
+          "source": {
+            "collection": "container_items",
+            "index": 50
+          }
+        },
+        {
+          "index": 51,
+          "role": "slot",
+          "semanticId": "storage-51",
+          "source": {
+            "collection": "container_items",
+            "index": 51
+          }
+        },
+        {
+          "index": 52,
+          "role": "slot",
+          "semanticId": "storage-52",
+          "source": {
+            "collection": "container_items",
+            "index": 52
+          }
+        },
+        {
+          "index": 53,
+          "role": "slot",
+          "semanticId": "storage-53",
+          "source": {
+            "collection": "container_items",
+            "index": 53
+          }
+        }
+      ]
+    }
+  ]
+}

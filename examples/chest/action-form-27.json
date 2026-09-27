@@ -1,0 +1,173 @@
+{
+  "schema": "mcbe-chest-contract@1",
+  "id": "sample-chest-form",
+  "revision": "1",
+  "transport": "action-form",
+  "grid": {
+    "columns": 9,
+    "rows": 3
+  },
+  "initialPage": "main",
+  "actionForm": {
+    "collection": "form_buttons",
+    "placeholderPolicy": "preserve",
+    "cancelPolicy": "return-before-selection",
+    "closePolicy": "mapped-control"
+  },
+  "pages": [
+    {
+      "id": "main",
+      "slots": [
+        {
+          "index": 0,
+          "selectionIndex": 0,
+          "role": "slot",
+          "semanticId": "sample-item",
+          "icon": {
+            "mode": "texture-path",
+            "value": "textures/ui/example_owned_icon"
+          },
+          "count": 3,
+          "action": {
+            "type": "callback",
+            "id": "inspect-item"
+          }
+        },
+        {
+          "index": 1,
+          "selectionIndex": 1,
+          "role": "placeholder"
+        },
+        {
+          "index": 2,
+          "selectionIndex": 2,
+          "role": "placeholder"
+        },
+        {
+          "index": 3,
+          "selectionIndex": 3,
+          "role": "placeholder"
+        },
+        {
+          "index": 4,
+          "selectionIndex": 4,
+          "role": "placeholder"
+        },
+        {
+          "index": 5,
+          "selectionIndex": 5,
+          "role": "placeholder"
+        },
+        {
+          "index": 6,
+          "selectionIndex": 6,
+          "role": "placeholder"
+        },
+        {
+          "index": 7,
+          "selectionIndex": 7,
+          "role": "placeholder"
+        },
+        {
+          "index": 8,
+          "selectionIndex": 8,
+          "role": "placeholder"
+        },
+        {
+          "index": 9,
+          "selectionIndex": 9,
+          "role": "placeholder"
+        },
+        {
+          "index": 10,
+          "selectionIndex": 10,
+          "role": "placeholder"
+        },
+        {
+          "index": 11,
+          "selectionIndex": 11,
+          "role": "placeholder"
+        },
+        {
+          "index": 12,
+          "selectionIndex": 12,
+          "role": "placeholder"
+        },
+        {
+          "index": 13,
+          "selectionIndex": 13,
+          "role": "placeholder"
+        },
+        {
+          "index": 14,
+          "selectionIndex": 14,
+          "role": "placeholder"
+        },
+        {
+          "index": 15,
+          "selectionIndex": 15,
+          "role": "placeholder"
+        },
+        {
+          "index": 16,
+          "selectionIndex": 16,
+          "role": "placeholder"
+        },
+        {
+          "index": 17,
+          "selectionIndex": 17,
+          "role": "placeholder"
+        },
+        {
+          "index": 18,
+          "selectionIndex": 18,
+          "role": "placeholder"
+        },
+        {
+          "index": 19,
+          "selectionIndex": 19,
+          "role": "placeholder"
+        },
+        {
+          "index": 20,
+          "selectionIndex": 20,
+          "role": "placeholder"
+        },
+        {
+          "index": 21,
+          "selectionIndex": 21,
+          "role": "placeholder"
+        },
+        {
+          "index": 22,
+          "selectionIndex": 22,
+          "role": "placeholder"
+        },
+        {
+          "index": 23,
+          "selectionIndex": 23,
+          "role": "placeholder"
+        },
+        {
+          "index": 24,
+          "selectionIndex": 24,
+          "role": "placeholder"
+        },
+        {
+          "index": 25,
+          "selectionIndex": 25,
+          "role": "placeholder"
+        },
+        {
+          "index": 26,
+          "selectionIndex": 26,
+          "role": "control",
+          "semanticId": "close",
+          "action": {
+            "type": "close"
+          }
+        }
+      ]
+    }
+  ]
+}

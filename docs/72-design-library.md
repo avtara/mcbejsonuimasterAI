@@ -1,5 +1,7 @@
 # 선택형 UI·게임 UI 디자인 자료
 
+체스트 GUI는 `node tools/design-library.mjs chest-topics`에서 7개 주제 중 하나를 선택한다. `chest --topic ID`로 실제 컨테이너 또는 ActionForm 자료만 읽는다. [체스트 도구](75-chest-gui.md), [소스 검토](76-chest-source-review.md)를 참고한다.
+
 검토일: **2026-09-27**. 기존 `visual-design`, `texture-design`, `research`, `samples` 스킬에 연결했다. 외부 스킬 원문을 기본 프롬프트에 합치거나 실행하지 않는다. 필요한 스타일·화면·입력 체크만 조회한다.
 
 ## 스타일과 사용

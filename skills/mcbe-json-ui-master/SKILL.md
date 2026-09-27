@@ -21,6 +21,7 @@ Use this only when the request is broad, mixed, or has no clear owner. Exact lay
 | bindings, expressions, string protocols | `mcbe-json-ui-logic` |
 | HUD, chat, title, actionbar, scoreboard | `mcbe-json-ui-hud-and-chat` |
 | `server_form.json`, title routing, button collections | `mcbe-json-ui-server-forms` |
+| native chest slots, chest-style forms, Minato editor projects | `mcbe-json-ui-chest-gui` |
 | known reusable implementations | `mcbe-json-ui-patterns` |
 | exact property, binding, catalog, or vanilla evidence | `mcbe-json-ui-reference` |
 | mine working packs with source and redistribution evidence | `mcbe-json-ui-samples` |

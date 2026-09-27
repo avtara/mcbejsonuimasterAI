@@ -574,6 +574,34 @@
           "lineEnd": 21
         }
       ]
+    },
+    {
+      "id": "minato-web-apps-chest-ui-editor",
+      "kind": "tooling",
+      "url": "https://github.com/Minato-mba/web-apps",
+      "revision": "dcc7932fceea828131053fb067e1f91503e36b21",
+      "revisionDate": "2026-09-21T12:56:36Z",
+      "license": "NOASSERTION",
+      "reuse": "analysis-only",
+      "summary": "실제 chest_screen 편집기 v2. 슬롯·탭·스크롤·프로젝트 왕복을 분석하며 라이선스 미확인 원본은 실행·재배포하지 않는다.",
+      "fileCount": 20,
+      "bytes": 627056,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "microsoftdocs-minecraft-creator",
+      "kind": "official",
+      "url": "https://github.com/MicrosoftDocs/minecraft-creator",
+      "revision": "1dfc5c4fa1cd75cabe558b08adee3420264ff0b5",
+      "revisionDate": "2026-09-22T16:37:54Z",
+      "license": "CC-BY-4.0 (documentation); MIT (code examples, LICENSE-CODE)",
+      "reuse": "reference-only",
+      "summary": "ActionFormData/Response, 취소 이유와 스케줄러의 버전 고정 공식 계약. 재시도 횟수·페이지 정책은 별도 앱 설계다.",
+      "fileCount": 7,
+      "bytes": 37956,
+      "runtime": "unverified",
+      "pathScope": "upstream"
     }
   ]
 }

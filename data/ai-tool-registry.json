@@ -982,134 +982,34 @@
     {
       "id": "design.library",
       "status": "implemented",
-      "purpose": "Retrieve one style or pixel-art production method with pinned source evidence under a character budget.",
-      "command": {
-        "executable": "node",
-        "script": "tools/design-library.mjs",
-        "display": "node tools/design-library.mjs"
-      },
+      "purpose": "Retrieve one style, pixel-art method or chest GUI topic with pinned evidence under a character budget.",
+      "command": { "executable": "node", "script": "tools/design-library.mjs", "display": "node tools/design-library.mjs" },
       "arguments": [
-        {
-          "name": "command",
-          "kind": "positional",
-          "required": true,
-          "valueType": "enum",
-          "values": [
-            "styles",
-            "context",
-            "sources",
-            "skills",
-            "methods",
-            "method",
-            "verify"
-          ],
-          "description": "Small style/method index, one selected card, sources, external skill adapters or metadata validation."
-        },
-        {
-          "name": "method",
-          "kind": "option",
-          "flag": "--method",
-          "required": false,
-          "valueType": "string",
-          "description": "Exact method id for the method command; lists are available through methods."
-        },
-        {
-          "name": "style",
-          "kind": "option",
-          "flag": "--style",
-          "required": false,
-          "valueType": "string",
-          "description": "Exact style id or known alias for context, or optional palette/style in a method card."
-        },
-        {
-          "name": "role",
-          "kind": "option",
-          "flag": "--role",
-          "required": false,
-          "valueType": "string",
-          "description": "Screen role; defaults to menu."
-        },
-        {
-          "name": "input",
-          "kind": "option",
-          "flag": "--input",
-          "required": false,
-          "valueType": "string",
-          "description": "mixed, keyboard, gamepad or touch."
-        },
-        {
-          "name": "source",
-          "kind": "option",
-          "flag": "--source",
-          "required": false,
-          "valueType": "string",
-          "description": "One pinned source id."
-        },
-        {
-          "name": "limit",
-          "kind": "option",
-          "flag": "--limit",
-          "required": false,
-          "valueType": "integer",
-          "description": "Zero to three pattern cards; default two."
-        },
-        {
-          "name": "max-chars",
-          "kind": "option",
-          "flag": "--max-chars",
-          "required": false,
-          "valueType": "integer",
-          "description": "JSON character cap, 1500 to 16000; default 7500."
-        }
+        { "name": "command", "kind": "positional", "required": true, "valueType": "enum", "values": [ "styles", "context", "sources", "skills", "methods", "method", "verify", "chest-topics", "chest" ], "description": "Small style/method index, one selected card, sources, external skill adapters or metadata validation." },
+        { "name": "method", "kind": "option", "flag": "--method", "required": false, "valueType": "string", "description": "Exact method id for the method command; lists are available through methods." },
+        { "name": "style", "kind": "option", "flag": "--style", "required": false, "valueType": "string", "description": "Exact style id or known alias for context, or optional palette/style in a method card." },
+        { "name": "role", "kind": "option", "flag": "--role", "required": false, "valueType": "string", "description": "Screen role; defaults to menu." },
+        { "name": "input", "kind": "option", "flag": "--input", "required": false, "valueType": "string", "description": "mixed, keyboard, gamepad or touch." },
+        { "name": "source", "kind": "option", "flag": "--source", "required": false, "valueType": "string", "description": "One pinned source id." },
+        { "name": "limit", "kind": "option", "flag": "--limit", "required": false, "valueType": "integer", "description": "Zero to three pattern cards; default two." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "JSON character cap, 1500 to 16000; default 7500." },
+        { "name": "topic", "kind": "option", "flag": "--topic", "required": false, "valueType": "string", "description": "Exact chest topic id selected through chest-topics." }
       ],
       "inputs": [
-        {
-          "name": "catalogs",
-          "kind": "file",
-          "required": true,
-          "format": "json",
-          "pathPattern": "data/design-*.json",
-          "description": "Reviewed style/source metadata and immutable source lock."
-        }
+        { "name": "catalogs", "kind": "file", "required": true, "format": "json", "pathPattern": "data/design-*.json", "description": "Reviewed style/source metadata and immutable source lock." }
       ],
       "outputs": [
-        {
-          "name": "result",
-          "kind": "stdout",
-          "required": true,
-          "format": "json",
-          "description": "Compact machine-readable result."
-        }
+        { "name": "result", "kind": "stdout", "required": true, "format": "json", "description": "Compact machine-readable result." }
       ],
-      "preconditions": [
-        "Run from a checkout containing the design catalogs."
-      ],
-      "mutates": {
-        "mode": "none",
-        "paths": [],
-        "description": "Read-only local lookup. Does not load upstream instructions or run downloaded code."
-      },
-      "successExitCodes": [
-        0
-      ],
+      "preconditions": [ "Run from a checkout containing the design catalogs." ],
+      "mutates": { "mode": "none", "paths": [], "description": "Read-only local lookup. Does not load upstream instructions or run downloaded code." },
+      "successExitCodes": [ 0 ],
       "failures": [
-        {
-          "exitCode": 2,
-          "meaning": "Invalid query, source metadata or output budget too small.",
-          "recovery": "Select a listed id; reduce optional patterns or increase the explicit budget."
-        }
+        { "exitCode": 2, "meaning": "Invalid query, source metadata or output budget too small.", "recovery": "Select a listed id; reduce optional patterns or increase the explicit budget." }
       ],
-      "evidenceProduced": [
-        "Proposed style and opaque palette contrast, input-specific review checks, pinned source/reuse metadata."
-      ],
-      "unsupportedBehavior": [
-        "No Bedrock runtime proof, asset installation, automatic upstream code execution or unlicensed redistribution."
-      ],
-      "supports": {
-        "help": true,
-        "json": true,
-        "report": false
-      }
+      "evidenceProduced": [ "Proposed style and opaque palette contrast, input-specific review checks, pinned source/reuse metadata." ],
+      "unsupportedBehavior": [ "No Bedrock runtime proof, asset installation, automatic upstream code execution or unlicensed redistribution." ],
+      "supports": { "help": true, "json": true, "report": false }
     },
     {
       "id": "design.board",
@@ -1227,6 +1127,67 @@
         "json": true,
         "report": false
       }
+    },
+    {
+      "id": "chest.contract",
+      "status": "implemented",
+      "purpose": "Validate declared native-container or ActionForm slot mappings and produce a deterministic plan.",
+      "command": { "executable": "node", "script": "tools/chest-contract.mjs", "display": "node tools/chest-contract.mjs" },
+      "arguments": [
+        { "name": "contract", "kind": "option", "flag": "--contract", "required": true, "valueType": "path", "description": "Authored mcbe-chest-contract@1 JSON." },
+        { "name": "page", "kind": "option", "flag": "--page", "required": false, "valueType": "string", "description": "One page id for its detailed slot map." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "JSON character cap: 1500..16000." },
+        { "name": "report", "kind": "option", "flag": "--report", "required": false, "valueType": "path", "description": "Optional full JSON report at a new explicit path; input and existing report files are preserved." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "JSON output; stdout is always compact JSON." }
+      ],
+      "inputs": [
+        { "name": "contract", "kind": "file", "required": true, "format": "JSON", "description": "Unmodified input data." }
+      ],
+      "outputs": [
+        { "name": "result", "kind": "stdout", "required": true, "format": "JSON", "description": "Bounded diagnostic summary with explicit static evidence." },
+        { "name": "report", "kind": "report", "required": false, "format": "JSON", "description": "Full report only when --report is supplied." }
+      ],
+      "preconditions": [ "Read the declared transport and exact input schema before running." ],
+      "mutates": { "mode": "workspace", "paths": [ "--report" ], "description": "Read-only by default; optional new report at the explicit path." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 9, "meaning": "Authored contract is invalid.", "recovery": "Fix the diagnosed contract path; do not coerce invalid slots." },
+        { "exitCode": 64, "meaning": "Invalid or ambiguous arguments.", "recovery": "Read --help and select an existing page." },
+        { "exitCode": 1, "meaning": "Input or report I/O failed.", "recovery": "Use a readable contract and a new report path." }
+      ],
+      "evidenceProduced": [ "Static declared/project evidence with runtimeVerified:false." ],
+      "unsupportedBehavior": [ "Does not infer actual RP/BP implementation, send packets, transfer items or generate a resource pack." ],
+      "supports": { "help": true, "json": true, "report": true }
+    },
+    {
+      "id": "chest.project",
+      "status": "implemented",
+      "purpose": "Inspect Minato chest editor JSON for slot, screen, tab and uploaded-image consistency.",
+      "command": { "executable": "node", "script": "tools/chest-project.mjs", "display": "node tools/chest-project.mjs" },
+      "arguments": [
+        { "name": "input", "kind": "option", "flag": "--input", "required": true, "valueType": "path", "description": "Minato formatVersion 2 JSON; treated as data only." },
+        { "name": "capacity", "kind": "option", "flag": "--capacity", "required": true, "valueType": "integer", "description": "Verified native host capacity; preview slot count is not capacity." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "JSON character cap: 1000..64000; default 6000." },
+        { "name": "report", "kind": "option", "flag": "--report", "required": false, "valueType": "path", "description": "Optional full JSON report at a new explicit path; input and existing report files are preserved." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "JSON output; stdout is always compact JSON." }
+      ],
+      "inputs": [
+        { "name": "input", "kind": "file", "required": true, "format": "JSON", "description": "Unmodified input data." }
+      ],
+      "outputs": [
+        { "name": "result", "kind": "stdout", "required": true, "format": "JSON", "description": "Bounded diagnostic summary with explicit static evidence." },
+        { "name": "report", "kind": "report", "required": false, "format": "JSON", "description": "Full report only when --report is supplied." }
+      ],
+      "preconditions": [ "Read the declared transport and exact input schema before running." ],
+      "mutates": { "mode": "workspace", "paths": [ "--report" ], "description": "Read-only by default; optional new report at the explicit path." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 1, "meaning": "Project contains structural or reference errors.", "recovery": "Read diagnostic paths and fix a preserved copy of the editor project." },
+        { "exitCode": 2, "meaning": "Arguments, parsing or file/report I/O failed.", "recovery": "Read --help and use a new report path; existing files are preserved." }
+      ],
+      "evidenceProduced": [ "Static declared/project evidence with runtimeVerified:false." ],
+      "unsupportedBehavior": [ "Does not execute upstream code, repair ZIPs, validate image pixels, or prove generated RP/client behavior." ],
+      "supports": { "help": true, "json": true, "report": true }
     }
   ]
 }

@@ -6,6 +6,7 @@
   "escalationReasons": ["ROUTE_AMBIGUOUS", "REQUIRED_TOOL_UNAVAILABLE", "BLOCKING_UNRESOLVED", "CACHE_MISMATCH", "CONTRACT_DIVERGENCE", "STATIC_RUNTIME_DISAGREEMENT", "RUNTIME_EVIDENCE_REQUIRED", "USER_AUTHORITY_REQUIRED"],
   "maxEscalations": 2,
   "routes": [
+    {"skill":"mcbe-json-ui-chest-gui","primaryFor":["chest-gui","native-container","chest-form","chest-editor-project"],"antiTriggers":["hud-only"],"defaultMode":"standard","referencesByNeed":{"native-container":"references/native-container.md","chest-form":"references/action-form.md","chest-editor-project":"references/editor-audit.md"},"escalateWhen":["container and form transport unclear","source slots or runtime interaction unresolved"],"answerProfile":"compact"},
     {"skill":"mcbe-json-ui-master","primaryFor":["broad","mixed","owner-unclear"],"antiTriggers":["exact-owner"],"defaultMode":"standard","referencesByNeed":{},"escalateWhen":["owner remains unclear"],"answerProfile":"compact"},
     {"skill":"mcbe-json-ui-addon-integration","primaryFor":["addon-integration","rp-bp-contract","dependency-trace"],"antiTriggers":["json-ui-only"],"defaultMode":"standard","referencesByNeed":{"contract":"references/addon-map.md"},"escalateWhen":["BP sender required"],"answerProfile":"default"},
     {"skill":"mcbe-json-ui-basics","primaryFor":["beginner-explanation","resource-pack-basics"],"antiTriggers":["implementation"],"defaultMode":"quick","referencesByNeed":{},"escalateWhen":["implementation requested"],"answerProfile":"compact"},

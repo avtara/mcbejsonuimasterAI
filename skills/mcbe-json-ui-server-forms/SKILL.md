@@ -7,6 +7,8 @@ description: Analyze and implement Bedrock JSON UI server forms, including title
 
 Treat a custom form as one BP/RP protocol, not as an isolated screen skin.
 
+For a chest-style menu, use `mcbe-json-ui-chest-gui` for fixed slots, page snapshots and inventory appendix mapping, then return here for the ActionForm factory contract. A native `chest_screen` inventory is owned by that chest skill rather than this ActionForm workflow.
+
 ## Contract
 
 - Input: `server_form.json`, routed UI files, exact title/body/buttons or modal fields, sender code, and target input devices.

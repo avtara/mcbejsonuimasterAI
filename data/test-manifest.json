@@ -1,6 +1,8 @@
 {
   "schema": "mcbe-jsonui-ai-kit/test-manifest@1",
   "tests": [
+    {"id":"chest-contract","argv":["tests/chest-contract.mjs"],"timeoutMs":120000},
+    {"id":"chest-project","argv":["tests/chest-project.mjs"],"timeoutMs":120000},
     {"id":"design-board","argv":["tests/design-board.mjs"],"timeoutMs":120000},
     {"id":"design-library","argv":["tests/design-library.mjs"],"timeoutMs":120000},
     {"id":"skill-installer-rollback","argv":["tests/skill-installer-rollback.mjs"],"timeoutMs":120000},

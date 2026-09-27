@@ -3,9 +3,21 @@ import { mkdtemp, readFile, writeFile, symlink, rm, readdir } from 'node:fs/prom
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { loadDesignLibrary, designContext, pixelArtMethod, boundedJson, validateLock, validateDesignLibrary, safeRelative, cachePath, storePinned, fetchPinned, hash, ROOT, contrast } from '../tools/_lib/design-library.mjs';
+import { loadDesignLibrary, designContext, pixelArtMethod, chestContext, boundedJson, validateLock, validateDesignLibrary, safeRelative, cachePath, storePinned, fetchPinned, hash, ROOT, contrast } from '../tools/_lib/design-library.mjs';
 
 const db=await loadDesignLibrary();validateLock(db.lock);
+for(const topic of db.chest.topics) {
+  const card=chestContext(db,{topic:topic.id});
+  assert.equal(card.runtimeVerified,false);
+  assert.deepEqual(card.sources.map(s=>s.id).sort(),[...topic.sourceIds].sort());
+  assert.deepEqual(JSON.parse(boundedJson(card,6000)),card);
+  assert.equal(card.pathScope,'upstream');
+  assert.ok(!Object.hasOwn(card,'methods')&&!Object.hasOwn(card,'style'),'One chest query excludes pixel workflows and style cards');
+}
+assert.throws(()=>chestContext(db,{topic:'missing'}),/Unknown chest topic/);
+for(const mutation of [d=>d.chest.topics.push(d.chest.topics[0]),d=>d.chest.topics[0].evidence[0].sha256='0'.repeat(64),d=>d.chest.topics[0].sourceIds=['unknown'],d=>d.chest.runtimeVerified=true,d=>d.chest.topics[0].transport='inventory']) {
+  const changed=structuredClone(db); mutation(changed); assert.throws(()=>validateDesignLibrary(changed));
+}
 assert.equal(db.styles.length,6);
 for(const style of db.styles){
   const value=designContext(db,{style:style.id,role:'inventory',input:'touch'});
@@ -24,6 +36,7 @@ assert.ok(mixed.patterns.some(p=>p.id==='chest-form-fixed-slot-index'));
 assert.ok(!mixed.patterns.some(p=>p.sourceId==='islocal-chest-gui'));
 assert.deepEqual(Object.keys(mixed),['schema','reviewedAt','decisionStatus','style','role','input','paletteCheck','checks','patterns','sources','optionalReference','boundary']);
 assert.ok(!Object.hasOwn(mixed,'methods')&&!JSON.stringify(mixed).includes('mcbe-pixel-art-method'),'Optional workflows stay out of ordinary style context');
+assert.ok(!Object.hasOwn(mixed,'chest')&&!mixed.sources.some(s=>s.id==='minato-web-apps-chest-ui-editor'),'Native chest research stays out of ordinary style context');
 assert.deepEqual(designContext(db,{style:' cozy16 ',role:'inventory, shop'}).checks,mixed.checks);
 for(const args of [{style:'unknown'},{style:'cozy',role:'webpage'},{style:'cozy',input:'vr'},{style:'cozy',limit:99}])assert.throws(()=>designContext(db,args));
 const oversized={sources:[{license:'retained'}],patterns:[{summary:'x'.repeat(3000)},{summary:'y'.repeat(3000)}]};

@@ -1,5 +1,9 @@
 # Skill Map
 
+## `mcbe-json-ui-chest-gui`
+
+Use for native container slots, chest-style ActionForm menus, or Minato editor projects. It separates actual item movement from button selections and conditionally reads one of three references: native container, ActionForm, or editor audit. See [Chest GUI tools](75-chest-gui.md).
+
 ## `mcbe-json-ui-basics`
 
 Use for:
