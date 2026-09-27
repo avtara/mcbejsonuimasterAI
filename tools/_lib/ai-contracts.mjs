@@ -90,8 +90,8 @@ export async function validateProfiles(profiles, registry) {
       errors.push({ path, message: "profile must be an object" });
       continue;
     }
-    if (typeof profile.skill !== "string" || !/^mcbe-json-ui-[a-z0-9-]+$/.test(profile.skill)) {
-      errors.push({ path: `${path}/skill`, message: "skill must be a canonical mcbe-json-ui-* id" });
+    if (typeof profile.skill !== "string" || !/^mcbe-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(profile.skill) || profile.skill.length > 64) {
+      errors.push({ path: `${path}/skill`, message: "skill must be a canonical mcbe-* id of at most 64 characters" });
     } else if (skills.has(profile.skill)) {
       errors.push({ path: `${path}/skill`, message: `duplicate skill profile ${profile.skill}` });
     }

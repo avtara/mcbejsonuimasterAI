@@ -90,6 +90,11 @@ async function main() {
     check("chest-context:one-tool:"+need,selected.code===0 && value?.tools?.length===1 && value.tools[0].id===id && JSON.stringify(value.workflow)===JSON.stringify([id]));
   }
   const compactDesignValue = json(compactDesign.stdout);
+  for(const [skill,need,id] of [["mcbe-geo-ui","asset-graph","attachable.inspect"],["mcbe-resource-pack-rendering","render-materials","material.audit"],["mcbe-json-ui-samples","asset-learning","asset.learn"],["mcbe-json-ui-research","research-context","research.context"]]) {
+    const selected=await run(["tools/skill-context.mjs",skill,"--needs",need,"--compact","--json"]);
+    const value=json(selected.stdout);
+    check("pack-context:one-tool:"+need,selected.code===0 && value?.tools?.length===1 && value.tools[0].id===id && JSON.stringify(value.workflow)===JSON.stringify([id]));
+  }
   check("skill-context:mapped-union-deduplicated", compactDesign.code === 0 && JSON.stringify(compactDesignValue?.workflow) === JSON.stringify(["design.library"]) && compactDesignValue?.tools?.length === 1);
   const unrelated = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", "syntax-only", "--json"]);
   check("skill-context:unrelated-need-keeps-legacy", unrelated.code === 0 && semanticHash(json(unrelated.stdout)) === semanticHash(contextResult));

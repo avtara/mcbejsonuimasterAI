@@ -36,6 +36,20 @@ for (const [kind, expected] of exactCases) {
 }
 const broad = parse(await run(node, ["tools/route-task.mjs", "--intent", JSON.stringify({ surface: "json-ui", taskKinds: ["mixed"], knownFiles: [], evidenceNeeded: ["T1"] })]));
 check("broad master exactly one", broad?.primarySkill === "mcbe-json-ui-master" && broad.followOnSkill === null);
+for (const [surface,kind,owner,reference] of [
+  ["addon","mixed","mcbe-resource-pack-master","references/addon-ownership.md"],
+  ["resource-pack","outline","mcbe-resource-pack-rendering","references/outlines.md"],
+  ["resource-pack","texture-set","mcbe-resource-pack-rendering","references/texture-sets.md"],
+  ["attachables-ui","first-person-model","mcbe-attachables-ui","references/perspective-and-state.md"],
+  ["geo-ui","geoui-studio","mcbe-geo-ui","references/geoui-contract.md"],
+  ["json-ui","chest-form","mcbe-json-ui-chest-gui","references/action-form.md"],
+  ["resource-pack","local-asset-learning","mcbe-json-ui-samples","references/local-asset-learning.md"],
+]) {
+  const value = parse(await run(node,["tools/route-task.mjs","--intent",JSON.stringify({surface,taskKinds:[kind]})]));
+  check(`surface and reference ${surface}/${kind}`,value?.ok && value.primarySkill===owner && JSON.stringify(value.references)===JSON.stringify([reference]));
+}
+const geoSupporting = parse(await run(node,["tools/route-task.mjs","--intent",JSON.stringify({surface:"geo-ui",taskKinds:["geoui-studio"],supportingKinds:["outline","texture-set"]})]));
+check("supporting reference follows first requested need",geoSupporting?.nextRoutes?.length===1 && geoSupporting.nextRoutes[0].skill==="mcbe-resource-pack-rendering" && geoSupporting.nextRoutes[0].references[0]==="references/outlines.md");
 for (const intent of [{ taskKinds: [] }, { taskKinds: ["unknown-kind"] }, { taskKinds: ["hud", "server-form"] }, { taskKinds: ["hud"], unexpected: true }]) {
   const result = await run(node, ["tools/route-task.mjs", "--intent", JSON.stringify(intent)]);
   check(`fail closed ${JSON.stringify(intent)}`, result.code === 9 && parse(result)?.ok === false);

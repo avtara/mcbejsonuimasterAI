@@ -7,6 +7,8 @@ description: Mine working Minecraft Bedrock JSON UI packs into traceable pattern
 
 Extract the smallest reusable pattern from configured RP/BP evidence.
 
+For an existing indexed asset library, use [local asset learning](references/local-asset-learning.md). Scan eligible text once, preserve actual coverage and hashes, then retrieve one need/role. This path does not require rebuilding the source library or loading the entire catalog into context.
+
 ## Contract
 
 - Input: source ID or pack root, target screen or behavior, intended output visibility, and the pattern question.

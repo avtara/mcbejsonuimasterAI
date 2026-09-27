@@ -20,8 +20,8 @@ async function digest(path) {
   return createHash("sha256").update(await readFile(path)).digest("hex");
 }
 
-async function skillNames(root) {
-  try { return (await readdir(root, { withFileTypes: true })).filter((entry) => entry.isDirectory() && entry.name.startsWith("mcbe-json-ui-")).map((entry) => entry.name).sort(); }
+async function skillNames(root, managed = null) {
+  try { return (await readdir(root, { withFileTypes: true })).filter((entry) => entry.isDirectory() && (!managed || managed.includes(entry.name) || entry.name.startsWith("mcbe-json-ui-"))).map((entry) => entry.name).sort(); }
   catch { return []; }
 }
 
@@ -35,7 +35,7 @@ if (process.argv.includes("--help")) {
   process.exit(0);
 }
 const source = await skillNames(sourceRoot);
-const installed = await skillNames(installedRoot);
+const installed = await skillNames(installedRoot, topology.sourceSkills);
 const sourceOnly = source.filter((name) => !installed.includes(name));
 const installedOnly = installed.filter((name) => !source.includes(name));
 const drift = [];

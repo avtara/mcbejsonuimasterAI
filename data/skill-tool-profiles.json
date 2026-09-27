@@ -23,20 +23,21 @@
       "skillStatus": "implemented",
       "purpose": "Select measured recipes and verify size, ratio, alignment, typography, states, and texture-aware previews.",
       "toolSelections": [
-        { "id": "design.board", "phase": "style-comparison", "required": false, "when": ["style-comparison", "design-board"], "skipWhen": ["binding-only", "syntax-only"], "reason": "Write a standalone board comparing palettes, states and long text on one shared inventory/shop specimen.", "optIn": true },
-        { "id": "design.library", "phase": "design-context", "required": false, "when": ["style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method"], "skipWhen": ["binding-only", "syntax-only"], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
+        { "id": "design.board", "phase": "style-comparison", "required": false, "when": [ "style-comparison", "design-board" ], "skipWhen": [ "binding-only", "syntax-only" ], "reason": "Write a standalone board comparing palettes, states and long text on one shared inventory/shop specimen.", "optIn": true },
+        { "id": "design.library", "phase": "design-context", "required": false, "when": [ "style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method" ], "skipWhen": [ "binding-only", "syntax-only" ], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
         { "id": "design.search", "phase": "evidence", "required": true, "reason": "Find measured designs matching the target role and profile." },
         { "id": "asset.search", "phase": "assets", "required": false, "reason": "Find UI-first, duplicate-filtered local textures without exposing absolute paths." },
         { "id": "project.init", "phase": "author", "required": false, "reason": "Create a safe IR starting point when no project exists." },
         { "id": "pipeline.run", "phase": "geometry", "required": true, "reason": "Solve and validate the selected geometry." },
         { "id": "preview.texture", "phase": "preview", "required": true, "reason": "Generate state-aware texture evidence and clipping reports." },
         { "id": "preview.diff", "phase": "compare", "required": false, "reason": "Compare a measured reference against the internal preview." },
-        { "id": "final-rp.mcp", "phase": "final-evidence", "required": false, "reason": "For an integrated RP, require installed vanilla/font evidence, state renders, device calibration, screenshot comparison, and read-only proposals." }
+        { "id": "final-rp.mcp", "phase": "final-evidence", "required": false, "reason": "For an integrated RP, require installed vanilla/font evidence, state renders, device calibration, screenshot comparison, and read-only proposals." },
+        { "id": "research.context", "phase": "inspect", "required": false, "when": [ "game-input-research" ], "optIn": true, "reason": "Retrieve game input/text/focus research when needed." }
       ],
-      "workflow": ["design.board", "design.library", "design.search", "asset.search", "project.init", "pipeline.run", "preview.texture", "preview.diff", "final-rp.mcp"],
-      "successCriteria": ["Every visual decision cites a recipe or measured source.", "Alignment, symmetry, and equal gaps are within one UI unit.", "Unsupported renderer behavior is reported.", "Final-RP coordinate claims are backed by available vanilla/font profiles and calibrated device evidence."],
-      "boundaries": ["The texture preview is not a Bedrock emulator.", "Do not infer unresolved bindings or collection sizes.", "Do not claim pixel accuracy or guess coordinates while font, vanilla, device, state, or calibration evidence is unresolved.", "External editors provide fixture evidence only; Bedrock runtime is final authority."],
-      "contextByNeed": { "style-selection": ["design.library"], "game-ui-design": ["design.library"], "external-design-skill": ["design.library"], "pixel-art-method": ["design.library"], "style-comparison": ["design.board"], "design-board": ["design.board"] }
+      "workflow": [ "design.board", "design.library", "design.search", "asset.search", "project.init", "pipeline.run", "preview.texture", "preview.diff", "final-rp.mcp", "research.context" ],
+      "successCriteria": [ "Every visual decision cites a recipe or measured source.", "Alignment, symmetry, and equal gaps are within one UI unit.", "Unsupported renderer behavior is reported.", "Final-RP coordinate claims are backed by available vanilla/font profiles and calibrated device evidence." ],
+      "boundaries": [ "The texture preview is not a Bedrock emulator.", "Do not infer unresolved bindings or collection sizes.", "Do not claim pixel accuracy or guess coordinates while font, vanilla, device, state, or calibration evidence is unresolved.", "External editors provide fixture evidence only; Bedrock runtime is final authority." ],
+      "contextByNeed": { "style-selection": [ "design.library" ], "game-ui-design": [ "design.library" ], "external-design-skill": [ "design.library" ], "pixel-art-method": [ "design.library" ], "style-comparison": [ "design.board" ], "design-board": [ "design.board" ], "game-input-research": [ "research.context" ] }
     },
     {
       "skill": "mcbe-json-ui-final-rp-inspection",
@@ -59,19 +60,20 @@
       "skillStatus": "implemented",
       "purpose": "Turn catalog evidence into original state-complete Bedrock UI texture briefs, generation prompts, and nine-slice contracts.",
       "toolSelections": [
-        { "id": "design.board", "phase": "style-comparison", "required": false, "when": ["style-comparison", "design-board"], "skipWhen": ["binding-only", "syntax-only"], "reason": "Compare authored style proposals before creating RP textures; this board contains no imported art.", "optIn": true },
-        { "id": "design.library", "phase": "design-context", "required": false, "when": ["style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method"], "skipWhen": ["binding-only", "syntax-only"], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
+        { "id": "design.board", "phase": "style-comparison", "required": false, "when": [ "style-comparison", "design-board" ], "skipWhen": [ "binding-only", "syntax-only" ], "reason": "Compare authored style proposals before creating RP textures; this board contains no imported art.", "optIn": true },
+        { "id": "design.library", "phase": "design-context", "required": false, "when": [ "style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method" ], "skipWhen": [ "binding-only", "syntax-only" ], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
         { "id": "asset.catalog", "phase": "index", "required": true, "reason": "Build the local evidence-backed semantic catalog from indexed textures and their JSON UI usage sites." },
         { "id": "asset.context", "phase": "evidence", "required": true, "reason": "Summarize measured roles, states, sizes, palettes, alpha, and nine-slice patterns into a source-redacted generation context." },
         { "id": "asset.search", "phase": "fallback", "required": false, "reason": "Fall back to metadata search when the semantic catalog is unavailable or a concrete local candidate must be inspected." },
         { "id": "preview.texture", "phase": "integration", "required": false, "reason": "Check the resulting texture states and nine-slice behavior in a deterministic static preview after the files exist." },
         { "id": "pack.validate", "phase": "validate", "required": false, "reason": "Check RP texture references and adjacent metadata after integration." },
-        { "id": "public.audit", "phase": "release", "required": false, "reason": "Reject local paths, private source identifiers, and restricted source details from public briefs and prompts." }
+        { "id": "public.audit", "phase": "release", "required": false, "reason": "Reject local paths, private source identifiers, and restricted source details from public briefs and prompts." },
+        { "id": "research.context", "phase": "inspect", "required": false, "when": [ "pixel-craft-research" ], "optIn": true, "reason": "Retrieve original pixel craft/export guidance when needed." }
       ],
-      "workflow": ["asset.catalog", "asset.context", "asset.search", "preview.texture", "pack.validate", "public.audit", "design.library", "design.board"],
-      "successCriteria": ["The brief separates measured evidence from new design decisions.", "Required interaction states and output files are explicit.", "Every scalable PNG has a same-stem nine-slice contract or a documented unresolved status."],
-      "boundaries": ["Catalog assets are analysis evidence, not automatically redistributable inputs.", "Image generation runs only after an explicit user request to create or edit an image.", "Public outputs omit absolute paths and source-specific identities."],
-      "contextByNeed": { "pixel-art-method": ["design.library"] }
+      "workflow": [ "asset.catalog", "asset.context", "asset.search", "preview.texture", "pack.validate", "public.audit", "design.library", "design.board", "research.context" ],
+      "successCriteria": [ "The brief separates measured evidence from new design decisions.", "Required interaction states and output files are explicit.", "Every scalable PNG has a same-stem nine-slice contract or a documented unresolved status." ],
+      "boundaries": [ "Catalog assets are analysis evidence, not automatically redistributable inputs.", "Image generation runs only after an explicit user request to create or edit an image.", "Public outputs omit absolute paths and source-specific identities." ],
+      "contextByNeed": { "pixel-art-method": [ "design.library" ], "pixel-craft-research": [ "research.context" ] }
     },
     {
       "skill": "mcbe-json-ui-ir-authoring",
@@ -123,19 +125,20 @@
       "skillStatus": "implemented",
       "purpose": "Mine working sample packs into traceable, source-tiered patterns.",
       "toolSelections": [
-        { "id": "design.library", "phase": "design-context", "required": false, "when": ["style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method"], "skipWhen": ["binding-only", "syntax-only"], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
+        { "id": "design.library", "phase": "design-context", "required": false, "when": [ "style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method" ], "skipWhen": [ "binding-only", "syntax-only" ], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
         { "id": "sources.validate", "phase": "preflight", "required": true, "reason": "Confirm source and redistribution boundaries." },
         { "id": "corpus.inventory", "phase": "discover", "required": false, "reason": "Inventory a broad local example archive into neutral local-only sources and recipe candidates before selecting packs." },
         { "id": "source.scan", "phase": "collect", "required": true, "reason": "Extract UI-only evidence from the chosen source." },
         { "id": "catalog.build", "phase": "index", "required": true, "reason": "Build recipe and evidence relationships." },
         { "id": "design.search", "phase": "query", "required": true, "reason": "Return concrete patterns rather than general prose." },
         { "id": "asset.search", "phase": "assets", "required": false, "reason": "Find adjacent UI textures by category, size, source, hash, and duplicate state." },
-        { "id": "design.sources", "phase": "source-evidence", "required": false, "when": ["source-download", "source-integrity"], "skipWhen": ["local-edit-only"], "reason": "Plan or verify one pinned source; explicit download stores original evidence without running code.", "optIn": true }
+        { "id": "design.sources", "phase": "source-evidence", "required": false, "when": [ "source-download", "source-integrity" ], "skipWhen": [ "local-edit-only" ], "reason": "Plan or verify one pinned source; explicit download stores original evidence without running code.", "optIn": true },
+        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Extract and retrieve the supplied local asset library without copying original assets." }
       ],
-      "workflow": ["design.library", "sources.validate", "corpus.inventory", "source.scan", "catalog.build", "design.search", "asset.search", "design.sources"],
-      "successCriteria": ["Every extracted pattern retains source tier and evidence paths.", "Private or restricted inputs remain local-only."],
-      "boundaries": ["Quarantine sources are searchable only locally and are never automatic recommendations."],
-      "contextByNeed": { "pixel-art-method": ["design.library"] }
+      "workflow": [ "design.library", "sources.validate", "corpus.inventory", "source.scan", "catalog.build", "design.search", "asset.search", "design.sources", "asset.learn" ],
+      "successCriteria": [ "Every extracted pattern retains source tier and evidence paths.", "Private or restricted inputs remain local-only." ],
+      "boundaries": [ "Quarantine sources are searchable only locally and are never automatic recommendations." ],
+      "contextByNeed": { "pixel-art-method": [ "design.library" ], "asset-learning": [ "asset.learn" ] }
     },
     {
       "skill": "mcbe-json-ui-patterns",
@@ -174,11 +177,13 @@
         { "id": "source.scan", "phase": "trace", "required": false, "reason": "Collect linked RP/BP evidence from configured read-only sources." },
         { "id": "asset.search", "phase": "assets", "required": false, "reason": "Locate UI-specific texture candidates without copying them before license review." },
         { "id": "pack.validate", "phase": "validate", "required": true, "reason": "Check RP UI and texture connections." },
-        { "id": "prompt.build", "phase": "handoff", "required": false, "reason": "Record the data owner, generated files, and runtime-only checks explicitly." }
+        { "id": "prompt.build", "phase": "handoff", "required": false, "reason": "Record the data owner, generated files, and runtime-only checks explicitly." },
+        { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Trace attached/player-renderer resources alongside UI." }
       ],
-      "workflow": ["source.scan", "asset.search", "pack.validate", "prompt.build"],
-      "successCriteria": ["Every dynamic value has a named owner and sender path.", "RP and BP changes are validated as one feature boundary."],
-      "boundaries": ["Do not hardcode dynamic state in RP labels.", "Runtime protocol behavior remains unverified until Bedrock execution."]
+      "workflow": [ "source.scan", "asset.search", "pack.validate", "prompt.build", "attachable.inspect" ],
+      "successCriteria": [ "Every dynamic value has a named owner and sender path.", "RP and BP changes are validated as one feature boundary." ],
+      "boundaries": [ "Do not hardcode dynamic state in RP labels.", "Runtime protocol behavior remains unverified until Bedrock execution." ],
+      "contextByNeed": { "asset-graph": [ "attachable.inspect" ] }
     },
     {
       "skill": "mcbe-json-ui-debugging",
@@ -315,7 +320,7 @@
       "skillStatus": "implemented",
       "purpose": "Choose evidence sources by authority, tier, redistribution, and task relevance.",
       "toolSelections": [
-        { "id": "design.library", "phase": "design-context", "required": false, "when": ["style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method"], "skipWhen": ["binding-only", "syntax-only"], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
+        { "id": "design.library", "phase": "design-context", "required": false, "when": [ "style-selection", "game-ui-design", "external-design-skill", "source-research", "pixel-art-method" ], "skipWhen": [ "binding-only", "syntax-only" ], "reason": "Retrieve one style/role/input card or reviewed external design method; keep full upstream sources out of default context.", "optIn": true },
         { "id": "research.sync", "phase": "fixtures", "required": false, "reason": "Synchronize reviewed pinned repositories into ignored local mirrors when an offline compatibility fixture is required." },
         { "id": "upstream.compat", "phase": "fixtures", "required": false, "reason": "Validate reviewed black-box baselines without executing external editor source." },
         { "id": "upstream.compat.capture", "phase": "fixtures", "required": false, "reason": "Record a reviewed local observation for a pending fixture without automatic baseline promotion." },
@@ -324,12 +329,13 @@
         { "id": "design.search", "phase": "query", "required": false, "reason": "Retrieve catalog evidence rather than rely on memory." },
         { "id": "vanilla.index", "phase": "vanilla", "required": false, "reason": "Refresh local vanilla evidence." },
         { "id": "public.audit", "phase": "release", "required": false, "reason": "Verify that public research outputs do not expose local or restricted source data." },
-        { "id": "design.sources", "phase": "source-evidence", "required": false, "when": ["source-download", "source-integrity"], "skipWhen": ["local-edit-only"], "reason": "Plan or verify one pinned source; explicit download stores original evidence without running code.", "optIn": true }
+        { "id": "design.sources", "phase": "source-evidence", "required": false, "when": [ "source-download", "source-integrity" ], "skipWhen": [ "local-edit-only" ], "reason": "Plan or verify one pinned source; explicit download stores original evidence without running code.", "optIn": true },
+        { "id": "research.context", "phase": "inspect", "required": false, "when": [ "research-context" ], "optIn": true, "reason": "Retrieve one reviewed research method and its limits." }
       ],
-      "workflow": ["design.library", "research.sync", "upstream.compat", "upstream.compat.capture", "sources.validate", "source.scan", "design.search", "vanilla.index", "public.audit", "design.sources"],
-      "successCriteria": ["Confirmed facts, inference, and unresolved claims are labeled."],
-      "boundaries": ["Do not redistribute local-only or unknown-license source content.", "External editors are compatibility fixtures, not Bedrock runtime or visual authorities."],
-      "contextByNeed": { "pixel-art-method": ["design.library"] }
+      "workflow": [ "design.library", "research.sync", "upstream.compat", "upstream.compat.capture", "sources.validate", "source.scan", "design.search", "vanilla.index", "public.audit", "design.sources", "research.context" ],
+      "successCriteria": [ "Confirmed facts, inference, and unresolved claims are labeled." ],
+      "boundaries": [ "Do not redistribute local-only or unknown-license source content.", "External editors are compatibility fixtures, not Bedrock runtime or visual authorities." ],
+      "contextByNeed": { "pixel-art-method": [ "design.library" ], "research-context": [ "research.context" ] }
     },
     {
       "skill": "mcbe-json-ui-vanilla-presets",
@@ -357,6 +363,64 @@
       "successCriteria": [ "The chosen transport and actual data owner are explicit.", "Diagnostics preserve original input and distinguish declared/static evidence from runtime interaction." ],
       "boundaries": [ "The browser editor and authored plan do not prove RP/BP agreement, inventory safety or Bedrock interaction." ],
       "contextByNeed": { "chest-research": [ "design.library" ], "chest-project": [ "chest.project" ], "chest-contract": [ "chest.contract" ] }
+    },
+    {
+      "skill": "mcbe-resource-pack-master",
+      "skillStatus": "implemented",
+      "purpose": "Select the requested Bedrock pack surface and validate only its relevant evidence.",
+      "toolSelections": [
+        { "id": "skill.route", "phase": "inspect", "required": false, "when": [ "pack-routing" ], "optIn": true, "reason": "Select the correct pack surface and one owner." },
+        { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Inspect connected model resources." },
+        { "id": "material.audit", "phase": "inspect", "required": false, "when": [ "render-materials" ], "optIn": true, "reason": "Inspect rendering structure." },
+        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve source-grounded local patterns." },
+        { "id": "research.context", "phase": "inspect", "required": false, "when": [ "research-context" ], "optIn": true, "reason": "Read one relevant research topic." }
+      ],
+      "workflow": [ "skill.route", "attachable.inspect", "material.audit", "asset.learn", "research.context" ],
+      "contextByNeed": { "pack-routing": [ "skill.route" ], "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ], "research-context": [ "research.context" ] },
+      "successCriteria": [ "The actual surface, data owner and source version remain explicit.", "Unresolved static and runtime evidence are reported separately." ],
+      "boundaries": [ "A source pattern or structurally valid graph does not prove Bedrock appearance or interaction.", "Load the next needed reference/tool only." ]
+    },
+    {
+      "skill": "mcbe-resource-pack-rendering",
+      "skillStatus": "implemented",
+      "purpose": "Select the requested Bedrock pack surface and validate only its relevant evidence.",
+      "toolSelections": [
+        { "id": "material.audit", "phase": "inspect", "required": false, "when": [ "render-materials" ], "optIn": true, "reason": "Check material/texture-set structure." },
+        { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Trace the rendering owner and aliases." },
+        { "id": "design.library", "phase": "inspect", "required": false, "when": [ "style-selection" ], "optIn": true, "reason": "Select one authored pixel/game style." }
+      ],
+      "workflow": [ "material.audit", "attachable.inspect", "design.library" ],
+      "contextByNeed": { "render-materials": [ "material.audit" ], "asset-graph": [ "attachable.inspect" ], "style-selection": [ "design.library" ] },
+      "successCriteria": [ "The actual surface, data owner and source version remain explicit.", "Unresolved static and runtime evidence are reported separately." ],
+      "boundaries": [ "A source pattern or structurally valid graph does not prove Bedrock appearance or interaction.", "Load the next needed reference/tool only." ]
+    },
+    {
+      "skill": "mcbe-attachables-ui",
+      "skillStatus": "implemented",
+      "purpose": "Select the requested Bedrock pack surface and validate only its relevant evidence.",
+      "toolSelections": [
+        { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Trace equipment and render resources." },
+        { "id": "material.audit", "phase": "inspect", "required": false, "when": [ "render-materials" ], "optIn": true, "reason": "Inspect the selected material path." },
+        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve local attachable patterns." }
+      ],
+      "workflow": [ "attachable.inspect", "material.audit", "asset.learn" ],
+      "contextByNeed": { "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ] },
+      "successCriteria": [ "The actual surface, data owner and source version remain explicit.", "Unresolved static and runtime evidence are reported separately." ],
+      "boundaries": [ "A source pattern or structurally valid graph does not prove Bedrock appearance or interaction.", "Load the next needed reference/tool only." ]
+    },
+    {
+      "skill": "mcbe-geo-ui",
+      "skillStatus": "implemented",
+      "purpose": "Select the requested Bedrock pack surface and validate only its relevant evidence.",
+      "toolSelections": [
+        { "id": "attachable.inspect", "phase": "inspect", "required": false, "when": [ "asset-graph" ], "optIn": true, "reason": "Trace player-renderer GeoUI dependencies." },
+        { "id": "material.audit", "phase": "inspect", "required": false, "when": [ "render-materials" ], "optIn": true, "reason": "Inspect material and texture-set structure." },
+        { "id": "asset.learn", "phase": "inspect", "required": false, "when": [ "asset-learning" ], "optIn": true, "reason": "Retrieve geometry and UI source patterns." }
+      ],
+      "workflow": [ "attachable.inspect", "material.audit", "asset.learn" ],
+      "contextByNeed": { "asset-graph": [ "attachable.inspect" ], "render-materials": [ "material.audit" ], "asset-learning": [ "asset.learn" ] },
+      "successCriteria": [ "The actual surface, data owner and source version remain explicit.", "Unresolved static and runtime evidence are reported separately." ],
+      "boundaries": [ "A source pattern or structurally valid graph does not prove Bedrock appearance or interaction.", "Load the next needed reference/tool only." ]
     }
   ]
 }

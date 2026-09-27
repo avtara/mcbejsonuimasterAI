@@ -1,5 +1,14 @@
 # Skill Map
 
+## Resource-pack specialists
+
+- `mcbe-resource-pack-master`: broad RP/addon ownership, one specialist at a time.
+- `mcbe-attachables-ui`: equipped-item model UI, perspective and state dependencies.
+- `mcbe-geo-ui`: GeouiStudio/player-renderer geometry UI and its BP/HUD contracts.
+- `mcbe-resource-pack-rendering`: materials, outlines, texture sets and graphics modes.
+
+See [resource-pack workflows](77-resource-pack-skills.md). The structured router preserves the JSON UI default and supports explicit pack/model surfaces.
+
 ## `mcbe-json-ui-chest-gui`
 
 Use for native container slots, chest-style ActionForm menus, or Minato editor projects. It separates actual item movement from button selections and conditionally reads one of three references: native container, ActionForm, or editor audit. See [Chest GUI tools](75-chest-gui.md).

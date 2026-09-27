@@ -7,6 +7,8 @@ description: Route broad or end-to-end Minecraft Bedrock JSON UI work to the sma
 
 Use this only when the request is broad, mixed, or has no clear owner. Exact layout, binding, form, HUD, asset, lookup, or debugging requests go directly to one specialist without loading this router. Keep one primary owner, then expand the ordered supporting route one Skill and one reference at a time.
 
+For broad resource-pack/addon work use `mcbe-resource-pack-master`. Equipped model UI belongs to `mcbe-attachables-ui`; camera/player geometry UI belongs to `mcbe-geo-ui`; materials, outlines and texture sets belong to `mcbe-resource-pack-rendering`. Preserve the requested surface when a feature spans them.
+
 ## Route by primary need
 
 | Need | Skill |
@@ -47,7 +49,7 @@ When a server form mixes control-reference, collection/search, marker, hover/foc
 
 When routing data is available, validate structured intent with `node tools/route-task.mjs`; raw prompt classification is advisory and must not auto-execute at low confidence. Unknown or ambiguous ownership fails closed. Escalation is one-way `quick → standard → deep`, at most twice, without repeating the same command and input hash.
 
-Use `surface: "json-ui"` (or omit it). `supportingKinds` lists specialist tasks in execution order; `nextRoutes` returns `{skill, references}` entries in that order and `followOnSkill` remains the first entry for older callers. Load only the next relevant entry. Unsupported surfaces and unknown kinds must be resolved before execution.
+Use `surface: "json-ui"` (or omit it) for JSON UI. The pack router also accepts `resource-pack`, `addon`, `attachables-ui` and `geo-ui`. `supportingKinds` lists specialist tasks in execution order; `nextRoutes` returns `{skill, references}` entries in that order and `followOnSkill` remains the first entry for older callers. Load only the next relevant entry. Unsupported surfaces and unknown kinds must be resolved before execution.
 
 ## Boundaries
 

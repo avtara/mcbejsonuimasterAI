@@ -1188,6 +1188,129 @@
       "evidenceProduced": [ "Static declared/project evidence with runtimeVerified:false." ],
       "unsupportedBehavior": [ "Does not execute upstream code, repair ZIPs, validate image pixels, or prove generated RP/client behavior." ],
       "supports": { "help": true, "json": true, "report": true }
+    },
+    {
+      "id": "attachable.inspect",
+      "status": "implemented",
+      "purpose": "Inspect attachable/client-entity references, controllers, aliases and supplied BP/vanilla dependencies.",
+      "command": { "executable": "node", "script": "tools/attachable-inspect.mjs", "display": "node tools/attachable-inspect.mjs" },
+      "arguments": [
+        { "name": "rp", "kind": "option", "flag": "--rp", "required": true, "valueType": "path", "description": "Resource pack root." },
+        { "name": "bp", "kind": "option", "flag": "--bp", "required": false, "valueType": "path", "description": "Optional behavior pack root." },
+        { "name": "vanilla", "kind": "option", "flag": "--vanilla", "required": false, "valueType": "path", "description": "Optional version-matched vanilla RP." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "1000..64000; default 6000." },
+        { "name": "report", "kind": "option", "flag": "--report", "required": false, "valueType": "path", "description": "Full report at a new path; existing files remain unchanged." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "Print bounded JSON." }
+      ],
+      "inputs": [
+        { "name": "evidence", "kind": "record", "required": true, "format": "JSONC/files", "description": "Selected input pack, local catalog or pinned research." }
+      ],
+      "outputs": [
+        { "name": "result", "kind": "stdout", "required": true, "format": "JSON", "description": "Compact evidence and unresolved diagnostics." }
+      ],
+      "preconditions": [ "Read --help and supply the selected operation inputs." ],
+      "mutates": { "mode": "workspace", "paths": [ "--report" ], "description": "Read-only inputs; optionally creates a new report." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 1, "meaning": "Static diagnostics contain errors.", "recovery": "Read paths and fix the owning source; preserve reference inputs." },
+        { "exitCode": 2, "meaning": "Arguments, input data or output I/O failed.", "recovery": "Check --help, existing input roots and a new report destination." }
+      ],
+      "evidenceProduced": [ "Explicit static/research evidence; no Bedrock runtime claim." ],
+      "unsupportedBehavior": [ "No Molang execution, image decoding, renderer emulation or runtime evidence." ],
+      "supports": { "help": true, "json": true, "report": true }
+    },
+    {
+      "id": "material.audit",
+      "status": "implemented",
+      "purpose": "Check material inheritance and texture-set structure for a selected graphics mode.",
+      "command": { "executable": "node", "script": "tools/material-audit.mjs", "display": "node tools/material-audit.mjs" },
+      "arguments": [
+        { "name": "rp", "kind": "option", "flag": "--rp", "required": true, "valueType": "path", "description": "Resource pack root." },
+        { "name": "mode", "kind": "option", "flag": "--mode", "required": false, "valueType": "string", "description": "classic (default), vibrant or rtx." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "1500..32000; default 6000." },
+        { "name": "report", "kind": "option", "flag": "--report", "required": false, "valueType": "path", "description": "Full report at a new path; existing files remain unchanged." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "Print bounded JSON." }
+      ],
+      "inputs": [
+        { "name": "evidence", "kind": "record", "required": true, "format": "JSONC/files", "description": "Selected input pack, local catalog or pinned research." }
+      ],
+      "outputs": [
+        { "name": "result", "kind": "stdout", "required": true, "format": "JSON", "description": "Compact evidence and unresolved diagnostics." }
+      ],
+      "preconditions": [ "Read --help and supply the selected operation inputs." ],
+      "mutates": { "mode": "workspace", "paths": [ "--report" ], "description": "Read-only inputs; optionally creates a new report." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 1, "meaning": "Static diagnostics contain errors.", "recovery": "Read paths and fix the owning source; preserve reference inputs." },
+        { "exitCode": 2, "meaning": "Arguments, input data or output I/O failed.", "recovery": "Check --help, existing input roots and a new report destination." }
+      ],
+      "evidenceProduced": [ "Explicit static/research evidence; no Bedrock runtime claim." ],
+      "unsupportedBehavior": [ "No shader execution, image decoding or outline/lighting verification; select subpacks separately." ],
+      "supports": { "help": true, "json": true, "report": true }
+    },
+    {
+      "id": "asset.learn",
+      "status": "implemented",
+      "purpose": "Extract local asset patterns, retrieve a bounded redacted card, then recheck one selected private source.",
+      "command": { "executable": "node", "script": "tools/local-asset-learn.mjs", "display": "node tools/local-asset-learn.mjs" },
+      "arguments": [
+        { "name": "command", "kind": "positional", "required": true, "valueType": "enum", "values": [ "scan", "context", "evidence" ], "description": "Select exactly one operation." },
+        { "name": "root", "kind": "option", "flag": "--root", "required": false, "valueType": "path", "description": "For scan: asset-library root." },
+        { "name": "out", "kind": "option", "flag": "--out", "required": false, "valueType": "path", "description": "For scan: new private catalog under workspace." },
+        { "name": "cache", "kind": "option", "flag": "--cache", "required": false, "valueType": "path", "description": "Optional earlier catalog; source hashes must still be verified." },
+        { "name": "catalog", "kind": "option", "flag": "--catalog", "required": false, "valueType": "path", "description": "For context/evidence: local learning catalog." },
+        { "name": "id", "kind": "option", "flag": "--id", "required": false, "valueType": "string", "description": "For evidence: asset-20hex ID returned by context; rechecks selected source and owner manifest hashes." },
+        { "name": "need", "kind": "option", "flag": "--need", "required": false, "valueType": "string", "description": "ui, geometry, attachable, material, texture-state, nine-slice, entity, animation or render-controller." },
+        { "name": "role", "kind": "option", "flag": "--role", "required": false, "valueType": "string", "description": "Optional form, inventory, hud, wearable, entity or generic." },
+        { "name": "limit", "kind": "option", "flag": "--limit", "required": false, "valueType": "integer", "description": "Explicit scan sample size, context cards 0..10 or evidence links 0..50." },
+        { "name": "concurrency", "kind": "option", "flag": "--concurrency", "required": false, "valueType": "integer", "description": "Scan workers 1..12." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "Context/evidence cap 1000..16000." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "Print bounded JSON." }
+      ],
+      "inputs": [
+        { "name": "evidence", "kind": "record", "required": true, "format": "JSONC/files", "description": "Selected input pack, local catalog or pinned research." }
+      ],
+      "outputs": [
+        { "name": "result", "kind": "stdout", "required": true, "format": "JSON", "description": "Compact evidence and unresolved diagnostics." }
+      ],
+      "preconditions": [ "Read --help and supply the selected operation inputs." ],
+      "mutates": { "mode": "workspace", "paths": [ "--out" ], "description": "Scan writes a new ignored private catalog. Context and evidence are read-only; evidence paths are local-only." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 1, "meaning": "Static diagnostics contain errors.", "recovery": "Read paths and fix the owning source; preserve reference inputs." },
+        { "exitCode": 2, "meaning": "Arguments, input data or output I/O failed.", "recovery": "Check --help, existing input roots and a new report destination." }
+      ],
+      "evidenceProduced": [ "Explicit static/research evidence; no Bedrock runtime claim." ],
+      "unsupportedBehavior": [ "No model-weight training, license transfer, full image decoding or runtime verification." ],
+      "supports": { "help": true, "json": true, "report": false }
+    },
+    {
+      "id": "research.context",
+      "status": "implemented",
+      "purpose": "Retrieve one source-grounded AI skill, pixel art or game UI research topic.",
+      "command": { "executable": "node", "script": "tools/research-context.mjs", "display": "node tools/research-context.mjs" },
+      "arguments": [
+        { "name": "command", "kind": "positional", "required": true, "valueType": "enum", "values": [ "topics", "context" ], "description": "Select exactly one operation." },
+        { "name": "topic", "kind": "option", "flag": "--topic", "required": false, "valueType": "string", "description": "Exact topic ID from topics." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "1000..16000; default 5000." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "Print bounded JSON." }
+      ],
+      "inputs": [
+        { "name": "evidence", "kind": "record", "required": true, "format": "JSONC/files", "description": "Selected input pack, local catalog or pinned research." }
+      ],
+      "outputs": [
+        { "name": "result", "kind": "stdout", "required": true, "format": "JSON", "description": "Compact evidence and unresolved diagnostics." }
+      ],
+      "preconditions": [ "Read --help and supply the selected operation inputs." ],
+      "mutates": { "mode": "none", "paths": [], "description": "Read-only lookup." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 64, "meaning": "Unknown arguments/topic or insufficient output budget.", "recovery": "Select a listed topic and supported budget." },
+        { "exitCode": 1, "meaning": "Local research catalog validation failed.", "recovery": "Repair the diagnosed source/card record." }
+      ],
+      "evidenceProduced": [ "Explicit static/research evidence; no Bedrock runtime claim." ],
+      "unsupportedBehavior": [ "Paper results are not measured performance of this repository; no full papers or upstream code are loaded." ],
+      "supports": { "help": true, "json": true, "report": false }
     }
   ]
 }

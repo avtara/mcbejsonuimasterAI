@@ -1,0 +1,16 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.inspection.panel": {
+      "initial_state": "default",
+      "states": {
+        "default": {
+          "animations": [
+            { "first": "context.is_first_person == 1.0" },
+            { "third": "context.is_first_person == 0.0" }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ description: Design Minecraft Bedrock game UI, select cartoon pixel, fantasy RPG
 
 Turn a screenshot, working screen, or catalog recipe into explicit layout decisions before JSON UI is compiled.
 
+For text, input, controller focus or touch accessibility research, retrieve `node tools/research-context.mjs context --topic game-ui-input` when this checkout is available. Apply the selected source to the requested interface and verify the actual interaction; avoid loading unrelated research topics.
+
 ## Contract
 
 - Input: target screen and files, device profile, reference image or working UI evidence, allowed textures, and required text/state variants.

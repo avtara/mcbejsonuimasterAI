@@ -4,7 +4,7 @@ This file is read first by any AI agent (Cursor, Claude Code, Codex, Copilot, Ai
 
 The repository has two layers:
 
-1. **Knowledge layer** — `skills/`, `docs/`, `references/`. Long-form knowledge for Bedrock JSON UI.
+1. **Knowledge layer** — `skills/`, `docs/`, `references/`. Selected guidance for Bedrock JSON UI, resource packs, attachables, GeoUI and addon ownership.
 2. **Tools layer** — `tools/`, `schemas/`, `vanilla-index/`, `workspace/`. Deterministic Node CLI that the AI calls to author, compile, validate, and (optionally) render JSON UI.
 
 ## 0. First-time self-bootstrap (do this once per clone)
@@ -38,6 +38,8 @@ Pick the layer **based on what the user asked for**, not by default.
 | "design/generate a button, panel, slot, icon, or nine-slice texture" | `mcbe-json-ui-texture-design` -> `asset:catalog` -> `asset:context`; generate only original art and only when explicitly requested |
 | "final RP를 실제 화면처럼 검사", "hover/pressed 위치와 텍스트가 맞는지 확인", "Bedrock screenshot과 비교" | `mcbe-json-ui-final-rp-inspection` -> v2 `final-rp:render`/MCP/Inspector; IR preview만으로 판정하지 않음 |
 | "chest GUI", native container slots, chest-style ActionForm, Minato editor project | `mcbe-json-ui-chest-gui`; first distinguish native item movement from form callbacks, then select project inspection or declared slot validation |
+| Resource packs/addons beyond JSON UI, attachable UI, GeoUI, materials or outlines | `mcbe-resource-pack-master` for mixed ownership; exact tasks go to `mcbe-attachables-ui`, `mcbe-geo-ui`, or `mcbe-resource-pack-rendering`. Keep the actual rendering/input surface. |
+| Learn the supplied local asset library | `mcbe-json-ui-samples` → local asset learning reference. Full source evidence remains ignored/local; retrieve one need and role, with coverage and hash mismatches visible. |
 | "실제 RP로 완성", "production-ready", "skills 기반으로 마감" | **Two-stage**: tools for coords, then hand-finish the JSON UI per `docs/46-tools-output-to-handcrafted-ui.md`. Cross-check versioned patterns and verify the target client; tool `ok=true` alone is insufficient. See `docs/04-source-priority.md` for authority by claim. |
 
 If unsure, ask the user one short question to disambiguate. Do not silently switch layers.

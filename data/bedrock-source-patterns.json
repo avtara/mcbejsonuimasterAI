@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedAt": "2026-09-27",
+  "reviewedAt": "2026-09-28",
   "evidenceTier": "source-inspected",
   "runtimeVerified": false,
   "reviewDocument": "docs/73-bedrock-source-review.md",
@@ -288,6 +288,201 @@
       ],
       "pathScope": "upstream",
       "screenRoles": []
+    },
+    {
+      "id": "vanilla-held-item-state-perspective",
+      "sourceId": "mojang-bedrock-samples",
+      "paths": [
+        "resource_pack/attachables/bow.json",
+        "resource_pack/models/entity/bow.geo.json",
+        "resource_pack/animations/bow.animation.json",
+        "resource_pack/render_controllers/bow.render_controllers.json",
+        "resource_pack/attachables/shield.entity.json",
+        "resource_pack/models/entity/shield.geo.json",
+        "resource_pack/animations/shield.animation.json",
+        "resource_pack/animation_controllers/shield.animation_controllers.json",
+        "resource_pack/attachables/trident.entity.json",
+        "resource_pack/models/entity/trident.geo.json",
+        "resource_pack/animations/trident.animation.json",
+        "resource_pack/animation_controllers/trident.animation_controllers.json",
+        "resource_pack/render_controllers/item_default.render_controllers.json"
+      ],
+      "roles": [
+        "attachable",
+        "first-person",
+        "third-person",
+        "animation",
+        "held-item"
+      ],
+      "summary": "활은 같은 animation frame으로 geometry/texture 배열을 선택한다. 방패는 item_slot·blocking·시점으로, 삼지창은 시점·사용 시간·riptide 조건으로 소유 애니메이션을 선택한다.",
+      "adaptation": "장착 아이템 description의 aliases→scripts.animate→animation controller→animation bone→geometry를 연결한다. 메인/보조 손과 1/3인칭 상태를 분리하고, 실제 참조하는 controller.render.item_default와 bow controller를 선택한다.",
+      "limitations": [
+        "shield.entity.json은 이름이 비슷한 controller.render.shield를 참조하지 않는다. 파일명 유사성으로 연결하지 않는다.",
+        "표시용 charge 변수와 controller 조건은 BP 사용·공격·투사체 동작 검증을 대신하지 않는다.",
+        "이 선택 자료에는 전체 텍스처와 엔진 재질이 포함되지 않으며 모든 클라이언트 상태에서 실행한 결과가 아니다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "vanilla-player-armor-owner-and-trim",
+      "sourceId": "mojang-bedrock-samples",
+      "paths": [
+        "resource_pack/attachables/diamond_boots.player.json",
+        "resource_pack/attachables/diamond_chestplate.player.json",
+        "resource_pack/attachables/diamond_helmet.player.json",
+        "resource_pack/attachables/diamond_leggings.player.json",
+        "resource_pack/attachables/diamond_chestplate.json",
+        "resource_pack/models/entity/player_armor.json",
+        "resource_pack/animations/armor.animation.json",
+        "resource_pack/render_controllers/armor.render_controllers.json"
+      ],
+      "roles": [
+        "attachable",
+        "armor",
+        "owner-selector",
+        "geometry-inheritance",
+        "trim"
+      ],
+      "summary": "player 전용 다이아 갑옷은 별도 attachable identifier에서 실제 item ID와 player 소유 조건을 선언한다. player_armor는 geometry.child:geometry.parent 상속키를 쓰며 armor controller가 trim과 enchant 재질·텍스처를 선택한다.",
+      "adaptation": "item selector를 검사한 뒤 geometry 상속과 animation offset을 추적한다. parent_setup의 layer visibility를 player 초기화와 함께 확인하고, 동적 trim_path는 정적 파일 경로로 오판하지 않는다.",
+      "limitations": [
+        "identifier와 item ID가 항상 같아야 한다는 검사는 이 공식 사례를 거짓 오류로 만든다.",
+        "geometry 상속을 단순 독립 bone 목록으로 해석하면 reset·inflate·부모 연결의 의미가 사라진다.",
+        "갑옷 슬롯·스킨·trim·인챈트·시점 조합은 대상 클라이언트에서 별도 확인해야 한다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "vanilla-player-attachable-host",
+      "sourceId": "mojang-bedrock-samples",
+      "paths": [
+        "resource_pack/entity/player.entity.json",
+        "resource_pack/models/entity/humanoid.custom.geo.json",
+        "resource_pack/animations/player.animation.json",
+        "resource_pack/animations/player_firstperson.animation.json",
+        "resource_pack/animation_controllers/player.animation_controllers.json",
+        "resource_pack/render_controllers/player.render_controllers.json"
+      ],
+      "roles": [
+        "client-entity",
+        "player-renderer",
+        "attachable",
+        "perspective"
+      ],
+      "summary": "player client entity는 enable_attachables를 켜고 root animation controller와 1/3인칭·spectator·map render 조건을 연결한다. 갑옷 layer 변수도 player pre_animation에서 초기화한다.",
+      "adaptation": "player.json을 교체하기 전에 기존 geometry·animation/controller aliases와 render 조건을 보존해야 할 그래프로 기록한다. 추가 화면용 geometry와 장착 attachable의 소유 경로를 구분한다.",
+      "limitations": [
+        "선택된 player 파일은 전체 humanoid/cape/persona 의존성 묶음이 아니다. 연결 완료나 교체 안전성을 주장하지 않는다.",
+        "live_player_renderer의 정적 미리보기는 실제 장착·보조 손·spectator·멀티플레이 입력 검증이 아니다.",
+        "Mojang 자료는 EULA 범위의 분석 자료이며 독립 제작 에셋의 공개 라이선스가 아니다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "geoui-player-renderer-surface-contract",
+      "sourceId": "au12jp-geoui-studio",
+      "paths": [
+        "index.html",
+        "LICENSE"
+      ],
+      "roles": [
+        "geo-ui",
+        "player-renderer",
+        "material",
+        "client-sync",
+        "external-tool"
+      ],
+      "summary": "GeouiStudio의 출력은 player geometry/controller와 HUD live_player_renderer를 연결한다. 평면 north UV, 재질·layer 순서 및 선택적 client_sync 속성으로 표시 상태를 구성한다.",
+      "adaptation": "생성 출력을 별도 정적 분석 자료로 읽고 RP geometry·material·controller와 BP 속성 producer를 하나의 명시적 계약으로 점검한다. 입력은 원본의 IPC/itemUse/명령 경로이며 geometry가 클릭 영역을 만든다고 가정하지 않는다.",
+      "limitations": [
+        "외부 HTML이나 생성 스크립트는 자동 실행·설치하지 않는다. 176 units와 aspect 추정값은 도구 기본값이며 엔진 불변값이 아니다.",
+        "rpOnly에서 속성 소비자가 남는지, player.json 교체가 기존 그래프를 잃는지 점검해야 한다.",
+        "원본 alpha 명령의 Number(arg1)||100은 0을 100으로 바꾼다. indexed PNG 출력은 부분 alpha를 보존하지 않는 경로가 있다.",
+        "재질 shader·투명도·UI 배율·장치별 시야와 실제 입력은 런타임 미검증이다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "official-wrench-perspective-contract",
+      "sourceId": "microsoft-custom-items",
+      "paths": [
+        "custom_items/behavior_packs/custom_item/items/wrench.json",
+        "custom_items/resource_packs/custom_item/attachables/wrench.player.json",
+        "custom_items/resource_packs/custom_item/models/entity/wrench.geo.json",
+        "custom_items/resource_packs/custom_item/animations/first_person.json"
+      ],
+      "roles": [
+        "attachable",
+        "item-owner",
+        "first-person",
+        "third-person"
+      ],
+      "summary": "공식 wrench 예제는 item 소유자가 player인지 검사하고 context.is_first_person 값에 따라 별도 hold animation을 선택한다.",
+      "adaptation": "아이템 ID·owner selector·attachable geometry·animation bone을 함께 확인한다. 예제 좌표를 복사하기 전에 대상 모델의 pivot과 손 bone 및 시점 상태가 일치하는지 비교한다.",
+      "limitations": [
+        "샘플 animation 이름의 steve_head 부분은 파일 이름이나 아이템 의미를 추론할 근거가 아니다.",
+        "이 pin은 선택 JSON과 LICENSE이며 텍스처·모든 엔진 controller를 포함하는 실행 팩이 아니다.",
+        "실제 1/3인칭·오프핸드·플레이어 외 소유자의 화면 검증은 별도다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "geyser-explicit-attachable-item-selector",
+      "sourceId": "geyser-integrated-pack",
+      "paths": [
+        "src/main/resources/integratedpack/attachables/elytra.armor_stand.json",
+        "src/main/resources/integratedpack/attachables/diamond_chestplate.armor_stand.json"
+      ],
+      "roles": [
+        "attachable",
+        "item-owner",
+        "armor-stand"
+      ],
+      "summary": "Geyser 통합 팩은 armor_stand 접미사가 붙은 attachable identifier를 실제 바닐라 item ID 및 armor stand 소유 조건과 명시적으로 연결한다.",
+      "adaptation": "identifier 일치 검사에 앞서 description.item 매핑을 확인한다. 소유자별 geometry·animation·material 경로를 분리하고 동일 item의 player용 표현과 혼합하지 않는다.",
+      "limitations": [
+        "Geyser 연결 환경의 사례이므로 일반 Bedrock 서버의 동작 보장으로 확대하지 않는다.",
+        "선택 attachable 두 파일만으로 geometry/controller/texture 의존성이 모두 해결되지는 않는다.",
+        "바닐라 이름·원본 에셋 복사나 원본 pack 교체를 자동 수행하지 않는다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "community-attachable-hand-transform-guide",
+      "sourceId": "bedrock-wiki-attachables",
+      "paths": [
+        "docs/items/attachables.md",
+        "docs/public/assets/packs/items/attachables/method_two/attachable_guide.animation.json",
+        "docs/public/assets/packs/items/attachables/method_two/skeleton_head.geo.json"
+      ],
+      "roles": [
+        "attachable",
+        "hand-bone",
+        "pivot",
+        "perspective"
+      ],
+      "summary": "커뮤니티 가이드는 손과 아이템 bone을 구분하고 1/3인칭 변환을 모델 구조와 함께 설명한다.",
+      "adaptation": "대상 geometry의 bone 부모·pivot을 먼저 확인하고 가이드 animation의 변환 목적을 자체 모델 좌표로 다시 설계한다. attachables 범위의 이 revision을 기존 JSON UI 문서 pin과 구분한다.",
+      "limitations": [
+        "문서 예제 좌표는 해당 skeleton 모델 기준이며 다른 모델의 정답 좌표가 아니다.",
+        "이 스냅샷에서 라이선스가 확정되지 않아 원문·예제 전체 재배포 허가로 취급하지 않는다.",
+        "커뮤니티 설명과 정적 파일 확인은 대상 Bedrock 클라이언트의 렌더·입력 검증을 대신하지 않는다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
     }
   ]
 }

@@ -1,0 +1,7 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.inspection.first": { "loop": true, "bones": { "panel": { "scale": 1 } } },
+    "animation.inspection.third": { "loop": true, "bones": { "panel": { "scale": 0 } } }
+  }
+}
