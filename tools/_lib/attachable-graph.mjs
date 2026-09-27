@@ -10,6 +10,26 @@ const norm = value => value.replaceAll('\\', '/');
 const pointer = value => String(value).replaceAll('~', '~0').replaceAll('/', '~1');
 const limits = { files: 50000, jsonBytes: 8 * 1024 * 1024, totalBytes: 256 * 1024 * 1024, edges: 100000 };
 
+// Locate references, not evaluate Molang. Quoted text is data; uncertain comment/
+// quote syntax is masked and reported rather than interpreted as resource names.
+function expressionCode(value) {
+  const chars = value.split(''); let uncertain = false;
+  for (let i = 0; i < value.length;) {
+    const start = i, quote = value[i];
+    if (quote === "'" || quote === '"') {
+      if (quote === '"') uncertain = true;
+      i++; while (i < value.length && value[i] !== quote) i++;
+      if (i === value.length) uncertain = true; else i++;
+    } else if (value.startsWith('//', i)) {
+      uncertain = true; i += 2; while (i < value.length && value[i] !== '\n') i++;
+    } else if (value.startsWith('/*', i)) {
+      uncertain = true; i += 2; while (i < value.length && !value.startsWith('*/', i)) i++; i = Math.min(value.length, i + 2);
+    } else { i++; continue; }
+    for (let j = start; j < i; j++) chars[j] = ' ';
+  }
+  return { code: chars.join(''), uncertain };
+}
+
 /** Read-only RP graph. Expression evaluation and Bedrock rendering are intentionally absent. */
 export async function inspectAttachableGraph({ rp, bp, vanilla } = {}) {
   if (typeof rp !== 'string' || !rp) throw new Error('--rp is required');
@@ -50,9 +70,16 @@ export async function inspectAttachableGraph({ rp, bp, vanilla } = {}) {
           const data = await readFile(full, 'utf8');
           if (Buffer.byteLength(data) > limits.jsonBytes) throw new Error('File grew beyond resource limit');
           doc = JSON.parse(stripJsonTrailingCommas(stripJsonComments(data.replace(/^\uFEFF/, ''))));
-          if (!object(doc)) throw new Error('Root must be an object');
+          const graphFolder = pack === 'bp' ? /^(items|entities)\// : /^(attachables|entity|models|animations|animation_controllers|render_controllers|materials)\//;
+          const objectRoot = file === 'manifest.json' || extname(file).toLowerCase() === '.material' || graphFolder.test(file);
+          if (!object(doc) && objectRoot) throw new Error('Graph definition root must be an object');
+          if (pack !== 'bp' && file === 'texts/languages.json' && !object(doc) && !(Array.isArray(doc) && doc.every(text))) throw new Error('Language list must contain language-code strings');
         } catch (error) { add('error', 'JSON_PARSE', `${pack}/${file}`, '', String(error.message).slice(0, 180)); continue; }
         documents.push({ pack, file, doc });
+        if (!object(doc)) {
+          add('info', 'NON_GRAPH_DOCUMENT', `${pack}/${file}`, '', 'JSON parsed outside graph-owned definition paths; its pack-specific schema was not validated.');
+          continue;
+        }
         if (pack === 'bp') {
           const item = doc['minecraft:item']?.description;
           if (typeof item?.identifier === 'string') node(pack, file, 'item', item.identifier, doc['minecraft:item'], '/minecraft:item');
@@ -121,18 +148,29 @@ export async function inspectAttachableGraph({ rp, bp, vanilla } = {}) {
   };
   for (const owner of owners) {
     const d = owner.value, maps = {};
-    const propertySeen = new Set();
+    const propertySeen = new Set(), uncertainExpressions = new Set();
+    const codeFor = (from, expression, path) => {
+      const result = expressionCode(expression), key = `${from.id}:${path}`;
+      if (result.uncertain && !uncertainExpressions.has(key)) {
+        uncertainExpressions.add(key);
+        edge(from, 'molang-expression', 'unverified-lexical-boundary', path, 'dynamic', null, 'Comment or quote syntax is outside this reference scanner; expression validity remains unverified');
+      }
+      return result.code;
+    };
     const properties = (from, value, path) => {
       const pending = [[value, path]];
       while (pending.length) {
         const [current, at] = pending.pop();
         if (Array.isArray(current) || object(current)) { for (const [k, child] of Object.entries(current)) pending.push([child, `${at}/${pointer(k)}`]); continue; }
         if (typeof current !== 'string') continue;
-        let remaining = current;
+        const code = codeFor(from, current, at);
+        let remaining = code;
         for (const match of current.matchAll(/\b(?:q|query)\.property\s*\(\s*(['"])([^'"]+)\1\s*\)/gi)) {
-          remaining = remaining.replace(match[0], '');
+          if (code[match.index] === ' ') continue;
+          remaining = remaining.slice(0, match.index) + ' '.repeat(match[0].length) + remaining.slice(match.index + match[0].length);
           const key = match[2], identity = `${from.id}:${at}:${key}`;
           if (propertySeen.has(identity)) continue; propertySeen.add(identity);
+          if (code.includes('->')) { edge(from, 'entity-property', key, at, 'external-unverified', null, 'Expression changes actor context; the property owner cannot be inferred from this render owner'); continue; }
           const target = owner.kind === 'client-entity' ? registry.get(`bp:entity-property:${owner.name}#${key}`) : undefined;
           if (target) {
             edge(from, 'entity-property', key, at, target.value?.client_sync === true ? 'resolved' : 'unresolved', target.value?.client_sync === true ? target : null, 'RP property requires client_sync:true on the matching BP entity property');
@@ -151,7 +189,13 @@ export async function inspectAttachableGraph({ rp, bp, vanilla } = {}) {
       for (const [alias, target] of Object.entries(maps[kind])) {
         const actual = kind === 'animation' && typeof target === 'string' && target.startsWith('controller.animation.') ? 'animation-controller' : kind;
         resource(owner, actual, target, `${owner.path}/${property}/${pointer(alias)}`);
-        if (kind === 'animation' && typeof target === 'string') { const animation = lookup(actual, target); if (animation) properties(animation, animation.value, animation.path); }
+        if (['animation', 'geometry'].includes(kind) && typeof target === 'string') {
+          let referenced = lookup(actual, target); const seen = new Set();
+          while (referenced && !seen.has(referenced.id)) {
+            seen.add(referenced.id); properties(referenced, referenced.value, referenced.path);
+            referenced = kind === 'geometry' && referenced.inheritedFrom ? lookup('geometry', referenced.inheritedFrom) : null;
+          }
+        }
       }
     }
     const alias = (from, kind, name, path) => {
@@ -186,18 +230,18 @@ export async function inspectAttachableGraph({ rp, bp, vanilla } = {}) {
       const target = alias(from, 'animation', name, path);
       if (typeof target === 'string' && target.startsWith('controller.animation.')) { const found = lookup('animation-controller', target); if (found) queue.push(found); }
     };
-    const conditionalList = (list, from, path, cb) => {
+    const conditionalList = (list, from, path, cb, requireCondition = false) => {
       if (list === undefined) return;
       if (!Array.isArray(list)) { add('error', 'REFERENCE_LIST', `${from.pack}/${from.file}`, path, 'Expected a list of strings or single-key condition objects'); return; }
       list.forEach((entry, i) => {
-        if (text(entry)) cb(entry, `${path}/${i}`);
+        if (text(entry) && !requireCondition) cb(entry, `${path}/${i}`);
         else if (object(entry) && Object.keys(entry).length === 1) {
           const [name, expression] = Object.entries(entry)[0];
           if (!text(name) || !condition(expression)) { add('error', 'REFERENCE_ENTRY', `${from.pack}/${from.file}`, `${path}/${i}`, 'Expected a nonempty reference with a primitive condition'); return; }
-          if (typeof expression === 'string' && /(?:context|c|variable|v)\.is_first_person/.test(expression)) perspectiveReferences.push({ owner: owner.id, file: `${from.pack}/${from.file}`, path: `${path}/${i}`, expression });
+          if (typeof expression === 'string' && /\b(?:context|c|variable|v)\.is_first_person\b/i.test(codeFor(from, expression, `${path}/${i}`))) perspectiveReferences.push({ owner: owner.id, file: `${from.pack}/${from.file}`, path: `${path}/${i}`, expression });
           cb(name, `${path}/${i}`);
         }
-        else add('error', 'REFERENCE_ENTRY', `${from.pack}/${from.file}`, `${path}/${i}`, 'Expected a string or single-key condition object');
+        else add('error', 'REFERENCE_ENTRY', `${from.pack}/${from.file}`, `${path}/${i}`, requireCondition ? 'State transition requires a single-key target/condition object' : 'Expected a string or single-key condition object');
       });
     };
     conditionalList(d.scripts?.animate, owner, owner.path + '/scripts/animate', (name, path) => animationRef(owner, name, path));
@@ -213,23 +257,79 @@ export async function inspectAttachableGraph({ rp, bp, vanilla } = {}) {
         const path = `${ac.path}/states/${pointer(state)}`;
         if (!text(state) || !object(value)) { add('error', 'CONTROLLER_STATE', `${ac.pack}/${ac.file}`, path, 'State requires a nonempty name and object body'); continue; }
         conditionalList(value.animations, ac, path + '/animations', (name, p) => animationRef(ac, name, p));
-        conditionalList(value.transitions, ac, path + '/transitions', (name, p) => edge(ac, 'controller-state', name, p, Object.hasOwn(states, name) ? 'resolved' : 'unresolved', Object.hasOwn(states, name) ? ac : null));
+        conditionalList(value.transitions, ac, path + '/transitions', (name, p) => edge(ac, 'controller-state', name, p, Object.hasOwn(states, name) ? 'resolved' : 'unresolved', Object.hasOwn(states, name) ? ac : null), true);
       }
     }
     if (owner.kind === 'attachable' && !perspectiveReferences.some(reference => reference.owner === owner.id)) add('warning', 'PERSPECTIVE_UNVERIFIED', `rp/${owner.file}`, owner.path + '/scripts/animate', 'No first-person query was found in reachable animation conditions. Verify whether shared poses are intentional.');
     conditionalList(d.render_controllers, owner, owner.path + '/render_controllers', (name, path) => {
       const rc = resource(owner, 'render-controller', name, path); if (!rc?.value) return;
       properties(rc, rc.value, rc.path);
+      // Current Mojang schema: geometry string, texture list, material mappings.
+      // Older official examples also use a texture string; scan it without
+      // declaring current-schema compatibility or runtime validity.
+      const selectorError = (field, message) => add('error', 'RESOURCE_SELECTOR', `${rc.pack}/${rc.file}`, `${rc.path}/${field}`, message);
+      if (rc.value.geometry !== undefined && !text(rc.value.geometry)) selectorError('geometry', 'Geometry selector must be a nonempty resource expression string');
+      if (rc.value.textures !== undefined) {
+        if (text(rc.value.textures)) edge(rc, 'resource-selector-shape', 'textures-string', rc.path + '/textures', 'dynamic', null, 'A texture string appears in older official examples; current-schema list compatibility remains unverified');
+        else if (!Array.isArray(rc.value.textures) || rc.value.textures.some(value => !text(value))) selectorError('textures', 'Textures must be a list of nonempty resource expression strings');
+      }
+      if (rc.value.materials !== undefined && (!Array.isArray(rc.value.materials) || rc.value.materials.some(value => !object(value) || Object.entries(value).some(([bone, expression]) => !text(bone) || !text(expression))))) selectorError('materials', 'Materials must be a list of bone-pattern to resource-expression mappings');
+      const arrayMaps = { geometry: new Map(), texture: new Map(), material: new Map() };
+      const groupKinds = { geometries: 'geometry', textures: 'texture', materials: 'material' };
+      if (rc.value.arrays !== undefined && !object(rc.value.arrays)) add('error', 'RESOURCE_ARRAYS', `${rc.pack}/${rc.file}`, rc.path + '/arrays', 'Resource arrays must be grouped by resource type');
+      for (const [group, kind] of Object.entries(groupKinds)) {
+        const declarations = rc.value.arrays?.[group]; if (declarations === undefined) continue;
+        const groupPath = `${rc.path}/arrays/${group}`;
+        if (!object(declarations)) { add('error', 'RESOURCE_ARRAYS', `${rc.pack}/${rc.file}`, groupPath, 'Array group must be an object'); continue; }
+        for (const [arrayName, members] of Object.entries(declarations)) {
+          const arrayPath = `${groupPath}/${pointer(arrayName)}`;
+          if (!text(arrayName) || !Array.isArray(members) || members.some(member => !text(member))) {
+            add('error', 'RESOURCE_ARRAY_MEMBERS', `${rc.pack}/${rc.file}`, arrayPath, 'Resource array requires a named array and a list of nonempty resource expressions'); continue;
+          }
+          if (!/^array\.[a-z0-9_]+(?:\.[a-z0-9_]+)*$/i.test(arrayName)) edge(rc, 'resource-array-declaration', arrayName, arrayPath, 'dynamic', null, 'Array identifier syntax is outside this reference scanner');
+          const key = arrayName.toLowerCase();
+          if (arrayMaps[kind].has(key)) add('error', 'RESOURCE_ARRAY_DUPLICATE', `${rc.pack}/${rc.file}`, arrayPath, 'Molang array names are case-insensitive');
+          else arrayMaps[kind].set(key, { members, path: arrayPath });
+        }
+      }
+      // Bare nested membership requires finite expansion. Do not evaluate
+      // conditional/indexed expressions to infer cycles: those remain dynamic.
+      for (const group of Object.values(arrayMaps)) {
+        const links = new Map([...group].map(([key, record]) => [key, record.members.map(member => expressionCode(member).code.trim().toLowerCase()).filter(member => group.has(member))]));
+        const checked = new Set(), reported = new Set();
+        for (const start of group.keys()) {
+          if (checked.has(start)) continue;
+          const active = new Set([start]), stack = [{ key: start, index: 0 }];
+          while (stack.length) {
+            const frame = stack[stack.length - 1], next = links.get(frame.key)[frame.index++];
+            if (next === undefined) { stack.pop(); active.delete(frame.key); checked.add(frame.key); continue; }
+            if (active.has(next)) {
+              if (!reported.has(next)) edge(rc, 'resource-array-cycle', next, group.get(frame.key).path, 'dynamic', null, 'Cyclic array membership has no proven finite expansion');
+              reported.add(next);
+            } else if (!checked.has(next)) { active.add(next); stack.push({ key: next, index: 0 }); }
+          }
+        }
+      }
       const strings = (value, p, fn) => {
         const pending = [[value, p]];
         while (pending.length) { const [v, at] = pending.pop(); if (typeof v === 'string') fn(v, at); else if (Array.isArray(v) || object(v)) for (const [k, child] of Object.entries(v)) pending.push([child, `${at}/${pointer(k)}`]); }
       };
       strings(rc.value, rc.path, (expression, at) => {
-        for (const match of expression.matchAll(/\b(geometry|texture|material)\.([a-z0-9_]+)/gi)) alias(rc, match[1].toLowerCase(), match[2], at);
-        for (const match of expression.matchAll(/\barray\.([a-z0-9_]+)\s*\[/gi)) {
+        const code = codeFor(rc, expression, at), parts = at.slice(rc.path.length + 1).split('/');
+        const expected = parts[0] === 'arrays' ? groupKinds[parts[1]] : { geometry: 'geometry', textures: 'texture', materials: 'material' }[parts[0]];
+        const directAlias = /^(geometry|texture|material)\.[a-z0-9_]+$/i.exec(code.trim());
+        if (expected && directAlias && directAlias[1].toLowerCase() !== expected) add('error', 'RESOURCE_TYPE', `${rc.pack}/${rc.file}`, at, `Expected a ${expected} resource, not ${directAlias[1].toLowerCase()}`);
+        for (const match of code.matchAll(/(?<![a-z0-9_.])\b(geometry|texture|material)\.([a-z0-9_]+)(?![a-z0-9_.])/gi)) alias(rc, match[1].toLowerCase(), match[2], at);
+        const directArray = /^array\.[a-z0-9_]+(?:\.[a-z0-9_]+)*\s*(?:\[[^\[\]]*\])?$/i.test(code.trim());
+        if (expected && !directAlias && !directArray) edge(rc, 'resource-expression', expression, at, 'dynamic', null, 'References were scanned; the expression return type requires Molang evaluation');
+        for (const match of code.matchAll(/(?<![a-z0-9_.])\barray\.([a-z0-9_]+(?:\.[a-z0-9_]+)*)/gi)) {
           const arrayName = `array.${match[1]}`;
-          const found = Object.values(rc.value.arrays || {}).some(group => object(group) && Object.keys(group).some(k => k.toLowerCase() === arrayName.toLowerCase()));
-          edge(rc, 'resource-array', arrayName, at, found ? 'dynamic' : 'unresolved', null, found ? 'Declared array members were checked; selected index remains runtime-dependent' : 'Referenced controller array is not declared');
+          const choices = expected && directArray ? [arrayMaps[expected]] : Object.values(arrayMaps);
+          const found = choices.some(group => group.has(arrayName.toLowerCase()));
+          const indexed = /^\s*\[/.test(code.slice(match.index + match[0].length));
+          const dynamic = indexed || parts[0] !== 'arrays';
+          edge(rc, 'resource-array', arrayName, at, !found ? 'unresolved' : dynamic ? 'dynamic' : 'resolved', found && !dynamic ? rc : null,
+            found ? 'Declared array members were checked; selecting a single resource remains unverified' : `Referenced controller array is not declared${expected && directArray ? ` for ${expected}` : ''}`);
         }
       });
     });

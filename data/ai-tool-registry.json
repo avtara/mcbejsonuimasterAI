@@ -985,7 +985,7 @@
       "purpose": "Retrieve one style, pixel-art method or chest GUI topic with pinned evidence under a character budget.",
       "command": { "executable": "node", "script": "tools/design-library.mjs", "display": "node tools/design-library.mjs" },
       "arguments": [
-        { "name": "command", "kind": "positional", "required": true, "valueType": "enum", "values": [ "styles", "context", "sources", "skills", "methods", "method", "verify", "chest-topics", "chest" ], "description": "Small style/method index, one selected card, sources, external skill adapters or metadata validation." },
+        { "name": "command", "kind": "positional", "required": true, "valueType": "enum", "values": [ "styles", "context", "sources", "skills", "methods", "method", "verify", "chest-topics", "chest", "patterns" ], "description": "Small style/method index, one selected card, sources, patterns for one --source, external skill adapters or metadata validation." },
         { "name": "method", "kind": "option", "flag": "--method", "required": false, "valueType": "string", "description": "Exact method id for the method command; lists are available through methods." },
         { "name": "style", "kind": "option", "flag": "--style", "required": false, "valueType": "string", "description": "Exact style id or known alias for context, or optional palette/style in a method card." },
         { "name": "role", "kind": "option", "flag": "--role", "required": false, "valueType": "string", "description": "Screen role; defaults to menu." },
@@ -1311,6 +1311,30 @@
       "evidenceProduced": [ "Explicit static/research evidence; no Bedrock runtime claim." ],
       "unsupportedBehavior": [ "Paper results are not measured performance of this repository; no full papers or upstream code are loaded." ],
       "supports": { "help": true, "json": true, "report": false }
+    },
+    {
+      "id": "geoui.project",
+      "status": "implemented",
+      "purpose": "Inspect a native GeouiStudio v6 save for export collisions, missing persistent assets and state producer gaps.",
+      "command": { "executable": "node", "script": "tools/geoui-inspect.mjs", "display": "node tools/geoui-inspect.mjs" },
+      "arguments": [
+        { "name": "input", "kind": "option", "flag": "--input", "required": true, "valueType": "path", "description": "One saved .geoui.json file; no upstream HTML execution." },
+        { "name": "max-chars", "kind": "option", "flag": "--max-chars", "required": false, "valueType": "integer", "description": "1000..64000; default 6000 including final newline." },
+        { "name": "report", "kind": "option", "flag": "--report", "required": false, "valueType": "path", "description": "Optional full report at a new path; existing files are preserved." },
+        { "name": "json", "kind": "flag", "flag": "--json", "required": false, "valueType": "boolean", "description": "Print bounded JSON." }
+      ],
+      "inputs": [{ "name": "project", "kind": "file", "required": true, "format": "json", "description": "Saved project data, with its own source version and media persistence." }],
+      "outputs": [{ "name": "result", "kind": "stdout", "required": true, "format": "json", "description": "mcbe-geoui-project-inspection@1; static diagnostics and coverage limits." }],
+      "preconditions": [ "Supply one project exported by the inspected native save format." ],
+      "mutates": { "mode": "workspace", "paths": [ "--report" ], "description": "Read-only project; optional exclusive new report, after output budget checks." },
+      "successExitCodes": [ 0 ],
+      "failures": [
+        { "exitCode": 1, "meaning": "Static project errors were found.", "recovery": "Resolve diagnosed export/restore problems in a copy of the source project." },
+        { "exitCode": 2, "meaning": "Arguments, input or report I/O failed.", "recovery": "Read --help, verify file/size limits and choose a new report path." }
+      ],
+      "evidenceProduced": [ "Source-grounded static project inspection; ok and complete are independent." ],
+      "unsupportedBehavior": [ "No HTML execution, image/media decoding, font layout, geometry rendering, pack export or Bedrock runtime validation." ],
+      "supports": { "help": true, "json": true, "report": true }
     }
   ]
 }

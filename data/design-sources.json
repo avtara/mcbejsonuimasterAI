@@ -11,8 +11,8 @@
       "license": "Mojang-EULA",
       "reuse": "analysis-only",
       "summary": "공식 바닐라 화면, 공통 컨트롤, server-ui 메타데이터. 실제 클라이언트 버전과 별도 비교한다.",
-      "fileCount": 253,
-      "bytes": 6358797,
+      "fileCount": 254,
+      "bytes": 6381998,
       "runtime": "unverified",
       "pathScope": "upstream"
     },
@@ -25,8 +25,8 @@
       "license": "MIT",
       "reuse": "reference",
       "summary": "공식 UI 속성·요소 스키마. 허용 문법의 근거이며 런타임 구현 보장은 아니다.",
-      "fileCount": 13,
-      "bytes": 64948,
+      "fileCount": 15,
+      "bytes": 67986,
       "runtime": "unverified",
       "pathScope": "upstream"
     },
@@ -597,9 +597,9 @@
       "revisionDate": "2026-09-22T16:37:54Z",
       "license": "CC-BY-4.0 (documentation); MIT (code examples, LICENSE-CODE)",
       "reuse": "reference-only",
-      "summary": "ActionFormData/Response, 취소 이유와 스케줄러의 버전 고정 공식 계약. 재시도 횟수·페이지 정책은 별도 앱 설계다.",
-      "fileCount": 12,
-      "bytes": 89680,
+      "summary": "공식 폼·attachable·Molang·렌더 재질·Entity Property·Script API의 버전 고정 계약. 실제 게임 관측 및 앱별 입력·복원 정책과 구분한다.",
+      "fileCount": 30,
+      "bytes": 348660,
       "runtime": "unverified",
       "pathScope": "upstream"
     },
@@ -768,8 +768,8 @@
       "license": "NOASSERTION",
       "reuse": "reference-only",
       "summary": "attachable 손/아이템 bone과 시점 변환 설명에 한정한 별도 최신 스냅샷. 기존 bedrock-oss-bedrock-wiki JSON UI revision을 대체하지 않으며 페이지별 권리는 미확인이다.",
-      "fileCount": 3,
-      "bytes": 12600,
+      "fileCount": 5,
+      "bytes": 35156,
       "runtime": "unverified",
       "pathScope": "upstream",
       "evidence": [
@@ -778,6 +778,28 @@
           "sha256": "c8ba51fb3c19c1e66bfec356103dfda2b2b7337704b09494c5a71750d9c998e1",
           "lineStart": 1,
           "lineEnd": 28
+        }
+      ]
+    },
+    {
+      "id": "mirzahilmi-3d-totem",
+      "kind": "addon",
+      "url": "https://github.com/mirzahilmi/3d-totem",
+      "revision": "93b436eea475b2baa9aae2e5d10c67122aa85c19",
+      "revisionDate": "2022-08-15T04:12:54Z",
+      "license": "NOASSERTION",
+      "reuse": "reference-only",
+      "summary": "독립 3D totem의 main/offhand 조건과 애니메이션 누적 사례. 원본 코드·아트의 재배포 권리는 확인되지 않아 분석 근거로만 사용한다.",
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "fileCount": 6,
+      "bytes": 8617,
+      "evidence": [
+        {
+          "path": "attachables/mmaarapuppet.json",
+          "sha256": "0f86389d01cb43aff83f22b76b0c6611f3f1e7d45bb818d80ab67e2a85c302bf",
+          "lineStart": 1,
+          "lineEnd": 43
         }
       ]
     }

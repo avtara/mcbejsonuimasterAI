@@ -430,7 +430,8 @@
       "limitations": [
         "샘플 animation 이름의 steve_head 부분은 파일 이름이나 아이템 의미를 추론할 근거가 아니다.",
         "이 pin은 선택 JSON과 LICENSE이며 텍스처·모든 엔진 controller를 포함하는 실행 팩이 아니다.",
-        "실제 1/3인칭·오프핸드·플레이어 외 소유자의 화면 검증은 별도다."
+        "실제 1/3인칭·오프핸드·플레이어 외 소유자의 화면 검증은 별도다.",
+        "이 고정 예제의 geometry root bb_main과 애니메이션 대상 steve_head가 다르다. 공식 출처라도 bone/pivot 일치와 실제 pose를 별도로 검사한다."
       ],
       "pathScope": "upstream",
       "screenRoles": [],
@@ -479,6 +480,100 @@
         "문서 예제 좌표는 해당 skeleton 모델 기준이며 다른 모델의 정답 좌표가 아니다.",
         "이 스냅샷에서 라이선스가 확정되지 않아 원문·예제 전체 재배포 허가로 취급하지 않는다.",
         "커뮤니티 설명과 정적 파일 확인은 대상 Bedrock 클라이언트의 렌더·입력 검증을 대신하지 않는다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "official-render-array-types",
+      "sourceId": "microsoftdocs-minecraft-creator",
+      "paths": [
+        "creator/Documents/molang/practical-molang.md",
+        "creator/Documents/molang/syntax-guide.md",
+        "creator/Documents/Animations/AnimationController.md"
+      ],
+      "roles": [
+        "render-controller",
+        "typed-array",
+        "animation-controller"
+      ],
+      "summary": "Render Controller의 리소스 배열은 geometry/texture/material 타입을 유지하며 nested Array를 포함할 수 있다. 조건부 animation transition은 상태 이름과 조건의 객체다.",
+      "adaptation": "참조 문자열·배열 타입·cycle을 검사하고 따옴표 안 텍스트를 alias로 오인하지 않는다. 복합 Molang의 실행 결과와 반환 타입을 정규식만으로 확정하지 않는다.",
+      "limitations": [
+        "정적 어휘 검사이며 전체 Molang parser/evaluator가 아니다. 모호한 조건과 실행 분기는 complete:false로 남긴다.",
+        "실행 순서·가중치·변환 누적은 대상 클라이언트 관측이 필요하다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "official-geometry-ui-state-scope",
+      "sourceId": "microsoftdocs-minecraft-creator",
+      "paths": [
+        "creator/Documents/IntroductionToEntityProperties.md",
+        "creator/ScriptAPI/minecraft/server/Player.md",
+        "creator/ScriptAPI/minecraft/server/Entity.md",
+        "creator/ScriptAPI/minecraft/server/changelog.md"
+      ],
+      "roles": [
+        "geo-ui",
+        "client-sync",
+        "state",
+        "multiplayer"
+      ],
+      "summary": "Entity Property의 일반 저장 상태와 viewer별 property override는 소유 범위가 다르다. Script API set/get은 같은 tick의 새 값을 보장하지 않는다.",
+      "adaptation": "서버의 실제 게임 상태와 UI 표시 상태를 구분한다. 타입·범위·client_sync·module version·해제 key를 확인하고 닫기/재접속의 세션 유효성을 검증한다. docs/81-geometry-ui-state-and-lifecycle.md를 선택해 읽는다.",
+      "limitations": [
+        "viewer override가 특정 live_player_renderer에 적용되는지는 target entity 문맥과 실제 두 클라이언트 관측으로 확인한다.",
+        "GeouiStudio 원본이 이 override API를 사용한다는 주장이 아니다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "independent-offhand-animation-composition",
+      "sourceId": "mirzahilmi-3d-totem",
+      "paths": [
+        "attachables/mmaarapuppet.json",
+        "animations/mmaarapuppet.animation.json",
+        "models/entity/mmaarapuppet.geo.json"
+      ],
+      "roles": [
+        "attachable",
+        "offhand",
+        "perspective",
+        "animation"
+      ],
+      "summary": "독립 3D totem은 offhand에서도 기본 first/third 애니메이션과 보정 애니메이션을 동시에 활성화한다.",
+      "adaptation": "원본의 누적 보정 설계와 자체 모델의 독립 pose 설계를 구분한다. 네 조건을 분리하려면 각 bone의 position/rotation/scale과 조건의 상호배타성을 함께 설계한다.",
+      "limitations": [
+        "라이선스 파일을 확인하지 못했으므로 코드·아트는 재배포하지 않는다.",
+        "원본 좌표·문자열·식별자를 자체 pack에 복사하지 않으며 원본의 런타임 성공을 주장하지 않는다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "geoui-native-project-export-loss",
+      "sourceId": "au12jp-geoui-studio",
+      "paths": [
+        "index.html"
+      ],
+      "roles": [
+        "geo-ui",
+        "project-restore",
+        "asset-persistence",
+        "export"
+      ],
+      "summary": "GeouiStudio v6 serialize/restore와 build 경로는 설정 객체와 image/audio/model 데이터를 다르게 저장한다. 정규화된 layer ID 충돌은 export 식별자·파일 충돌로 이어질 수 있다.",
+      "adaptation": "실제 저장 프로젝트에서 layer ID, 복원 가능한 payload, frame/page 계획, scene/property producer와 RP-only 옵션을 export 전에 검사한다. 원문 HTML 실행 없이 source 경로를 근거로 보존한다.",
+      "limitations": [
+        "프로젝트 검사는 atlas 디코딩·실제 Web Audio·폰트·export 후 Bedrock 렌더를 검증하지 않는다.",
+        "미지원 프로젝트 버전과 asset 압축 경로의 불확실성을 성공으로 숨기지 않는다."
       ],
       "pathScope": "upstream",
       "screenRoles": [],

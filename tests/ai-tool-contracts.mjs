@@ -90,7 +90,7 @@ async function main() {
     check("chest-context:one-tool:"+need,selected.code===0 && value?.tools?.length===1 && value.tools[0].id===id && JSON.stringify(value.workflow)===JSON.stringify([id]));
   }
   const compactDesignValue = json(compactDesign.stdout);
-  for(const [skill,need,id] of [["mcbe-geo-ui","asset-graph","attachable.inspect"],["mcbe-resource-pack-rendering","render-materials","material.audit"],["mcbe-json-ui-samples","asset-learning","asset.learn"],["mcbe-json-ui-research","research-context","research.context"]]) {
+  for(const [skill,need,id] of [["mcbe-geo-ui","geoui-project","geoui.project"],["mcbe-attachables-ui","source-patterns","design.library"],["mcbe-geo-ui","source-patterns","design.library"],["mcbe-geo-ui","asset-graph","attachable.inspect"],["mcbe-resource-pack-rendering","render-materials","material.audit"],["mcbe-json-ui-samples","asset-learning","asset.learn"],["mcbe-json-ui-research","research-context","research.context"]]) {
     const selected=await run(["tools/skill-context.mjs",skill,"--needs",need,"--compact","--json"]);
     const value=json(selected.stdout);
     check("pack-context:one-tool:"+need,selected.code===0 && value?.tools?.length===1 && value.tools[0].id===id && JSON.stringify(value.workflow)===JSON.stringify([id]));

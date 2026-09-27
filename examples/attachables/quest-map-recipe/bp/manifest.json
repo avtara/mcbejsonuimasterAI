@@ -1,0 +1,39 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Quest Map Authoring Recipe BP",
+    "description": "Two inspectable map states; no automatic grants, replacements or input handler.",
+    "uuid": "06671941-5a75-4d58-a198-135d11c4babc",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      100
+    ]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "a1c6b34f-d33e-4550-9c1e-26cf88b94d5b",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "f4baa344-86e5-4bcd-88e0-82842b0ed49a",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}

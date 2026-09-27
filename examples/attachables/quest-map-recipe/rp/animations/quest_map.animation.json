@@ -1,0 +1,77 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.kit_demo.quest_map.main_first": {
+      "loop": true,
+      "bones": {
+        "quest_map_root": {
+          "position": [
+            3,
+            17,
+            -5
+          ],
+          "rotation": [
+            10,
+            -20,
+            0
+          ],
+          "scale": 0.7
+        }
+      }
+    },
+    "animation.kit_demo.quest_map.off_first": {
+      "loop": true,
+      "bones": {
+        "quest_map_root": {
+          "position": [
+            -3,
+            17,
+            -5
+          ],
+          "rotation": [
+            10,
+            20,
+            0
+          ],
+          "scale": 0.7
+        }
+      }
+    },
+    "animation.kit_demo.quest_map.main_third": {
+      "loop": true,
+      "bones": {
+        "quest_map_root": {
+          "position": [
+            0,
+            22,
+            -2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": 0.55
+        }
+      }
+    },
+    "animation.kit_demo.quest_map.off_third": {
+      "loop": true,
+      "bones": {
+        "quest_map_root": {
+          "position": [
+            0,
+            22,
+            -2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": 0.55
+        }
+      }
+    }
+  }
+}

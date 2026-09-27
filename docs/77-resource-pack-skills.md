@@ -14,6 +14,8 @@
 ```powershell
 node tools/route-task.mjs --intent '{"surface":"geo-ui","taskKinds":["geoui-studio"],"supportingKinds":["material"]}'
 node tools/skill-context.mjs mcbe-geo-ui --needs asset-graph --compact --json
+node tools/skill-context.mjs mcbe-geo-ui --needs geoui-project --compact --json
+node tools/design-library.mjs patterns --source au12jp-geoui-studio --max-chars 6000 --json
 node tools/research-context.mjs topics
 node tools/research-context.mjs context --topic context-selection --max-chars 5000
 ```
@@ -24,12 +26,17 @@ node tools/research-context.mjs context --topic context-selection --max-chars 50
 
 ```powershell
 node tools/attachable-inspect.mjs --rp RP --bp BP --vanilla VANILLA_RP --report workspace/graph-report.json --json
+node tools/geoui-inspect.mjs --input PROJECT.geoui.json --report workspace/geoui-report.json --json
 node tools/material-audit.mjs --rp RP --mode vibrant --report workspace/material-report.json --json
 ```
 
-두 도구의 기본 stdout 한도는 최종 줄바꿈을 포함한 6,000자이며 전체 진단은 새 보고서 파일에만 기록한다. 기존 보고서와 입력 파일을 덮어쓰지 않는다. 종료 코드 0은 검사 범위 내 오류 없음, 1은 발견한 구조 오류, 2는 인자·입출력 오류다.
+세 검사 도구의 기본 stdout 한도는 최종 줄바꿈을 포함한 6,000자이며 전체 진단은 새 보고서 파일에만 기록한다. 기존 보고서와 입력 파일을 덮어쓰지 않는다. 종료 코드 0은 검사 범위 내 오류 없음, 1은 발견한 구조 오류, 2는 인자·입출력 오류다.
+
+`geoui-inspect`는 native v6 프로젝트의 ID 충돌, 저장된 미디어 복원과 상태 생산자 누락을 검사한다. 내보낸 RP의 그래프는 별도로 `attachable-inspect`에 전달한다. 장착 UI를 직접 작성할 때는 [작성 가이드](80-attachables-ui-authoring.md)와 [두 상태 퀘스트 지도 예제](../examples/attachables/quest-map-recipe/README.md)를 선택한다.
 
 그래프의 `ok`와 `complete`는 다르다. 외부·동적 참조가 있으면 구조 오류가 없어도 완전한 해석을 주장하지 않는다. 이미지 픽셀, Molang 실행, 장착/해제, 네트워크 상태, 클릭과 화면 좌표는 실제 클라이언트에서 확인한다. 머테리얼 검사는 루트 `materials/`와 `textures/`를 대상으로 하며 subpack은 별도로 선택한다.
+
+상태가 재접속 뒤 남거나 다른 플레이어에게도 표시되면 [상태와 수명](81-geometry-ui-state-and-lifecycle.md)을 선택한다. 일반 Entity Property, 보는 사람별 표시 override, scoreboard producer와 임시 애니메이션 변수를 구분한다.
 
 ## 로컬 에셋 활용
 

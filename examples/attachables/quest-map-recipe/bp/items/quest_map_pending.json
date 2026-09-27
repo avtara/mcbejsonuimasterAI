@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:item": {
+    "description": {
+      "identifier": "kit_demo:quest_map_pending",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:max_stack_size": 1,
+      "minecraft:icon": "kit_demo:quest_map_pending",
+      "minecraft:display_name": {
+        "value": "item.kit_demo:quest_map_pending.name"
+      },
+      "minecraft:allow_off_hand": true
+    }
+  }
+}

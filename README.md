@@ -4,6 +4,8 @@ Portable Codex skills and tools for Minecraft Bedrock JSON UI, resource packs, a
 
 Resource packs and model UI: [workflows and checks](docs/77-resource-pack-skills.md), [source findings and coverage](docs/79-resource-source-review.md). Local asset evidence is indexed outside public sources and retrieved by need; [AI/pixel/game-UI research](docs/78-skill-research.md) supplies selected methods and their limits.
 
+For equipment and GeoUI state, use the [state/lifecycle guide](docs/81-geometry-ui-state-and-lifecycle.md): property producers, per-viewer scope, next-tick reads and reconnect handling.
+
 Chest GUI: [design and inspection tools](docs/75-chest-gui.md), [pinned source review](docs/76-chest-source-review.md), and the `mcbe-json-ui-chest-gui` specialist distinguish native containers, chest-style ActionForm menus and Minato editor projects.
 
 This repository is designed to be usable as a standalone GitHub project, not just as a local note dump.  

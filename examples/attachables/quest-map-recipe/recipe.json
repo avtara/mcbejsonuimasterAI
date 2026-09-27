@@ -1,0 +1,85 @@
+{
+  "schema": "mcbe-attachable-authoring-recipe@1",
+  "id": "quest-map-two-state",
+  "origin": "independently-authored",
+  "minimumClient": [
+    1,
+    21,
+    100
+  ],
+  "runtimeVerified": false,
+  "poseStatus": "authored-calibration-starting-point",
+  "states": [
+    {
+      "id": "pending",
+      "item": "kit_demo:quest_map_pending",
+      "texture": "textures/quest_map/pending"
+    },
+    {
+      "id": "ready",
+      "item": "kit_demo:quest_map_ready",
+      "texture": "textures/quest_map/ready"
+    }
+  ],
+  "equipment": [
+    "Mainhand",
+    "Offhand"
+  ],
+  "display": {
+    "geometry": "geometry.kit_demo.quest_map",
+    "bone": "quest_map_root",
+    "textureSize": [
+      48,
+      32
+    ],
+    "iconSize": [
+      16,
+      16
+    ],
+    "cubeSize": [
+      12,
+      8,
+      0.25
+    ],
+    "branches": [
+      "main_first",
+      "off_first",
+      "main_third",
+      "off_third"
+    ]
+  },
+  "stateContract": {
+    "owner": "server quest state keyed by player and quest instance",
+    "projection": "finite item variant; not arbitrary numeric text",
+    "inputOwner": "target addon adapter; no handler is included",
+    "preconditions": [
+      "request belongs to the current player, quest instance and revision",
+      "current slot still contains the same owned map instance",
+      "do not overwrite unrelated items or treat typeId alone as instance identity"
+    ],
+    "update": [
+      "validate canonical quest state before selecting the item variant",
+      "read current equipment immediately before replacement; preserve required item metadata",
+      "replace only the approved map instance and check the adapter result",
+      "on failure keep canonical state and retry only after revalidation"
+    ],
+    "cleanup": [
+      "cancel delayed callbacks on unequip, close, death, disconnect or session revision change",
+      "do not restore saved equipment blindly after death, respawn, inventory movement or reconnect",
+      "reconcile the currently owned map with canonical quest state when the player is available again"
+    ]
+  },
+  "runtimeCases": [
+    "main/offhand and first/third-person, including rapid hand changes",
+    "another observer and armor stand: player selector scope must match intent",
+    "normal and slim skins, GUI scale and requested mobile/controller profile",
+    "use/cancel/close, slot switch during callback, death/rejoin, world/pack reload",
+    "inspect alpha corners, both faces, clipping, nearby occlusion and readable state marker"
+  ],
+  "limits": [
+    "Pose coordinates are authored starting points, not measured device calibration.",
+    "No server script, command registration, arbitrary click region or equipment grant is installed.",
+    "entity_alphatest availability and shader behavior require target-client evidence.",
+    "Opaque/cutout sample has no glint or translucency contract."
+  ]
+}

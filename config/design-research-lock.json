@@ -1527,6 +1527,12 @@
           "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/render_controllers/player.render_controllers.json",
           "sha256": "9fdcf008895fcefcaa5f0bb948728b8d4513007b200c19b717c70908d026299a",
           "bytes": 3199
+        },
+        {
+          "path": "resource_pack/textures/flipbook_textures.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-samples/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/textures/flipbook_textures.json",
+          "sha256": "bc6e227e696002bcc39ce40bde6c4133a3687d08f732b89b054cd047c4fb54d2",
+          "bytes": 23201
         }
       ],
       "reuse": "analysis-only"
@@ -1616,6 +1622,18 @@
           "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/types/rp/ui/UiScreen.d.ts",
           "sha256": "743672a59bad63ca874f26eedab0f2cad0495ad05777aba758a895919b5ed184",
           "bytes": 1147
+        },
+        {
+          "path": "schemas/rp/render_controllers/index.schema.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/schemas/rp/render_controllers/index.schema.json",
+          "sha256": "c1cd06eca1092adbe4a082d9ab446dd622197375703f2e8901ced89ae9c6b1fb",
+          "bytes": 1967
+        },
+        {
+          "path": "schemas/rp/render_controllers/lists.schema.json",
+          "url": "https://raw.githubusercontent.com/Mojang/bedrock-schemas/2b842801ce08f42f21d9782543c8dfb868b84eee/schemas/rp/render_controllers/lists.schema.json",
+          "sha256": "83a5e67cfa60a2be4a22b3cf93365ff7e9f693e2e5ccfff4d05c15fa47ae1684",
+          "bytes": 1071
         }
       ],
       "reuse": "reference"
@@ -3241,6 +3259,114 @@
           "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Reference/Content/TextureSetsReference/TextureSetsConcepts/TextureSetsIntroduction.md",
           "sha256": "0d1d874e74031e2c0c5494ddc9ac7ec56c460a285869a2bf1e3514d827803c30",
           "bytes": 8691
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/EntityEquippableComponent.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/EntityEquippableComponent.md",
+          "sha256": "8e55665cd2429f2721d5c8b2052138e1c52064a05861d327b7120eed801d5b01",
+          "bytes": 3373
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/EquipmentSlot.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/EquipmentSlot.md",
+          "sha256": "2aa73ec083c3f2ac7e6572ff23cf0c16c6a2fcc4c1d7a547824284e11e8fed3d",
+          "bytes": 1296
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/PlayAnimationOptions.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/PlayAnimationOptions.md",
+          "sha256": "0dad02b13be21af81c347982e60a2e48ba29a50856b3ddd45d83d24d93d06e6e",
+          "bytes": 1129
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/ItemUseAfterEvent.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/ItemUseAfterEvent.md",
+          "sha256": "7b243851ecc4139bd37187eabb47f6190a3379727bb0e7fe3877e9130c6e9f40",
+          "bytes": 949
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/PlayerSpawnAfterEvent.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/PlayerSpawnAfterEvent.md",
+          "sha256": "8567cbfac01694e853e2be3f5044c7fc99c093e6daa1a684fc23872830cf5f97",
+          "bytes": 926
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/EntityDieAfterEvent.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/EntityDieAfterEvent.md",
+          "sha256": "7a7ab4595b77d4cbf71c14d16bfb7d61630a33acf41133111b87897d47fffd2a",
+          "bytes": 846
+        },
+        {
+          "path": "creator/Reference/Content/ItemReference/Examples/ItemComponents/minecraft_allow_off_hand.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Reference/Content/ItemReference/Examples/ItemComponents/minecraft_allow_off_hand.md",
+          "sha256": "5cb8b5cac7322d825180c4efb2ddf59cd06ea337c180a714d93632a3f03fa2d2",
+          "bytes": 816
+        },
+        {
+          "path": "creator/Reference/Content/ItemReference/Examples/ItemComponents/minecraft_wearable.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Reference/Content/ItemReference/Examples/ItemComponents/minecraft_wearable.md",
+          "sha256": "dc0c91bd8522a10a410e054d5e65a3e7edae1311b6597663eacfbe63afafbe38",
+          "bytes": 2028
+        },
+        {
+          "path": "creator/Documents/IntroductionToEntityProperties.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Documents/IntroductionToEntityProperties.md",
+          "sha256": "eed78ac368abd5f4c10fd0eacbb8d9e84cba0f700ab7fb2dedb29c1ee7cb0f80",
+          "bytes": 24322
+        },
+        {
+          "path": "creator/Documents/scripting/multiplayer-scripts.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Documents/scripting/multiplayer-scripts.md",
+          "sha256": "8e072c70807006f45afed10d53f6511cc5f750b3b01992955436fb2bfe603c3d",
+          "bytes": 8446
+        },
+        {
+          "path": "creator/Reference/Content/MolangReference/Examples/MolangConcepts/QueryFunctions/query_is_in_ui.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Reference/Content/MolangReference/Examples/MolangConcepts/QueryFunctions/query_is_in_ui.md",
+          "sha256": "025b89bbb240e1478485f6850bc9dcfc273d3dfe209ddbc5d789da27a60e5ecf",
+          "bytes": 372
+        },
+        {
+          "path": "creator/Reference/Content/MolangReference/Examples/MolangConcepts/QueryFunctions/query_is_first_person.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Reference/Content/MolangReference/Examples/MolangConcepts/QueryFunctions/query_is_first_person.md",
+          "sha256": "76737c10abf59b4add95837f4d811644afcc0df12ed3832beb6b5e60aab448c0",
+          "bytes": 402
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/Player.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/Player.md",
+          "sha256": "20647bf817545c62d6b95ca7ba5cdf190d2d82b7b249e95af3fc9e6b95bbfcf5",
+          "bytes": 28178
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/Entity.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/Entity.md",
+          "sha256": "03a18b00bf2a1a4c651b12706d5d6c40e118232004a2c14fe4fc5565d8a9c47d",
+          "bytes": 45073
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/changelog.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/changelog.md",
+          "sha256": "43fc4962de2d0dd4da660080bc08776a3b10652171b3b6c664fe380e565e7287",
+          "bytes": 98793
+        },
+        {
+          "path": "creator/Documents/molang/syntax-guide.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Documents/molang/syntax-guide.md",
+          "sha256": "470776d4701b4a03d5341b8fb1b537880193a5412337cdb9a6ec95cba095ac2b",
+          "bytes": 17356
+        },
+        {
+          "path": "creator/Documents/molang/practical-molang.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Documents/molang/practical-molang.md",
+          "sha256": "5a59468758c455453c3f33366b78d5110517f4e71dc523ee5f7a296b6e959d1e",
+          "bytes": 15321
+        },
+        {
+          "path": "creator/Documents/Animations/AnimationController.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/Documents/Animations/AnimationController.md",
+          "sha256": "f27cbcae0f06cb38d40ad524a85e7a72a3408b745aedbc88f0c7ba222c64c08a",
+          "bytes": 9354
         }
       ]
     },
@@ -3369,6 +3495,18 @@
           "gitBlobSha": "2d59cc4ddc745cbc14a22047dc047fdc3eb6d947",
           "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/ed49e24424c0aa8bd0edc710ffe9f09c167452b4/docs/public/assets/packs/items/attachables/method_two/skeleton_head.geo.json",
           "bytes": 567
+        },
+        {
+          "path": "docs/commands/playanimation.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/ed49e24424c0aa8bd0edc710ffe9f09c167452b4/docs/commands/playanimation.md",
+          "sha256": "6a9ea06f8e824b84aab40e55cacbfaa8ae55ed5ccb2c201e130b88b9588db5b5",
+          "bytes": 12043
+        },
+        {
+          "path": "docs/entities/render-controllers.md",
+          "url": "https://raw.githubusercontent.com/Bedrock-OSS/bedrock-wiki/ed49e24424c0aa8bd0edc710ffe9f09c167452b4/docs/entities/render-controllers.md",
+          "sha256": "35ecb8dd02a0b6922378d0237b0d310cdca705466c9fdb73743c916be2614fb4",
+          "bytes": 10513
         }
       ],
       "reuse": "reference-only",
@@ -3378,6 +3516,53 @@
       "kind": "github",
       "url": "https://github.com/Bedrock-OSS/bedrock-wiki",
       "revisionDate": "2026-09-27T10:03:33Z"
+    },
+    {
+      "id": "mirzahilmi-3d-totem",
+      "kind": "github",
+      "url": "https://github.com/mirzahilmi/3d-totem",
+      "revision": "93b436eea475b2baa9aae2e5d10c67122aa85c19",
+      "revisionDate": "2022-08-15T04:12:54Z",
+      "license": "NOASSERTION",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://raw.githubusercontent.com/mirzahilmi/3d-totem/93b436eea475b2baa9aae2e5d10c67122aa85c19/README.md",
+          "sha256": "787820b10fab4b7a281f1069e704f101437e4e1d38985b69e7bcd0eff3f5eb88",
+          "bytes": 121
+        },
+        {
+          "path": "attachables/mmaarapuppet.json",
+          "url": "https://raw.githubusercontent.com/mirzahilmi/3d-totem/93b436eea475b2baa9aae2e5d10c67122aa85c19/attachables/mmaarapuppet.json",
+          "sha256": "0f86389d01cb43aff83f22b76b0c6611f3f1e7d45bb818d80ab67e2a85c302bf",
+          "bytes": 1116
+        },
+        {
+          "path": "models/entity/mmaarapuppet.geo.json",
+          "url": "https://raw.githubusercontent.com/mirzahilmi/3d-totem/93b436eea475b2baa9aae2e5d10c67122aa85c19/models/entity/mmaarapuppet.geo.json",
+          "sha256": "5b7457d46acdec4220f42cd83fee3bf6de5405d7e554894039dd7abcdc7f0ca5",
+          "bytes": 5813
+        },
+        {
+          "path": "animations/mmaarapuppet.animation.json",
+          "url": "https://raw.githubusercontent.com/mirzahilmi/3d-totem/93b436eea475b2baa9aae2e5d10c67122aa85c19/animations/mmaarapuppet.animation.json",
+          "sha256": "f393c2c395e9ffae009e1d7052c37c9bd002eeec40865070f6e7e6bff88c24a1",
+          "bytes": 836
+        },
+        {
+          "path": "render_controllers/mmaarapuppet.render_controllers.json",
+          "url": "https://raw.githubusercontent.com/mirzahilmi/3d-totem/93b436eea475b2baa9aae2e5d10c67122aa85c19/render_controllers/mmaarapuppet.render_controllers.json",
+          "sha256": "bc92aa7240517613d2b74b1c747ea5dc49b3da46335c7a58dd37f0288d892c7b",
+          "bytes": 292
+        },
+        {
+          "path": "manifest.json",
+          "url": "https://raw.githubusercontent.com/mirzahilmi/3d-totem/93b436eea475b2baa9aae2e5d10c67122aa85c19/manifest.json",
+          "sha256": "91aaeaf4cad7e07625134878f8eb17dd4c2df253951e013828fd38821daacc51",
+          "bytes": 439
+        }
+      ]
     }
   ]
 }
