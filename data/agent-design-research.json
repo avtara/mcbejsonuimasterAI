@@ -1,0 +1,476 @@
+{
+  "schema": "mcbe-agent-design-research@1",
+  "reviewedAt": "2026-09-28",
+  "policy": {
+    "context": "selected-topic-only",
+    "reuse": "authored-summary",
+    "executeSourceCode": false,
+    "runtimeVerified": false,
+    "performanceImprovementMeasured": false
+  },
+  "sources": [
+    {
+      "id": "skillsbench-v1",
+      "kind": "paper",
+      "title": "SkillsBench: Benchmarking How Well Agent Skills Work Across Diverse Tasks",
+      "url": "https://arxiv.org/html/2602.12670v1",
+      "revision": {
+        "type": "arxiv-version",
+        "value": "2602.12670v1"
+      },
+      "doi": "10.48550/arXiv.2602.12670",
+      "license": {
+        "id": "CC-BY-4.0",
+        "scope": "arXiv paper; repository not assessed",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2602.12670v1",
+          "locator": "§2.4, §3.3–3.5, §4.1.4, §4.2, §5.1",
+          "claim": "동일 과제를 no-skill/curated/self-generated 조건으로 비교하고 실행 검증기와 반복 시행을 사용한다. 일부 과제에서는 스킬이 성능을 낮췄다.",
+          "observedSha256": "22d20eaa6f33cc14436914e90f459501829a8c6471f6644404bc6af688a719dd"
+        }
+      ],
+      "limits": [
+        "Terminal tasks; no Bedrock or GUI validation.",
+        "v1 mixes 84/86 tasks and different summary/figure gains; no gain is transferred here.",
+        "Length groups are observational, not a universal optimum."
+      ]
+    },
+    {
+      "id": "agentskillos-v1",
+      "kind": "paper",
+      "title": "Organizing, Orchestrating, and Benchmarking Agent Skills at Ecosystem Scale",
+      "url": "https://arxiv.org/html/2603.02176v1",
+      "revision": {
+        "type": "arxiv-version",
+        "value": "2603.02176v1"
+      },
+      "doi": "10.48550/arXiv.2603.02176",
+      "license": {
+        "id": "CC-BY-4.0",
+        "scope": "arXiv paper",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2603.02176v1",
+          "locator": "§3.2, §4.1, Table 1",
+          "claim": "30개 산출물 과제를 200/1K/200K 스킬 풀에서 비교한다. 검색·오케스트레이션에는 Opus 4.5, 실행에는 Sonnet 4.5, 판정에는 Opus 4.5를 사용한다. A/B 순서를 뒤집어 판정하고 상충 결과는 tie 처리한다.",
+          "observedSha256": "b6f275291b25e0cd661e37bf6171162ec08fc157a77861c419ddd21caddb5e31"
+        }
+      ],
+      "limits": [
+        "30 skill-derived tasks; model judge and screenshot resizing can bias results.",
+        "Normalized 0–100 ranking is not success percentage."
+      ]
+    },
+    {
+      "id": "lost-in-middle-v3",
+      "kind": "paper",
+      "title": "Lost in the Middle: How Language Models Use Long Contexts",
+      "url": "https://arxiv.org/html/2307.03172v3",
+      "revision": {
+        "type": "arxiv-version",
+        "value": "2307.03172v3"
+      },
+      "doi": "10.48550/arXiv.2307.03172",
+      "license": {
+        "id": "arXiv-nonexclusive-distrib",
+        "scope": "Distribution deposit permission; no general reuse grant",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2307.03172v3",
+          "locator": "§2.1–2.3, §3, §4.2, Appendix D",
+          "claim": "여러 문서 QA와 JSON key-value 검색에서 정답 위치·문맥 길이를 독립적으로 바꿔 비교했다. 문서 중간에서 정확도가 낮아지는 모델이 있었다. 질문 재배치는 단순 key-value와 QA에 같은 효과를 주지 않았다.",
+          "observedSha256": "9a9069ad7b90740b3245e80b0efc424b2e5c91601119a675536ef2193e12f701"
+        }
+      ],
+      "limits": [
+        "Earlier model generation, QA and key-value tasks; current Codex effect unmeasured.",
+        "Shorter context is not always better; task-relevant evidence must remain."
+      ]
+    },
+    {
+      "id": "anthropic-advanced-tool-use",
+      "kind": "vendor-engineering",
+      "title": "Introducing advanced tool use on the Claude Developer Platform",
+      "url": "https://www.anthropic.com/engineering/advanced-tool-use",
+      "revision": {
+        "type": "web-observation",
+        "value": "2026-09-28"
+      },
+      "license": {
+        "id": "NOASSERTION",
+        "scope": "Article referenced only; no reuse license identified",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/engineering/advanced-tool-use",
+          "locator": "Tool Search Tool / When to use; Programmatic Tool Calling / When to use",
+          "claim": "도구 정의를 필요할 때 검색하고 중간 결과는 코드에서 집계한 뒤 필요한 결과만 모델에 주는 구조를 설명한다. 작은 도구 집합에서는 검색 지연이 이익보다 클 수 있다고 명시한다.",
+          "observedSha256": "be1e79d1439932bd9bb6cd5aef3d124e912d318b3b40fd391da5988096a2d610"
+        }
+      ],
+      "limits": [
+        "Vendor internal experiments; no local measured gain.",
+        "Small tool lists may not benefit; Claude-specific APIs are not assumed available in Codex."
+      ]
+    },
+    {
+      "id": "openai-skill-creator-review",
+      "kind": "open-source-skill",
+      "title": "OpenAI skill-creator",
+      "url": "https://github.com/openai/skills/tree/49f948faa9258a0c61caceaf225e179651397431/skills/.system/skill-creator",
+      "revision": {
+        "type": "git",
+        "value": "49f948faa9258a0c61caceaf225e179651397431"
+      },
+      "license": {
+        "id": "Apache-2.0",
+        "scope": "skills/.system/skill-creator/LICENSE.txt only; no code copied",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://github.com/openai/skills/blob/49f948faa9258a0c61caceaf225e179651397431/skills/.system/skill-creator/SKILL.md#L86-L139",
+          "locator": "lines 86-139",
+          "claim": "반복되는 결정적 처리는 스크립트로 두고, 변형별 설명은 선택 참조로 옮기는 구성이다."
+        },
+        {
+          "url": "https://github.com/openai/skills/blob/49f948faa9258a0c61caceaf225e179651397431/skills/.system/skill-creator/scripts/quick_validate.py#L15-L91",
+          "locator": "lines 15-91",
+          "claim": "정적 읽기 결과: YAML frontmatter, 허용 키, 이름/설명 형식과 길이를 검사한다. 제작 결과나 스킬 선택 정확도를 검증하는 코드는 없다."
+        }
+      ],
+      "limits": [
+        "Frontmatter validation does not evaluate task success, visuals or runtime.",
+        "Source inspected as text; commands were not executed or installed."
+      ]
+    },
+    {
+      "id": "saint11-pixel-author",
+      "kind": "artist-tutorial",
+      "title": "Saint11: Cluster Sketching, Anti-Alias/Banding, Color Theory",
+      "url": "https://saint11.art/pixel_art_articles/article2/",
+      "revision": {
+        "type": "web-observation",
+        "value": "2026-09-28"
+      },
+      "license": {
+        "id": "NOASSERTION",
+        "scope": "2021 blog text; separate tutorial repository CC-BY is not extended to the blog",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://saint11.art/pixel_art_articles/article2/",
+          "locator": "What is a cluster; Steps 1–3",
+          "claim": "큰 색 덩어리에서 시작해 형태와 계단선을 정리한다. 고립 픽셀은 노이즈가 될 수 있지만 질감·강조에는 의도적으로 쓰인다.",
+          "observedSha256": "904b3e9099d8487b72ace0792fa26751d9f9161bdc302942abfeaf7b79b8cc9e"
+        },
+        {
+          "url": "https://saint11.art/pixel_art_articles/article5/",
+          "locator": "Too much anti-alias; Banding",
+          "claim": "과한 중간색은 흐림을 만들고 banding은 형태를 평평하게 보이게 할 수 있다. 작가도 스타일에 따른 주관성을 명시한다.",
+          "observedSha256": "d139df705c2195a050359ae094ddd96ee2ca3fe9bce1dabd7eb330b724203b1b"
+        },
+        {
+          "url": "https://saint11.art/pixel_art_articles/article6/",
+          "locator": "Saturation; Shading; final disclaimer",
+          "claim": "넓은 저채도 면과 작은 강조, 명도뿐 아니라 색상·채도 변화도 탐색한다. 규칙은 유연한 지침이다.",
+          "observedSha256": "56b381cb1f92f1db1518059992c709d663176c282163e32551f095cd5bfc0400"
+        }
+      ],
+      "limits": [
+        "Original artist advice, not a controlled AI evaluation.",
+        "Orphan pixels and anti-aliasing can be intentional; do not reject them categorically."
+      ]
+    },
+    {
+      "id": "aseprite-official-pipeline",
+      "kind": "official-docs",
+      "title": "Aseprite CLI and editable source/export contract",
+      "url": "https://www.aseprite.org/docs/cli/",
+      "revision": {
+        "type": "web-observation",
+        "value": "2026-09-28"
+      },
+      "license": {
+        "id": "NOASSERTION",
+        "scope": "Docs and FAQ referenced only; program EULA and user art are separate",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://www.aseprite.org/docs/cli/",
+          "locator": "--data, --format, --sheet, --split-layers",
+          "claim": "sheet와 JSON 데이터를 함께 출력할 수 있고 옵션 순서가 결과에 영향을 준다. sheet 대상은 덮어쓴다고 문서에 명시되어 있다.",
+          "observedSha256": "cbc169c1a32a422c1b3647ea5e558dc62e7956560453ccdd64252e6ee92b9f1b"
+        },
+        {
+          "url": "https://www.aseprite.org/docs/files/",
+          "locator": ".aseprite",
+          "claim": "편집용 원본에는 레이어·프레임·팔레트·태그·slice 등이 보존된다. 배포용 PNG와 원본 보존은 별개다.",
+          "observedSha256": "32c1be260975d909b19eefcb4d0d7b4ba10d71f7c9c766de1092c745394d8271"
+        },
+        {
+          "url": "https://www.aseprite.org/faq/",
+          "locator": "Can I redistribute Aseprite?; Can I sell graphics created with Aseprite?",
+          "claim": "프로그램 배포와 사용자가 만든 아트의 사용 범위를 구분한다.",
+          "observedSha256": "4fc62bd9ccc903b97e445c5e469549dd5add633566572bb95e6883ac77092497"
+        }
+      ],
+      "limits": [
+        "No local Aseprite installation or execution verified.",
+        "Aseprite JSON is not automatically Bedrock metadata; export overwrites need protection."
+      ]
+    },
+    {
+      "id": "xbox-accessibility-ui",
+      "kind": "official-docs",
+      "title": "Xbox Accessibility Guidelines 101, 112, 113",
+      "url": "https://learn.microsoft.com/en-us/xbox/accessibility/guidelines",
+      "revision": {
+        "type": "web-observation",
+        "value": "2026-09-28",
+        "reportedRevision": "fcf89d7c7ec0976ca008b7a9dfc232cfc44e2f68"
+      },
+      "license": {
+        "id": "NOASSERTION",
+        "scope": "Authored summaries only; embedded game screenshots are not redistributed",
+        "reuse": "reference-only"
+      },
+      "evidence": [
+        {
+          "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101",
+          "locator": "Text size; Text scaling; Icons and glyph sizes",
+          "claim": "실제 표시 글자 몸체 높이·해상도·DPI를 구분하며 확대해도 의미와 기능이 유지돼야 한다.",
+          "observedSha256": "d06a662a4c853b4732dbefe0501055992e832a8ebbb2dc88f9d6cecf3f2672b3"
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112",
+          "locator": "Implementation guidelines; linear-menu looping note",
+          "claim": "키보드/컨트롤러 디지털 입력 탐색, 일관된 순서, UI 재배치 후 탐색 순서 유지를 다룬다. 선형 목록과 2차원 grid의 loop 요구가 다르다.",
+          "observedSha256": "05ca9051a5bf2b674d38ef98dda9e1199b4cd71031de2482da0b6d07834c12f6"
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/113",
+          "locator": "Implementation guidelines",
+          "claim": "초점 표시를 모든 배경에서 볼 수 있어야 하고, 모달이 열렸을 때 보이지 않는 뒤쪽 요소로 초점이 이동하면 안 된다.",
+          "observedSha256": "2185f00fec0ebb2acae2b173e8b353e09084ea8d84d04c5a77aa08b2802e8d94"
+        }
+      ],
+      "limits": [
+        "Physical display pixels are not JSON UI logical units.",
+        "Static checks do not establish device input behavior or accessibility certification."
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "id": "skill-evaluation",
+      "name": "스킬 효과 평가",
+      "useWhen": "스킬 수정 전후의 과제 성공과 비용을 비교할 때",
+      "sourceIds": [
+        "skillsbench-v1",
+        "agentskillos-v1"
+      ],
+      "rules": [
+        {
+          "id": "paired-tasks",
+          "text": "같은 모델 버전·설정·도구·입력·시간 제한에서 현재 방식과 후보 참조를 비교한다.",
+          "sourceIds": [
+            "skillsbench-v1"
+          ]
+        },
+        {
+          "id": "separate-selection",
+          "text": "참조 선택 정확도와 최종 과제 성공을 별도 기록하고 개발에 쓰지 않은 사례로 재평가한다.",
+          "sourceIds": [
+            "skillsbench-v1",
+            "agentskillos-v1"
+          ]
+        },
+        {
+          "id": "visual-order",
+          "text": "시각 비교는 A/B 순서를 바꾸고 원본 크기·정수 배율 이미지를 유지한다. 판단 불일치는 무승부로 남긴다.",
+          "sourceIds": [
+            "agentskillos-v1"
+          ]
+        }
+      ],
+      "checks": [
+        "중요 불변조건 실패·잘못된 런타임 주장·재시도도 기록한다.",
+        "표본 수, 과제별 차이, 실제 토큰과 시간 제한을 공개한다."
+      ],
+      "limits": [
+        "논문 점수는 이 저장소의 개선율이 아니다.",
+        "모델 심사만으로 픽셀 정확도나 Bedrock 입력 성공을 확정하지 않는다."
+      ]
+    },
+    {
+      "id": "context-selection",
+      "name": "필요한 참조 선택",
+      "useWhen": "문맥이 커지거나 스킬·도구 선택 비용을 줄일 때",
+      "sourceIds": [
+        "lost-in-middle-v3",
+        "anthropic-advanced-tool-use",
+        "openai-skill-creator-review"
+      ],
+      "rules": [
+        {
+          "id": "selected-reference",
+          "text": "색인에서 맞는 참조 하나부터 선택하고 부족할 때만 확장한다. 원문과 모든 도구 설명을 기본 문맥에 넣지 않는다.",
+          "sourceIds": [
+            "anthropic-advanced-tool-use",
+            "openai-skill-creator-review"
+          ]
+        },
+        {
+          "id": "position-controls",
+          "text": "필요 정보의 앞·중간·끝 위치와 같은 길이의 방해 문맥을 바꿔 내용 효과와 길이 효과를 구분한다.",
+          "sourceIds": [
+            "lost-in-middle-v3"
+          ]
+        },
+        {
+          "id": "measure-overhead",
+          "text": "문자 수와 실제 tokenizer/API 토큰을 구분하고 검색 지연·누락도 측정한다.",
+          "sourceIds": [
+            "anthropic-advanced-tool-use"
+          ]
+        }
+      ],
+      "checks": [
+        "기본 스타일·라우팅 문맥에 이 연구 카드를 자동 추가하지 않는다.",
+        "형태 검사와 실제 사용성 평가를 별도로 실행한다."
+      ],
+      "limits": [
+        "문자 수를 고정 비율로 토큰으로 환산하지 않는다.",
+        "작은 목록에서 복잡한 검색 구조가 더 낫다고 가정하지 않는다."
+      ]
+    },
+    {
+      "id": "pixel-craft",
+      "name": "픽셀 형태와 색 검토",
+      "useWhen": "픽셀 버튼·아이콘의 형태, 계단선, 색상 덩어리를 검토할 때",
+      "sourceIds": [
+        "saint11-pixel-author"
+      ],
+      "rules": [
+        {
+          "id": "clusters-first",
+          "text": "큰 색 덩어리와 실루엣을 먼저 읽고 세부 픽셀·계단선·banding을 점검한다.",
+          "sourceIds": [
+            "saint11-pixel-author"
+          ]
+        },
+        {
+          "id": "intent-aware",
+          "text": "고립 픽셀·AA는 위치와 목적을 함께 판단한다. 별빛·눈·강조를 일괄 삭제하지 않는다.",
+          "sourceIds": [
+            "saint11-pixel-author"
+          ]
+        },
+        {
+          "id": "palette-ramp",
+          "text": "명도·색상·채도 램프를 검토하되 스타일 의도와 문자 가독성을 따로 확인한다.",
+          "sourceIds": [
+            "saint11-pixel-author"
+          ]
+        }
+      ],
+      "checks": [
+        "명시된 크기·알파·프레임 수·팔레트만 자동 실패 조건으로 삼는다.",
+        "원본 크기와 정수 배율로 보고 상태 사이 실루엣·정렬을 비교한다."
+      ],
+      "limits": [
+        "선택형 제작 조언이며 강제 픽셀 수·색상 수 기준이 아니다.",
+        "원문 그림은 참조이며 새 UI 에셋으로 복사하지 않는다."
+      ]
+    },
+    {
+      "id": "asset-export",
+      "name": "편집 원본과 atlas 출력",
+      "useWhen": "레이어·프레임·태그를 보존하면서 sprite sheet를 내보낼 때",
+      "sourceIds": [
+        "aseprite-official-pipeline"
+      ],
+      "rules": [
+        {
+          "id": "editable-source",
+          "text": "편집 원본과 배포 PNG·atlas 메타데이터를 별개 산출물로 보존한다.",
+          "sourceIds": [
+            "aseprite-official-pipeline"
+          ]
+        },
+        {
+          "id": "export-contract",
+          "text": "크기·프레임 순서·기간·alpha·trim·rotation 조건을 먼저 정하고 내보낸 데이터와 대조한다.",
+          "sourceIds": [
+            "aseprite-official-pipeline"
+          ]
+        },
+        {
+          "id": "protect-output",
+          "text": "원본 보존과 신규 출력 경로를 확인하고 옵션 순서·도구 버전에 따른 결과를 검증한다.",
+          "sourceIds": [
+            "aseprite-official-pipeline"
+          ]
+        }
+      ],
+      "checks": [
+        "nine-slice 메타데이터는 대상 PNG의 크기·stem과 맞춘다.",
+        "새 도구 설치나 프로그램·에셋 재배포는 별도로 판단한다."
+      ],
+      "limits": [
+        "특정 편집기 설치를 요구하지 않으며 여기서 실행하지 않는다.",
+        "Bedrock 전용 규격과 연결은 실제 대상 팩의 선언으로 검증한다."
+      ]
+    },
+    {
+      "id": "game-ui-input",
+      "name": "게임 UI 글자와 초점",
+      "useWhen": "긴 한글·확대 글자·모달을 touch와 gamepad로 검토할 때",
+      "sourceIds": [
+        "xbox-accessibility-ui"
+      ],
+      "rules": [
+        {
+          "id": "text-at-device",
+          "text": "실제 표시 해상도·배율·글자 몸체 크기를 확인하고 긴 한글과 확대 글자에서도 의미·기능이 유지되는지 본다.",
+          "sourceIds": [
+            "xbox-accessibility-ui"
+          ]
+        },
+        {
+          "id": "focus-traversal",
+          "text": "선형 목록과 2차원 grid를 구분해 일관된 탐색 순서를 정하고 재배치 후 다시 검사한다.",
+          "sourceIds": [
+            "xbox-accessibility-ui"
+          ]
+        },
+        {
+          "id": "modal-focus",
+          "text": "초점은 모든 배경에서 보여야 하며 모달을 열면 뒤쪽·화면 밖 요소로 이동하지 않아야 한다.",
+          "sourceIds": [
+            "xbox-accessibility-ui"
+          ]
+        }
+      ],
+      "checks": [
+        "구매·취소·닫기와 원래 초점 복귀를 실제 요청한 입력 장치에서 확인한다.",
+        "touch 목표 크기와 gamepad 초점을 별도 검사한다."
+      ],
+      "limits": [
+        "지침의 물리 픽셀 수치를 JSON UI font_scale_factor로 직접 치환하지 않는다.",
+        "실제 클라이언트를 실행하지 않았다면 runtime unverified로 남긴다."
+      ]
+    }
+  ]
+}

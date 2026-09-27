@@ -1,6 +1,8 @@
 # MCBE JSON UI Master AI
 
-Portable Codex skills and research notes for Minecraft Bedrock JSON UI.
+Portable Codex skills and tools for Minecraft Bedrock JSON UI, resource packs, attachables, GeoUI and connected addon features.
+
+Resource packs and model UI: [workflows and checks](docs/77-resource-pack-skills.md), [source findings and coverage](docs/79-resource-source-review.md). Local asset evidence is indexed outside public sources and retrieved by need; [AI/pixel/game-UI research](docs/78-skill-research.md) supplies selected methods and their limits.
 
 Chest GUI: [design and inspection tools](docs/75-chest-gui.md), [pinned source review](docs/76-chest-source-review.md), and the `mcbe-json-ui-chest-gui` specialist distinguish native containers, chest-style ActionForm menus and Minato editor projects.
 

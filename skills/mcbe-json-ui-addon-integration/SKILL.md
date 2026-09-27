@@ -7,6 +7,8 @@ description: Analyze Minecraft Bedrock JSON UI as part of a full addon or resour
 
 Use this when the UI depends on the wider pack.
 
+Equipped model UI uses `mcbe-attachables-ui`; player-renderer geometry UI uses `mcbe-geo-ui`; materials/outlines/PBR use `mcbe-resource-pack-rendering`. For broad non-UI addon ownership use `mcbe-resource-pack-master`. When available, `node tools/attachable-inspect.mjs --rp RP --bp BP --json` inspects the resource graph; it does not execute the input/state path.
+
 ## Contract
 
 - Input: target UI file, RP/BP roots, referenced assets, and the state or protocol owner.

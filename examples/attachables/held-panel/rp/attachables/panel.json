@@ -1,0 +1,18 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "inspection:panel",
+      "geometry": { "default": "geometry.inspection.panel" },
+      "materials": { "default": "inspection_panel" },
+      "textures": { "default": "textures/inspection/panel" },
+      "animations": {
+        "pose": "controller.animation.inspection.panel",
+        "first": "animation.inspection.first",
+        "third": "animation.inspection.third"
+      },
+      "scripts": { "animate": ["pose"] },
+      "render_controllers": ["controller.render.inspection.panel"]
+    }
+  }
+}

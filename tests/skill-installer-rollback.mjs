@@ -8,7 +8,7 @@ import { spawn } from "node:child_process";
 const repo = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const shell = process.platform === "win32" ? "powershell" : "pwsh";
 const sandbox = await mkdtemp(resolve(tmpdir(), "mcbe-skill-rollback-"));
-const names = ["mcbe-json-ui-alpha", "mcbe-json-ui-beta"];
+const names = ["mcbe-json-ui-alpha", "mcbe-resource-pack-beta"];
 const harness = resolve(sandbox, "inject-failure.ps1");
 let passed = 0;
 
@@ -69,8 +69,8 @@ $ErrorActionPreference = 'Stop'
 function Move-Item {
     [CmdletBinding()]
     param([string]$LiteralPath, [string]$Destination)
-    if ($Mode -ne 'prune-failure' -and $LiteralPath -match '[\\/]\.skill-stage-[^\\/]+[\\/]mcbe-json-ui-beta$') { throw 'INJECTED promotion failure' }
-    if ($Mode -eq 'rollback-failure' -and $LiteralPath -match '[\\/]\.skill-backup-[^\\/]+[\\/]mcbe-json-ui-beta$') { throw 'INJECTED restoration failure' }
+    if ($Mode -ne 'prune-failure' -and $LiteralPath -match '[\\/]\.skill-stage-[^\\/]+[\\/]mcbe-resource-pack-beta$') { throw 'INJECTED promotion failure' }
+    if ($Mode -eq 'rollback-failure' -and $LiteralPath -match '[\\/]\.skill-backup-[^\\/]+[\\/]mcbe-resource-pack-beta$') { throw 'INJECTED restoration failure' }
     if ($Mode -eq 'prune-failure' -and $LiteralPath -match '[\\/]mcbe-json-ui-obsolete-b$' -and $Destination -match '[\\/]\.skill-backup-') { throw 'INJECTED prune failure' }
     Microsoft.PowerShell.Management\Move-Item @PSBoundParameters
 }

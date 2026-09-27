@@ -1,6 +1,6 @@
 {
   "schema": "mcbe-design-sources@1",
-  "reviewedAt": "2026-09-27",
+  "reviewedAt": "2026-09-28",
   "sources": [
     {
       "id": "mojang-bedrock-samples",
@@ -11,8 +11,8 @@
       "license": "Mojang-EULA",
       "reuse": "analysis-only",
       "summary": "공식 바닐라 화면, 공통 컨트롤, server-ui 메타데이터. 실제 클라이언트 버전과 별도 비교한다.",
-      "fileCount": 224,
-      "bytes": 6262619,
+      "fileCount": 253,
+      "bytes": 6358797,
       "runtime": "unverified",
       "pathScope": "upstream"
     },
@@ -598,10 +598,188 @@
       "license": "CC-BY-4.0 (documentation); MIT (code examples, LICENSE-CODE)",
       "reuse": "reference-only",
       "summary": "ActionFormData/Response, 취소 이유와 스케줄러의 버전 고정 공식 계약. 재시도 횟수·페이지 정책은 별도 앱 설계다.",
-      "fileCount": 7,
-      "bytes": 37956,
+      "fileCount": 12,
+      "bytes": 89680,
       "runtime": "unverified",
       "pathScope": "upstream"
+    },
+    {
+      "id": "au12jp-geoui-studio",
+      "kind": "tooling",
+      "url": "https://github.com/Au12jp/GeouiStudio",
+      "revision": "7fe110f22385b1a44ea8ba01c2a6817b888b6893",
+      "revisionDate": "2026-08-01T09:44:57Z",
+      "license": "Apache-2.0",
+      "reuse": "reference-only",
+      "summary": "player live renderer에 평면 geometry·재질·동기 속성을 연결하는 선택적 외부 편집기. 장착 attachable이나 클릭 영역 생성기로 취급하지 않으며 실행하지 않는다.",
+      "fileCount": 2,
+      "bytes": 765413,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2260,
+          "lineEnd": 2405
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2230,
+          "lineEnd": 2255
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 1867,
+          "lineEnd": 1904
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2409,
+          "lineEnd": 2428
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 1957,
+          "lineEnd": 1965
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2051,
+          "lineEnd": 2069
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2118,
+          "lineEnd": 2132
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2186,
+          "lineEnd": 2211
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 3270,
+          "lineEnd": 3427
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 3407,
+          "lineEnd": 3410
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 1144,
+          "lineEnd": 1181
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 3705,
+          "lineEnd": 3722
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 2670,
+          "lineEnd": 2684
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 1763,
+          "lineEnd": 1785
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 3530,
+          "lineEnd": 3569
+        },
+        {
+          "path": "index.html",
+          "sha256": "f8e6e0832efff2a58bf5b22a2cea9a67a34a8be894ee448dc9231b58a129d075",
+          "lineStart": 1539,
+          "lineEnd": 1546
+        }
+      ]
+    },
+    {
+      "id": "microsoft-custom-items",
+      "kind": "official",
+      "url": "https://github.com/microsoft/minecraft-samples",
+      "revision": "5e04b6f719c316b0611f569af0cab7d6e9a2fb26",
+      "revisionDate": "2026-08-24T20:08:41Z",
+      "license": "MIT",
+      "reuse": "reference-only",
+      "summary": "공식 custom item wrench 예제의 아이템 소유자·1/3인칭 애니메이션·geometry 연결. 코드 라이선스와 게임 런타임 검증을 구분한다.",
+      "fileCount": 5,
+      "bytes": 4525,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "custom_items/resource_packs/custom_item/attachables/wrench.player.json",
+          "sha256": "21b13911715b9f456329da7af19da0ea0449c6bdf5f130e0b77254b9e768ef84",
+          "lineStart": 1,
+          "lineEnd": 35
+        }
+      ]
+    },
+    {
+      "id": "geyser-integrated-pack",
+      "kind": "addon",
+      "url": "https://github.com/GeyserMC/GeyserIntegratedPack",
+      "revision": "87008b13e13d2aef074933f6c03cb4ce381cde38",
+      "revisionDate": "2026-09-25T13:41:52Z",
+      "license": "MIT",
+      "reuse": "reference-only",
+      "summary": "armor stand용 attachable의 명시적 item selector 사례. identifier와 item ID 동일성을 보편 규칙으로 강제하지 않는다.",
+      "fileCount": 3,
+      "bytes": 2875,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "src/main/resources/integratedpack/attachables/elytra.armor_stand.json",
+          "sha256": "6edc0bcb41f61f08c8996c76ee0202e12ceb26b63f2615f6de5105ed79a64f3a",
+          "lineStart": 1,
+          "lineEnd": 34
+        }
+      ]
+    },
+    {
+      "id": "bedrock-wiki-attachables",
+      "kind": "community-docs",
+      "url": "https://github.com/Bedrock-OSS/bedrock-wiki",
+      "revision": "ed49e24424c0aa8bd0edc710ffe9f09c167452b4",
+      "revisionDate": "2026-09-27T10:03:33Z",
+      "license": "NOASSERTION",
+      "reuse": "reference-only",
+      "summary": "attachable 손/아이템 bone과 시점 변환 설명에 한정한 별도 최신 스냅샷. 기존 bedrock-oss-bedrock-wiki JSON UI revision을 대체하지 않으며 페이지별 권리는 미확인이다.",
+      "fileCount": 3,
+      "bytes": 12600,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "docs/public/assets/packs/items/attachables/method_two/attachable_guide.animation.json",
+          "sha256": "c8ba51fb3c19c1e66bfec356103dfda2b2b7337704b09494c5a71750d9c998e1",
+          "lineStart": 1,
+          "lineEnd": 28
+        }
+      ]
     }
   ]
 }

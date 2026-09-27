@@ -19,6 +19,8 @@ When selecting a style or palette, use [references/style-directions.md](referenc
 
 For pixel asset sets, palette/cluster review, frame animation or atlas handoff, read [references/pixel-art-production.md](references/pixel-art-production.md) and select one production method. It adapts reviewed external workflows without loading or installing their complete Skills or tools.
 
+If that method needs source-specific craft/export detail, `node tools/research-context.mjs context --topic pixel-craft` or `--topic asset-export` retrieves one reviewed topic. For a supplied indexed library, use `asset.learn` with `texture-state` or `nine-slice`; original art remains subject to its own reuse limits.
+
 1. Read [references/asset-brief-contract.md](references/asset-brief-contract.md) before producing a brief or generation prompt.
 2. Run registered `asset.catalog`, then query `asset.context` by role and state. If the local semantic catalog is unavailable, fall back to `asset.search` with role/state/shape/size terms and inspect several distinct results.
 3. Record only abstract evidence: function, role, state behavior, dimensions, aspect ratio, alpha use, stretchability, nine-slice margins, palette characteristics, edge weight, corner treatment, and pixel density.

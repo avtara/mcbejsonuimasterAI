@@ -7,6 +7,8 @@ description: Research and route Minecraft Bedrock JSON UI questions to the right
 
 Use this skill when the main problem is selecting or combining sources correctly.
 
+For skill/context design or pixel/game UI research, use `node tools/research-context.mjs topics` and retrieve only one relevant topic with `context --topic ID`. The source record separates published results from proposed local adaptations. Do not describe a paper's effect size as measured improvement of this skill.
+
 ## Contract
 
 - Input: the exact claim or implementation question, required recency, and redistribution boundary.

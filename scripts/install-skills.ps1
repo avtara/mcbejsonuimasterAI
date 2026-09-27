@@ -10,7 +10,8 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $sourceBase = Join-Path $repoRoot 'skills'
 $topology = Get-Content -Raw -LiteralPath (Join-Path $repoRoot 'data\skill-topology.json') | ConvertFrom-Json
 $sourceSkills = @($topology.sourceSkills | Sort-Object)
-$actualSkills = @(Get-ChildItem -LiteralPath $sourceBase -Directory | Where-Object Name -Like 'mcbe-json-ui-*' | Select-Object -ExpandProperty Name | Sort-Object)
+if (@($sourceSkills | Select-Object -Unique).Count -ne $sourceSkills.Count -or @($sourceSkills | Where-Object { $_ -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$' -or $_.Length -gt 64 }).Count) { throw 'Invalid or duplicate managed Skill name.' }
+$actualSkills = @(Get-ChildItem -LiteralPath $sourceBase -Directory | Select-Object -ExpandProperty Name | Sort-Object)
 if (($sourceSkills -join "`n") -ne ($actualSkills -join "`n")) { throw 'Source Skill set does not match data/skill-topology.json.' }
 $resolvedSource = [IO.Path]::GetFullPath($sourceBase)
 $resolvedTarget = [IO.Path]::GetFullPath($TargetBase)
@@ -41,7 +42,7 @@ $plan = foreach ($name in $sourceSkills) {
     $action = if ($null -eq $targetHash) { 'install' } elseif ($sourceHash -eq $targetHash) { 'same' } elseif ($ReviewedSkill -contains $name) { 'update-reviewed' } else { 'drift-unreviewed' }
     [pscustomobject]@{ skill = $name; action = $action; sourceHash = $sourceHash; installedHash = $targetHash }
 }
-$installedOnly = if (Test-Path -LiteralPath $resolvedTarget) { @(Get-ChildItem -LiteralPath $resolvedTarget -Directory | Where-Object Name -Like 'mcbe-json-ui-*' | Where-Object { $sourceSkills -notcontains $_.Name } | Select-Object -ExpandProperty Name | Sort-Object) } else { @() }
+$installedOnly = if (Test-Path -LiteralPath $resolvedTarget) { @(Get-ChildItem -LiteralPath $resolvedTarget -Directory | Where-Object { $_.Name -like 'mcbe-json-ui-*' -or $sourceSkills -contains $_.Name } | Where-Object { $sourceSkills -notcontains $_.Name } | Select-Object -ExpandProperty Name | Sort-Object) } else { @() }
 $plan | ForEach-Object { Write-Output ("{0,-18} {1}" -f $_.action, $_.skill) }
 foreach ($name in $installedOnly) { Write-Output ("{0,-18} {1}" -f 'installed-only', $name) }
 if (-not $Apply) { Write-Output 'DRY-RUN: no files changed. Use -Apply; list every reviewed drift in -ReviewedSkill.'; return }

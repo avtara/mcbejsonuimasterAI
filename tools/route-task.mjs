@@ -6,8 +6,16 @@ import { PATHS } from "./_lib/paths.mjs";
 const routing = JSON.parse(await readFile(resolve(PATHS.data, "skill-routing.json"), "utf8"));
 const modeOrder = ["quick", "standard", "deep"];
 const supportedSurfaces = new Set(routing.surfaces || ["json-ui"]);
+const surfaceRouters = routing.surfaceRouters || { "json-ui": "mcbe-json-ui-master" };
+const broadOwners = new Set(Object.values(surfaceRouters));
 const knownKinds = new Set([...routing.broadTaskKinds, ...routing.routes.flatMap((entry) => [...entry.primaryFor, ...entry.antiTriggers])]);
-const supportingOwners = new Map(routing.routes.filter((entry) => entry.skill !== "mcbe-json-ui-master").flatMap((entry) => entry.primaryFor.map((kind) => [kind, entry])));
+const supportingOwners = new Map(routing.routes.filter((entry) => !broadOwners.has(entry.skill)).flatMap((entry) => entry.primaryFor.map((kind) => [kind, entry])));
+
+function initialReference(entry, kinds) {
+  const refs = entry.referencesByNeed || {};
+  const selected = kinds.map(kind => refs[kind]).find(Boolean) || Object.values(refs)[0];
+  return selected ? [selected] : [];
+}
 
 function fail(code, message, details = {}) {
   process.stdout.write(`${JSON.stringify({ schema: routing.schema, ok: false, code, message, ...details })}\n`);
@@ -37,7 +45,7 @@ function validateIntent(intent) {
     }
   }
   if (!Array.isArray(intent.taskKinds) || intent.taskKinds.length === 0) fail("UNKNOWN_ROUTE", "taskKinds is required");
-  if (intent.surface !== undefined && !supportedSurfaces.has(intent.surface)) fail("UNSUPPORTED_SURFACE", "surface is not supported by the Bedrock JSON UI router", { supported: [...supportedSurfaces] });
+  if (intent.surface !== undefined && !supportedSurfaces.has(intent.surface)) fail("UNSUPPORTED_SURFACE", "surface is not supported by the Bedrock pack router", { supported: [...supportedSurfaces] });
   const unknownKinds = intent.taskKinds.filter((kind) => !knownKinds.has(kind));
   if (unknownKinds.length) fail("UNKNOWN_ROUTE", "unknown task kinds", { kinds: unknownKinds });
   const unknownSupportingKinds = (intent.supportingKinds || []).filter((kind) => !supportingOwners.has(kind));
@@ -49,8 +57,8 @@ function route(intent) {
   validateIntent(intent);
   const kinds = new Set(intent.taskKinds);
   const broad = intent.taskKinds.some((kind) => routing.broadTaskKinds.includes(kind));
-  let owners = routing.routes.filter((entry) => entry.skill !== "mcbe-json-ui-master" && entry.primaryFor.some((kind) => kinds.has(kind)));
-  if (broad) owners = [routing.routes.find((entry) => entry.skill === "mcbe-json-ui-master")];
+  let owners = routing.routes.filter((entry) => entry.primaryFor.some((kind) => kinds.has(kind)));
+  if (broad) owners = routing.routes.filter((entry) => entry.skill === surfaceRouters[intent.surface || "json-ui"]);
   if (owners.length === 0) fail("UNKNOWN_ROUTE", "no primary owner matches the structured intent");
   if (owners.length > 1) fail("ROUTE_AMBIGUOUS", "multiple primary owners match the structured intent", { candidates: owners.map((entry) => entry.skill).sort() });
   const primary = owners[0];
@@ -70,10 +78,10 @@ function route(intent) {
     mode: escalation?.nextMode || mode,
     primarySkill: primary.skill,
     followOnSkill: supports[0]?.skill || null,
-    nextRoutes: supports.map((entry) => ({ skill: entry.skill, references: [] })),
+    nextRoutes: supports.map((entry) => ({ skill: entry.skill, references: initialReference(entry, intent.supportingKinds || []) })),
     routeConfidence: "high",
     routeEvidence: intent.taskKinds.filter((kind) => primary.primaryFor.includes(kind)).map((kind) => `taskKinds contains ${kind}`),
-    references: Object.values(primary.referencesByNeed || {}).slice(0, 1),
+    references: initialReference(primary, intent.taskKinds),
     commands: [],
     evidenceTarget: (intent.evidenceNeeded || ["T1"])[0],
     answerProfile: primary.answerProfile,
@@ -86,7 +94,7 @@ async function validateReferences(result) {
   for (const owner of [{ skill: result.primarySkill, references: result.references }, ...result.nextRoutes]) {
     const skillRoot = resolve(PATHS.root, "skills", owner.skill);
     const configured = routing.routes.find((entry) => entry.skill === owner.skill);
-    let reference = Object.values(configured.referencesByNeed || {})[0];
+    let reference = owner.references[0] || Object.values(configured.referencesByNeed || {})[0];
     if (!reference) {
       const entrypoint = await readFile(resolve(skillRoot, "SKILL.md"), "utf8");
       reference = entrypoint.match(/references\/[A-Za-z0-9_./-]+\.md/)?.[0] || "SKILL.md";
