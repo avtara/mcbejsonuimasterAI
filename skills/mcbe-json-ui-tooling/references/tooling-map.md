@@ -75,6 +75,8 @@ Use for:
 
 ## Chest UI tooling
 
+Start with `mcbe-json-ui-chest-gui` to distinguish Minato's native chest editor from ActionForm skins. Use `chest-project` for saved editor JSON and `chest-contract` for the independently authored slot mapping. The following legacy sources cover chest-like forms, not Minato's native export format.
+
 - `references/external/Chest-UI/README.md`
 - `references/external/Chest-UI/RP/ui/`
 - `references/external/Chest-UI/BP-scripts/extensions/forms.js`

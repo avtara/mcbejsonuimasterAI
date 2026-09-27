@@ -8,6 +8,8 @@
     "node": ">=18.17"
   },
   "scripts": {
+    "chest:contract": "node tools/chest-contract.mjs",
+    "chest:project": "node tools/chest-project.mjs",
     "setup": "node tools/setup.mjs",
     "doctor": "node tools/doctor.mjs",
     "doctor:quick": "node tools/doctor.mjs --quick",

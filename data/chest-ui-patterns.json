@@ -1,0 +1,289 @@
+{
+  "schema": "mcbe-chest-topics@1",
+  "reviewedAt": "2026-09-27",
+  "defaultLoad": "selected-topic-only",
+  "runtimeVerified": false,
+  "topics": [
+    {
+      "id": "transport",
+      "name": "체스트 방식 선택",
+      "transport": "selection",
+      "useWhen": "실제 아이템 컨테이너와 체스트 모양 서버 폼의 소유자가 불분명할 때",
+      "sourceIds": [
+        "minato-web-apps-chest-ui-editor",
+        "herobrine643928-chest-ui"
+      ],
+      "checks": [
+        "native-container는 실제 container_items와 이동 이벤트를 추적한다. action-form은 form_buttons와 BP selection을 추적한다.",
+        "화면 모양이나 27/54칸 숫자로 전송 방식을 추측하지 않는다. 슬롯을 이동해야 하는지, 메뉴 작업을 선택해야 하는지 먼저 정한다.",
+        "실제 상자 제목 라우팅과 ActionForm 제목 표식은 별도 명세다. 스킨 변경만으로 서버 권한·거래·아이템 이동을 제어할 수 없다."
+      ],
+      "limits": [
+        "Minato는 small_chest_screen을 변경한다. Double Chest 템플릿 표시가 large_chest_screen 지원 증거는 아니다.",
+        "27/54는 검토한 예시다. 도구의 명세 크기를 모든 컨테이너의 엔진 한계로 일반화하지 않는다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/preview.js",
+          "sha256": "d402c606b76cd56bb37c63d8383f7213958f001a53ef3f6c933f5c879b0d8b3f",
+          "lineStart": 349,
+          "lineEnd": 363
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/preview.js",
+          "sha256": "d402c606b76cd56bb37c63d8383f7213958f001a53ef3f6c933f5c879b0d8b3f",
+          "lineStart": 862,
+          "lineEnd": 898
+        },
+        {
+          "sourceId": "herobrine643928-chest-ui",
+          "path": "BP/scripts/extensions/forms.js",
+          "sha256": "c917a17910b1e13e194053ed9afb01214a287492fe2bea536845a1c1050a8cfb",
+          "lineStart": 8,
+          "lineEnd": 14
+        }
+      ]
+    },
+    {
+      "id": "native-slots",
+      "name": "실제 슬롯과 인벤토리 매핑",
+      "transport": "native-container",
+      "useWhen": "실제 chest_screen 또는 player inventory/hotbar를 배치할 때",
+      "sourceIds": [
+        "minato-web-apps-chest-ui-editor"
+      ],
+      "checks": [
+        "화면 셀 번호와 실제 collection/index를 별도로 저장한다. 인벤토리·핫바도 자기 컬렉션과 원본 슬롯을 유지한다.",
+        "인덱스는 정수로 검증하고 문자열 5에 1을 붙여 51이 되는 상태를 거부한다. 사용 중인 컬렉션의 실제 크기로 범위를 검사한다.",
+        "같은 슬롯을 여러 조작 컨트롤이 가리키면 의도한 미러인지 확인한다. 장식 슬롯은 이동이나 드롭 이벤트를 보내지 않도록 명세와 실제 패킷 동작을 점검한다.",
+        "첫·마지막·빈 슬롯, 빠른 이동, 분할 스택, 드롭, 꽉 찬 인벤토리와 동시 갱신을 각각 확인한다."
+      ],
+      "limits": [
+        "브라우저 가짜 아이템·슬롯 수는 컨테이너 상태나 이동 권한을 증명하지 않는다.",
+        "지역별 비활성 UI와 서버의 거래/아이템 검증을 별도로 유지한다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/components.js",
+          "sha256": "822fc7c0aebcdc7b14c13e43b28203d96bc42d9fad06f714ff5a6ef6051d5d3d",
+          "lineStart": 917,
+          "lineEnd": 955
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/properties.js",
+          "sha256": "cab7b2dc8c56b43e0014757478804bab88b3ed57248be3db134f7c49e7c227c4",
+          "lineStart": 210,
+          "lineEnd": 218
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/preview.js",
+          "sha256": "d402c606b76cd56bb37c63d8383f7213958f001a53ef3f6c933f5c879b0d8b3f",
+          "lineStart": 349,
+          "lineEnd": 363
+        }
+      ]
+    },
+    {
+      "id": "native-state",
+      "name": "진행바·토글·숨은 상태 필드",
+      "transport": "native-container",
+      "useWhen": "아이템 hover_text를 진행률·토글·타입으로 파싱할 때",
+      "sourceIds": [
+        "minato-web-apps-chest-ui-editor"
+      ],
+      "checks": [
+        "상태 소유자, 원본 슬롯, 필드 폭, 허용 범위, 빈 값과 갱신 시점을 BP/서버와 RP의 하나의 명세로 적는다.",
+        "원본의 6문자 접두 제거 규약은 해당 자료의 프로토콜이다. 신규 프로젝트의 표식이나 필드 폭으로 자동 복사하지 않는다.",
+        "경계 0/최대, 누락 아이템, 짧은 문자열, 잘못된 숫자, 한국어 이름/줄바꿈, 다른 슬롯 업데이트를 fixture로 점검한다.",
+        "브라우저 미리보기 value/active와 실제 #hover_text binding이 같은 데이터 경로인지 확인한다."
+      ],
+      "limits": [
+        "로컬 토글 상태나 clip_ratio만으로 서버 작업 완료를 판단하지 않는다.",
+        "폼이 열린 채 갱신되는지, 다시 열어야 반영되는지 실기에서 구분한다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/preview.js",
+          "sha256": "d402c606b76cd56bb37c63d8383f7213958f001a53ef3f6c933f5c879b0d8b3f",
+          "lineStart": 490,
+          "lineEnd": 516
+        }
+      ]
+    },
+    {
+      "id": "tabs-scroll",
+      "name": "탭·스크롤·입력 설계",
+      "transport": "native-container",
+      "useWhen": "여러 탭과 동적 슬롯 그리드를 만들거나 가져올 때",
+      "sourceIds": [
+        "minato-web-apps-chest-ui-editor"
+      ],
+      "checks": [
+        "컴포넌트 ID와 tab_parent_id를 함께 관리한다. 복제 시 부모·자식 ID를 한 번에 다시 매핑하고 고아·자기 참조·순환을 거부한다.",
+        "그리드의 가용 너비에서 스크롤바 너비를 뺀 뒤 실제 셀 폭과 비교한다. preview_slots/slot_width/content_height는 출력 JSON에서 쓰이는지 확인한다.",
+        "마우스 hover 없이도 이름·수량·선택 상태가 전달되어야 한다. 탭 전환 뒤 첫 초점, 스크롤 끝, touch 드래그와 controller 이동을 확인한다.",
+        "레이아웃 크기 변경 후 핫바·인벤토리·닫기를 포함한 전체 외곽과 작은 화면의 실제 GUI 스케일을 확인한다."
+      ],
+      "limits": [
+        "Minato의 Preview Only 항목은 런타임 슬롯 크기/개수 설정으로 간주하지 않는다.",
+        "정적 슬롯 맵은 드래그·focus·touch 동작 증거가 아니다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/components.js",
+          "sha256": "822fc7c0aebcdc7b14c13e43b28203d96bc42d9fad06f714ff5a6ef6051d5d3d",
+          "lineStart": 518,
+          "lineEnd": 547
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/editor.js",
+          "sha256": "6e00a0c0cd4a76cb5213ce68912221123747ed35e80e560afdcfa62f748d2f62",
+          "lineStart": 1305,
+          "lineEnd": 1360
+        }
+      ]
+    },
+    {
+      "id": "project-roundtrip",
+      "name": "프로젝트·텍스처 왕복 검사",
+      "transport": "native-container",
+      "useWhen": "Minato v2 JSON 또는 ZIP 저장본을 분석할 때",
+      "sourceIds": [
+        "minato-web-apps-chest-ui-editor"
+      ],
+      "checks": [
+        "formatVersion만 보지 말고 uiProject.uis/activeId, 컴포넌트 타입·정수 인덱스·치수·탭 부모를 검사한다. 원본은 보존하고 자동 보정하지 않는다.",
+        "uiProject가 없는 v2의 컴포넌트 복원은 생성 함수가 무시하는 인수 때문에 width/height/properties가 유실될 수 있다.",
+        "업로드 이미지의 안정된 키, 모든 참조, alpha·원본 크기·같은 stem 메타데이터를 저장/불러오기/ZIP 왕복마다 대조한다.",
+        "로드되지 않는 동명 imageManager 코드보다 index.html이 실제 로드하는 구현을 기준으로 분석한다."
+      ],
+      "limits": [
+        "원본 저장소는 검토 시 라이선스 파일이 없어 분석용으로만 보관한다.",
+        "chest-project는 JSON 검사 도구이며 ZIP 복구·RP 생성·브라우저 미리보기 구현이 아니다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/project-format.js",
+          "sha256": "c135187b8e61c4194400bda8e6c5c8033bc1ec1a068e1cb3d9c3f7b4f451039f",
+          "lineStart": 65,
+          "lineEnd": 91
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/project-format.js",
+          "sha256": "c135187b8e61c4194400bda8e6c5c8033bc1ec1a068e1cb3d9c3f7b4f451039f",
+          "lineStart": 120,
+          "lineEnd": 156
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/components.js",
+          "sha256": "822fc7c0aebcdc7b14c13e43b28203d96bc42d9fad06f714ff5a6ef6051d5d3d",
+          "lineStart": 1,
+          "lineEnd": 43
+        },
+        {
+          "sourceId": "minato-web-apps-chest-ui-editor",
+          "path": "chest-ui-editor/scripts/export.js",
+          "sha256": "d947bf2c147e5bdb4964fd48b135e3e13c433dbb14390b6662f2c43ee8bf2f3e",
+          "lineStart": 410,
+          "lineEnd": 430
+        }
+      ]
+    },
+    {
+      "id": "action-grid",
+      "name": "ActionForm 고정 슬롯·페이지",
+      "transport": "action-form",
+      "useWhen": "ActionFormData를 체스트 메뉴로 표시할 때",
+      "sourceIds": [
+        "herobrine643928-chest-ui",
+        "microsoftdocs-minecraft-creator"
+      ],
+      "checks": [
+        "빈 슬롯까지 송신 순서에 남겨 selection 0과 마지막 슬롯을 보존한다. 장식·잠금 슬롯은 BP에서 작업을 거부한다.",
+        "페이지마다 화면 슬롯→semantic ID→작업을 명시한다. 응답은 폼을 열 때 캡처한 page/snapshot으로 해석하고 현재 목록에 다시 인덱싱하지 않는다.",
+        "canceled를 먼저 처리하고 UserClosed는 종료한다. UserBusy 재시도는 한 플레이어당 하나의 대기 작업과 유한 횟수/시간을 앱에서 정한다.",
+        "BP 슬롯 수·제목 표식·RP enabled 경로·grid·일반 폼 fallback이 일치하는지 확인한다. API가 허용하는 header/label도 기존 슬롯 프로토콜과 검증 없이 섞지 않는다."
+      ],
+      "limits": [
+        "계약 검사 성공은 배포된 RP의 route나 실제 callback 검증이 아니다.",
+        "아이템 수량·잔액·가격·권한은 서버에서 클릭 시 다시 검증한다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "herobrine643928-chest-ui",
+          "path": "BP/scripts/extensions/forms.js",
+          "sha256": "c917a17910b1e13e194053ed9afb01214a287492fe2bea536845a1c1050a8cfb",
+          "lineStart": 8,
+          "lineEnd": 14
+        },
+        {
+          "sourceId": "herobrine643928-chest-ui",
+          "path": "BP/scripts/extensions/forms.js",
+          "sha256": "c917a17910b1e13e194053ed9afb01214a287492fe2bea536845a1c1050a8cfb",
+          "lineStart": 103,
+          "lineEnd": 108
+        },
+        {
+          "sourceId": "herobrine643928-chest-ui",
+          "path": "RP/ui/chest_server_form.json",
+          "sha256": "b8f34587b01197252f056ae496fb4f6ddfcbe49b331535d3f70b04bf06c7dfaa",
+          "lineStart": 250,
+          "lineEnd": 274
+        },
+        {
+          "sourceId": "microsoftdocs-minecraft-creator",
+          "path": "creator/ScriptAPI/minecraft/server-ui/ActionFormResponse.md",
+          "sha256": "fc9a7e97744372c581411fa6a725c06a196ef76974d8eafc10f4fc8ed1ce5cc7",
+          "lineStart": 1,
+          "lineEnd": 35
+        },
+        {
+          "sourceId": "microsoftdocs-minecraft-creator",
+          "path": "creator/ScriptAPI/minecraft/server-ui/FormCancelationReason.md",
+          "sha256": "ba2d7e02980233a52b3215de0484bdefcedd6bd054fb57ac1876fe84d61a3434",
+          "lineStart": 13,
+          "lineEnd": 22
+        }
+      ]
+    },
+    {
+      "id": "action-inventory",
+      "name": "인벤토리 부록·아이콘 계약",
+      "transport": "action-form",
+      "useWhen": "폼에 플레이어 아이템을 나열하거나 AUX 아이콘을 쓸 때",
+      "sourceIds": [
+        "herobrine643928-chest-ui"
+      ],
+      "checks": [
+        "빈 인벤토리 슬롯을 생략한 목록에는 responseIndex→원본inventorySlot 매핑을 저장한다. 재정렬·아이템 이동 뒤 오래된 응답은 거부한다.",
+        "RP 텍스처 경로와 숫자 AUX 아이템 렌더링을 별도 모드로 다룬다. 숫자 ID·인챈트 표현은 대상 버전의 매핑을 확인한다.",
+        "수량·내구도·lore 필드의 폭과 타입을 송수신 양쪽에서 검사한다. 문자열 lore를 배열처럼 펼치지 않는다.",
+        "잘못된 아이콘은 검증된 fallback을 사용하고 프로토콜 문자열이 사용자에게 보이지 않도록 확인한다."
+      ],
+      "limits": [
+        "송신한 숫자 AUX나 아이템 식별자만으로 해당 클라이언트에서 아이콘이 존재한다고 판단하지 않는다.",
+        "원본 아이템·텍스처 권리는 코드 라이선스와 별도로 확인한다."
+      ],
+      "evidence": [
+        {
+          "sourceId": "herobrine643928-chest-ui",
+          "path": "BP/scripts/extensions/forms.js",
+          "sha256": "c917a17910b1e13e194053ed9afb01214a287492fe2bea536845a1c1050a8cfb",
+          "lineStart": 30,
+          "lineEnd": 132
+        }
+      ]
+    }
+  ]
+}

@@ -2855,6 +2855,190 @@
           "sha256": "05f048eecc85e21f6455b5d20643d4fbe5a3cc64fd6eef7f6dd93aa5fee3ce66"
         }
       ]
+    },
+    {
+      "id": "minato-web-apps-chest-ui-editor",
+      "kind": "github",
+      "url": "https://github.com/Minato-mba/web-apps",
+      "revision": "dcc7932fceea828131053fb067e1f91503e36b21",
+      "revisionDate": "2026-09-21T12:56:36Z",
+      "license": "NOASSERTION",
+      "reuse": "analysis-only",
+      "files": [
+        {
+          "path": "chest-ui-editor/CHANGELOG.md",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/CHANGELOG.md",
+          "bytes": 2305,
+          "sha256": "ff76f3aa9550cf1a9ce71ad44f7cf7dc273ddc57e3fdf8184195107f44bcf584"
+        },
+        {
+          "path": "chest-ui-editor/README.md",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/README.md",
+          "bytes": 6709,
+          "sha256": "0a649551b89fa5c7ddebc591e4361d141b8d89e18e0fcd8d3d45e4cdc729569c"
+        },
+        {
+          "path": "chest-ui-editor/how_to_add_new_component.md",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/how_to_add_new_component.md",
+          "bytes": 27209,
+          "sha256": "aae996a38d901b7f7e2195a79b80efedfff42dfaee2556f3b65b481b0219e9e4"
+        },
+        {
+          "path": "chest-ui-editor/index.html",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/index.html",
+          "bytes": 71290,
+          "sha256": "56e3c2af70e5d0198a2fdb6f92bfca9e5cf330d2218c65a18da13dcfa85fcada"
+        },
+        {
+          "path": "chest-ui-editor/scripting/examples/example.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripting/examples/example.js",
+          "bytes": 10140,
+          "sha256": "8722e043d4f582158f50456cf11519b290c6494553fdca5f3a862de49a9eb749"
+        },
+        {
+          "path": "chest-ui-editor/scripting/index.html",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripting/index.html",
+          "bytes": 49342,
+          "sha256": "2ae69719c865d760e6ef2ed7004a28d2b627713dcf3d543bec6c3f4d27674244"
+        },
+        {
+          "path": "chest-ui-editor/scripts/app.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/app.js",
+          "bytes": 46623,
+          "sha256": "67323f72624e620d3c69e3ad92807efe8f60fa2b6718987fee7a068c8b6a70ba"
+        },
+        {
+          "path": "chest-ui-editor/scripts/components.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/components.js",
+          "bytes": 48712,
+          "sha256": "822fc7c0aebcdc7b14c13e43b28203d96bc42d9fad06f714ff5a6ef6051d5d3d"
+        },
+        {
+          "path": "chest-ui-editor/scripts/editor.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/editor.js",
+          "bytes": 57401,
+          "sha256": "6e00a0c0cd4a76cb5213ce68912221123747ed35e80e560afdcfa62f748d2f62"
+        },
+        {
+          "path": "chest-ui-editor/scripts/export.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/export.js",
+          "bytes": 16917,
+          "sha256": "d947bf2c147e5bdb4964fd48b135e3e13c433dbb14390b6662f2c43ee8bf2f3e"
+        },
+        {
+          "path": "chest-ui-editor/scripts/imageManager.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/imageManager.js",
+          "bytes": 1324,
+          "sha256": "c3bf60d9dcf8f55cd710f14d8f659f3b1b8890617f61b9951a4ff2c915eac809"
+        },
+        {
+          "path": "chest-ui-editor/scripts/mobile.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/mobile.js",
+          "bytes": 45543,
+          "sha256": "aca1aa27054266373759b132d04c4cc6f8ca0eda6eaa7773e8c7b63e13deca1f"
+        },
+        {
+          "path": "chest-ui-editor/scripts/preview.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/preview.js",
+          "bytes": 110497,
+          "sha256": "d402c606b76cd56bb37c63d8383f7213958f001a53ef3f6c933f5c879b0d8b3f"
+        },
+        {
+          "path": "chest-ui-editor/scripts/project-format.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/project-format.js",
+          "bytes": 5304,
+          "sha256": "c135187b8e61c4194400bda8e6c5c8033bc1ec1a068e1cb3d9c3f7b4f451039f"
+        },
+        {
+          "path": "chest-ui-editor/scripts/properties.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/properties.js",
+          "bytes": 53044,
+          "sha256": "cab7b2dc8c56b43e0014757478804bab88b3ed57248be3db134f7c49e7c227c4"
+        },
+        {
+          "path": "chest-ui-editor/scripts/release-notice.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/release-notice.js",
+          "bytes": 2532,
+          "sha256": "edf0b6ec9d58ad796e12f1238050a6eca8f10edd40965603709e0317cf10ea29"
+        },
+        {
+          "path": "chest-ui-editor/scripts/templates.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/templates.js",
+          "bytes": 8514,
+          "sha256": "e72a25666d0778f48ce897a56687dcd460002c7be32bb6ec2de6f7287c6f1754"
+        },
+        {
+          "path": "chest-ui-editor/scripts/util.js",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/scripts/util.js",
+          "bytes": 11871,
+          "sha256": "708b7853626c02e8f2546dc8cab16b105aed192d34973af9719051715d7be76a"
+        },
+        {
+          "path": "chest-ui-editor/styles/preview.css",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/styles/preview.css",
+          "bytes": 7123,
+          "sha256": "b9002659dc03d87a8189a043cd57fad55ae9ad1158f59bb56aa43874e2db8177"
+        },
+        {
+          "path": "chest-ui-editor/workspace-documentation.md",
+          "url": "https://raw.githubusercontent.com/Minato-mba/web-apps/dcc7932fceea828131053fb067e1f91503e36b21/chest-ui-editor/workspace-documentation.md",
+          "bytes": 44656,
+          "sha256": "0871e9dccf1e53aa75fbe271d66cad7d04a7a5ac8936d369adbc98a4eee9962e"
+        }
+      ]
+    },
+    {
+      "id": "microsoftdocs-minecraft-creator",
+      "kind": "github",
+      "url": "https://github.com/MicrosoftDocs/minecraft-creator",
+      "revision": "1dfc5c4fa1cd75cabe558b08adee3420264ff0b5",
+      "revisionDate": "2026-09-22T16:37:54Z",
+      "license": "CC-BY-4.0 (documentation); MIT (code examples, LICENSE-CODE)",
+      "reuse": "reference-only",
+      "files": [
+        {
+          "path": "LICENSE",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/LICENSE",
+          "bytes": 18646,
+          "sha256": "842c308595f749b548e933b755151b7c0bafb1bbd676eda2e7fbd1a9e54ba551"
+        },
+        {
+          "path": "LICENSE-CODE",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/LICENSE-CODE",
+          "bytes": 1090,
+          "sha256": "91f7258203fd43ba6d6f7f72b644eaedee9e3430f035c053beb6f34052f045e2"
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server-ui/ActionFormData.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server-ui/ActionFormData.md",
+          "bytes": 5360,
+          "sha256": "8ba7ffcb84227af7812573a0a3b477bb7ede77b665ec943312ae8608e3483f2b"
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server-ui/ActionFormResponse.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server-ui/ActionFormResponse.md",
+          "bytes": 2625,
+          "sha256": "fc9a7e97744372c581411fa6a725c06a196ef76974d8eafc10f4fc8ed1ce5cc7"
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server-ui/FormResponse.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server-ui/FormResponse.md",
+          "bytes": 1014,
+          "sha256": "ab73c836137b82589a9d631fd81cd70ce2af12e404c2aeac85650147d5d9d2c6"
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server-ui/FormCancelationReason.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server-ui/FormCancelationReason.md",
+          "bytes": 763,
+          "sha256": "ba2d7e02980233a52b3215de0484bdefcedd6bd054fb57ac1876fe84d61a3434"
+        },
+        {
+          "path": "creator/ScriptAPI/minecraft/server/System.md",
+          "url": "https://raw.githubusercontent.com/MicrosoftDocs/minecraft-creator/1dfc5c4fa1cd75cabe558b08adee3420264ff0b5/creator/ScriptAPI/minecraft/server/System.md",
+          "bytes": 8458,
+          "sha256": "1adc04204ebc6d7380e20532924a3706dc776ac86e9a6d04a7e1e658d6703b1d"
+        }
+      ]
     }
   ]
 }

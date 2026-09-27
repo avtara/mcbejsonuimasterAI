@@ -84,6 +84,11 @@ async function main() {
     check("pixel-method:selective-routing:" + skill, selected.code === 0 && JSON.stringify(value?.workflow) === JSON.stringify(["design.library"]) && value?.tools?.length === 1);
   }
   const compactDesign = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", "style-selection,game-ui-design", "--compact", "--json"]);
+  for(const [need,id] of [["chest-research","design.library"],["chest-project","chest.project"],["chest-contract","chest.contract"]]) {
+    const selected=await run(["tools/skill-context.mjs","mcbe-json-ui-chest-gui","--needs",need,"--compact","--json"]);
+    const value=json(selected.stdout);
+    check("chest-context:one-tool:"+need,selected.code===0 && value?.tools?.length===1 && value.tools[0].id===id && JSON.stringify(value.workflow)===JSON.stringify([id]));
+  }
   const compactDesignValue = json(compactDesign.stdout);
   check("skill-context:mapped-union-deduplicated", compactDesign.code === 0 && JSON.stringify(compactDesignValue?.workflow) === JSON.stringify(["design.library"]) && compactDesignValue?.tools?.length === 1);
   const unrelated = await run(["tools/skill-context.mjs", "mcbe-json-ui-visual-design", "--needs", "syntax-only", "--json"]);

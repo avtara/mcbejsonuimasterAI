@@ -7,6 +7,8 @@ description: Use tools and tool-generated references for Minecraft Bedrock JSON 
 
 Use this when the main need is understanding or borrowing a tool workflow.
 
+For Minato Chest UI Editor projects, route to `mcbe-json-ui-chest-gui` and its editor-audit reference. The local `chest-project` inspector checks saved JSON; editor preview and exported RP behavior remain separate evidence.
+
 ## Contract
 
 - Input: authoring task, candidate tool, expected artifact, and the target pack constraints.

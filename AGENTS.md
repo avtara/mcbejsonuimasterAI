@@ -37,6 +37,7 @@ Pick the layer **based on what the user asked for**, not by default.
 | "analyze the whole local JSON UI archive" | `corpus:inventory` -> local recipe catalog -> `design:search`; keep raw names and paths in ignored local maps only |
 | "design/generate a button, panel, slot, icon, or nine-slice texture" | `mcbe-json-ui-texture-design` -> `asset:catalog` -> `asset:context`; generate only original art and only when explicitly requested |
 | "final RP를 실제 화면처럼 검사", "hover/pressed 위치와 텍스트가 맞는지 확인", "Bedrock screenshot과 비교" | `mcbe-json-ui-final-rp-inspection` -> v2 `final-rp:render`/MCP/Inspector; IR preview만으로 판정하지 않음 |
+| "chest GUI", native container slots, chest-style ActionForm, Minato editor project | `mcbe-json-ui-chest-gui`; first distinguish native item movement from form callbacks, then select project inspection or declared slot validation |
 | "실제 RP로 완성", "production-ready", "skills 기반으로 마감" | **Two-stage**: tools for coords, then hand-finish the JSON UI per `docs/46-tools-output-to-handcrafted-ui.md`. Cross-check versioned patterns and verify the target client; tool `ok=true` alone is insufficient. See `docs/04-source-priority.md` for authority by claim. |
 
 If unsure, ask the user one short question to disambiguate. Do not silently switch layers.

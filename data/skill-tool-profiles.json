@@ -158,11 +158,13 @@
         { "id": "design.search", "phase": "select", "required": false, "reason": "Select a measured server-form shell or button-grid recipe." },
         { "id": "pipeline.run", "phase": "layout", "required": false, "reason": "Solve static shell and grid geometry." },
         { "id": "pack.validate", "phase": "integrate", "required": true, "reason": "Check _ui_defs, namespaces, textures, and modifications." },
-        { "id": "prompt.lint", "phase": "handoff", "required": false, "reason": "Ensure button order and protocol acceptance criteria are explicit." }
+        { "id": "prompt.lint", "phase": "handoff", "required": false, "reason": "Ensure button order and protocol acceptance criteria are explicit." },
+        { "id": "chest.contract", "phase": "inspect", "required": false, "when": [ "chest-contract" ], "optIn": true, "reason": "Validate fixed-slot ActionForm response declarations." }
       ],
-      "workflow": ["design.search", "pipeline.run", "pack.validate", "prompt.lint"],
-      "successCriteria": ["Title route, collection owner, button indexes, and cancel behavior are traced together.", "All static pack references validate."],
-      "boundaries": ["Pack validation cannot prove a live form binding or click event."]
+      "workflow": [ "design.search", "pipeline.run", "pack.validate", "prompt.lint", "chest.contract" ],
+      "successCriteria": [ "Title route, collection owner, button indexes, and cancel behavior are traced together.", "All static pack references validate." ],
+      "boundaries": [ "Pack validation cannot prove a live form binding or click event." ],
+      "contextByNeed": { "chest-contract": [ "chest.contract" ] }
     },
     {
       "skill": "mcbe-json-ui-addon-integration",
@@ -300,11 +302,13 @@
         { "id": "tools.list", "phase": "discover", "required": true, "reason": "List only registered tools and their status." },
         { "id": "tools.describe", "phase": "inspect", "required": true, "reason": "Read the exact contract before invoking a tool." },
         { "id": "asset.search", "phase": "example", "required": false, "reason": "Use the safe local asset search contract when authoring needs UI textures." },
-        { "id": "skill.doctor", "phase": "verify", "required": true, "reason": "Ensure the tool is implemented and available." }
+        { "id": "skill.doctor", "phase": "verify", "required": true, "reason": "Ensure the tool is implemented and available." },
+        { "id": "chest.project", "phase": "inspect", "required": false, "when": [ "chest-project" ], "optIn": true, "reason": "Inspect Minato editor project data." }
       ],
-      "workflow": ["tools.list", "tools.describe", "asset.search", "skill.doctor"],
-      "successCriteria": ["Selected tools have explicit inputs, outputs, failures, mutations, and evidence."],
-      "boundaries": ["External visual editors are research inputs, not validation authorities."]
+      "workflow": [ "tools.list", "tools.describe", "asset.search", "skill.doctor", "chest.project" ],
+      "successCriteria": [ "Selected tools have explicit inputs, outputs, failures, mutations, and evidence." ],
+      "boundaries": [ "External visual editors are research inputs, not validation authorities." ],
+      "contextByNeed": { "chest-project": [ "chest.project" ] }
     },
     {
       "skill": "mcbe-json-ui-research",
@@ -339,6 +343,20 @@
       "workflow": ["vanilla.index", "project.init", "pipeline.run"],
       "successCriteria": ["Preset names and variables are verified and compiled geometry passes validation."],
       "boundaries": ["Do not hand-roll a preset skeleton when a verified vanilla control owns it."]
+    },
+    {
+      "skill": "mcbe-json-ui-chest-gui",
+      "skillStatus": "implemented",
+      "purpose": "Keep native container inventory and chest-style ActionForm contracts distinct; inspect saved projects and stable slot mappings.",
+      "toolSelections": [
+        { "id": "design.library", "phase": "inspect", "required": false, "when": [ "chest-research" ], "optIn": true, "reason": "Read one pinned chest topic only." },
+        { "id": "chest.project", "phase": "inspect", "required": false, "when": [ "chest-project" ], "optIn": true, "reason": "Inspect an editor JSON save without executing upstream code." },
+        { "id": "chest.contract", "phase": "inspect", "required": false, "when": [ "chest-contract" ], "optIn": true, "reason": "Validate the declared transport, slots and captured response mapping." }
+      ],
+      "workflow": [ "design.library", "chest.project", "chest.contract" ],
+      "successCriteria": [ "The chosen transport and actual data owner are explicit.", "Diagnostics preserve original input and distinguish declared/static evidence from runtime interaction." ],
+      "boundaries": [ "The browser editor and authored plan do not prove RP/BP agreement, inventory safety or Bedrock interaction." ],
+      "contextByNeed": { "chest-research": [ "design.library" ], "chest-project": [ "chest.project" ], "chest-contract": [ "chest.contract" ] }
     }
   ]
 }

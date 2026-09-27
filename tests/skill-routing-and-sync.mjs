@@ -17,12 +17,13 @@ const topology = JSON.parse(await readFile(resolve(repo, "data/skill-topology.js
 const routing = JSON.parse(await readFile(resolve(repo, "data/skill-routing.json"), "utf8"));
 const profiles = JSON.parse(await readFile(resolve(repo, "data/skill-tool-profiles.json"), "utf8"));
 const source = (await readdir(resolve(repo, "skills"), { withFileTypes: true })).filter(e => e.isDirectory()).map(e => e.name).sort();
-check("topology source 23", source.length === 23 && JSON.stringify(source) === JSON.stringify([...topology.sourceSkills].sort()));
+check("topology source count and identity", source.length === topology.sourceCount && JSON.stringify(source) === JSON.stringify([...topology.sourceSkills].sort()));
 check("routing set equality", JSON.stringify(source) === JSON.stringify(routing.routes.map(r => r.skill).sort()));
 check("profile set equality", JSON.stringify(source) === JSON.stringify(profiles.profiles.map(p => p.skill).sort()));
 check("implicit invocation preserved", !JSON.stringify(topology).includes("allow_implicit_invocation"));
 
 const exactCases = [
+  ["native-container", "mcbe-json-ui-chest-gui"], ["chest-form", "mcbe-json-ui-chest-gui"], ["chest-editor-project", "mcbe-json-ui-chest-gui"],
   ["runtime-error", "mcbe-json-ui-debugging"], ["vanilla-texture", "mcbe-json-ui-vanilla-assets"],
   ["server-form", "mcbe-json-ui-server-forms"], ["pixel-geometry", "mcbe-json-ui-ir-authoring"],
   ["screenshot-comparison", "mcbe-json-ui-final-rp-inspection"]
@@ -80,11 +81,11 @@ const runtimeBlocked = parse(await run(node, ["tools/route-task.mjs", "--intent"
 check("runtime blocker survives escalation ceiling", runtimeBlocked?.escalation?.status === "blocked-needs-user" && runtimeBlocked.escalation.count === 2);
 
 const lint = await run(node, ["tools/skill-lint.mjs", "--json"]);
-check("portable lint", lint.code === 0 && parse(lint)?.skills === 23, lint.stdout.slice(0, 300));
+check("portable lint", lint.code === 0 && parse(lint)?.skills === source.length, lint.stdout.slice(0, 300));
 const lintValue = parse(lint);
 check("routed references are discoverable", !lintValue?.warnings?.some((item) => /debugging-map\.md|master-routing\.md/.test(item.file || "")));
 const sync = parse(await run(node, ["tools/skill-sync-check.mjs"]));
-check("installed drift classified", sync?.readOnly === true && sync.counts?.source === 23 && Array.isArray(sync.installedOnly) && Array.isArray(sync.drift));
+check("installed drift classified", sync?.readOnly === true && sync.counts?.source === source.length && Array.isArray(sync.installedOnly) && Array.isArray(sync.drift));
 
 const full = await run(node, ["tools/skill-context.mjs", "mcbe-json-ui-master", "--full", "--json"]);
 const legacy = await run(node, ["tools/skill-context.mjs", "mcbe-json-ui-master", "--json"]);
@@ -100,7 +101,7 @@ try {
   const dry = await run(powershell, ["-NoProfile", "-File", "scripts/install-skills.ps1", "-TargetBase", temp]);
   check("installer dry-run default", dry.code === 0 && /DRY-RUN/.test(dry.stdout) && (await readdir(temp)).length === 0, dry.stderr);
   const apply = await run(powershell, ["-NoProfile", "-File", "scripts/install-skills.ps1", "-TargetBase", temp, "-Apply"]);
-  check("installer staged apply", apply.code === 0 && (await readdir(temp, { withFileTypes: true })).filter(e => e.isDirectory()).length === 23, apply.stderr);
+  check("installer staged apply", apply.code === 0 && (await readdir(temp, { withFileTypes: true })).filter(e => e.isDirectory()).length === source.length, apply.stderr);
   await mkdir(resolve(temp, "mcbe-json-ui-local-only"));
   const managedSync = await run(node, ["tools/skill-sync-check.mjs", "--installed", temp]);
   const strictSync = await run(node, ["tools/skill-sync-check.mjs", "--installed", temp, "--strict"]);

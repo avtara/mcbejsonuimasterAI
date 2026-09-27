@@ -1,0 +1,421 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mcbe-jsonui-ai-kit/chest-contract.schema.json",
+  "title": "Declared chest UI authoring contract",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "mcbe-chest-contract@1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^\\S+$"
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^\\S+$"
+    },
+    "transport": {
+      "enum": [
+        "action-form",
+        "native-container"
+      ]
+    },
+    "grid": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        }
+      },
+      "required": [
+        "columns",
+        "rows"
+      ],
+      "additionalProperties": false
+    },
+    "initialPage": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^\\S+$"
+    },
+    "actionForm": {
+      "type": "object",
+      "properties": {
+        "collection": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^\\S+$"
+        },
+        "placeholderPolicy": {
+          "const": "preserve"
+        },
+        "cancelPolicy": {
+          "const": "return-before-selection"
+        },
+        "closePolicy": {
+          "enum": [
+            "cancel",
+            "mapped-control"
+          ]
+        }
+      },
+      "required": [
+        "collection",
+        "placeholderPolicy",
+        "cancelPolicy",
+        "closePolicy"
+      ],
+      "additionalProperties": false
+    },
+    "nativeContainer": {
+      "type": "object",
+      "properties": {
+        "collections": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80,
+                "pattern": "^\\S+$"
+              },
+              "size": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 1000000
+              }
+            },
+            "required": [
+              "name",
+              "size"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "events": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^\\S+$"
+          }
+        },
+        "closeEvent": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^\\S+$"
+        }
+      },
+      "required": [
+        "collections",
+        "events",
+        "closeEvent"
+      ],
+      "additionalProperties": false
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^\\S+$"
+          },
+          "slots": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 256,
+            "items": {
+              "$ref": "#/$defs/slot"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "slots"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "id",
+    "revision",
+    "transport",
+    "grid",
+    "initialPage",
+    "pages"
+  ],
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "transport": {
+          "const": "action-form"
+        }
+      },
+      "required": [
+        "actionForm"
+      ],
+      "not": {
+        "required": [
+          "nativeContainer"
+        ]
+      }
+    },
+    {
+      "properties": {
+        "transport": {
+          "const": "native-container"
+        }
+      },
+      "required": [
+        "nativeContainer"
+      ],
+      "not": {
+        "required": [
+          "actionForm"
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "slot": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "role": {
+          "enum": [
+            "slot",
+            "control",
+            "placeholder"
+          ]
+        },
+        "semanticId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^\\S+$"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "selectionIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "action": {
+          "$ref": "#/$defs/action"
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "collection": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "pattern": "^\\S+$"
+            },
+            "index": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "collection",
+            "index"
+          ],
+          "additionalProperties": false
+        },
+        "targetSource": {
+          "$ref": "#/$defs/slot/properties/source"
+        },
+        "event": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^\\S+$"
+        },
+        "icon": {
+          "$ref": "#/$defs/icon"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "index",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "callback"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "pattern": "^\\S+$"
+            }
+          },
+          "required": [
+            "type",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "page"
+            },
+            "pageId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "pattern": "^\\S+$"
+            }
+          },
+          "required": [
+            "type",
+            "pageId"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "const": "close"
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "icon": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "none"
+            }
+          },
+          "required": [
+            "mode"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "texture-path"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256
+            }
+          },
+          "required": [
+            "mode",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "item-id"
+            },
+            "value": {
+              "type": "string",
+              "maxLength": 256,
+              "pattern": "^[a-z0-9_.-]+:[a-z0-9_./-]+$"
+            }
+          },
+          "required": [
+            "mode",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "const": "aux"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": -9007199254740991,
+              "maximum": 9007199254740991
+            },
+            "mappingRevision": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "pattern": "^\\S+$"
+            }
+          },
+          "required": [
+            "mode",
+            "value",
+            "mappingRevision"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

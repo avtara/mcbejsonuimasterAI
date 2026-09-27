@@ -7,12 +7,12 @@ export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 export const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const json = async p => JSON.parse(await readFile(resolve(ROOT, p), 'utf8'));
 export async function loadDesignLibrary() {
-  const [styles, sources, game, lock, patterns, skills, methods] = await Promise.all([
+  const [styles, sources, game, lock, patterns, skills, methods, chest] = await Promise.all([
     json('data/design-styles.json'), json('data/design-sources.json'), json('data/game-ui-design.json'),
     json('config/design-research-lock.json'), json('data/bedrock-source-patterns.json'), json('data/design-skill-sources.json'),
-    json('data/pixel-art-methods.json'),
+    json('data/pixel-art-methods.json'), json('data/chest-ui-patterns.json'),
   ]);
-  const db = { styles:styles.styles, sources:sources.sources, game, lock:lock.sources, patterns:patterns.patterns, skills:skills.sources, methods, reviewedAt:sources.reviewedAt };
+  const db = { styles:styles.styles, sources:sources.sources, game, lock:lock.sources, patterns:patterns.patterns, skills:skills.sources, methods, chest, reviewedAt:sources.reviewedAt };
   validateDesignLibrary(db);
   return db;
 }
@@ -130,6 +130,19 @@ export function validateDesignLibrary(db) {
     nonempty(p.summary,`pattern ${p.id} summary`);nonempty(p.adaptation,`pattern ${p.id} adaptation`);stringList(p.limitations,`pattern ${p.id} limitations`);
   }
   validatePixelArtMethods(db.methods,sourceIds);
+  validateChestTopics(db.chest,locked);
+}
+export function validateChestTopics(catalog,locked) {
+  if(catalog?.schema!=='mcbe-chest-topics@1' || catalog.defaultLoad!=='selected-topic-only' || catalog.runtimeVerified!==false)throw new Error('Invalid chest topics policy/schema');
+  uniqueRecords(catalog.topics,'chest topics');
+  for(const topic of catalog.topics) {
+    for(const field of ['name','useWhen'])nonempty(topic[field],`chest ${topic.id} ${field}`);
+    if(!['native-container','action-form','selection'].includes(topic.transport))throw new Error(`Invalid chest transport: ${topic.id}`);
+    for(const field of ['sourceIds','checks','limits'])stringList(topic[field],`chest ${topic.id} ${field}`);
+    for(const id of topic.sourceIds)if(!locked.has(id))throw new Error(`Chest topic missing source: ${topic.id}/${id}`);
+    if(!Array.isArray(topic.evidence)||!topic.evidence.length)throw new Error(`Missing chest evidence: ${topic.id}`);
+    for(const item of topic.evidence){if(!topic.sourceIds.includes(item.sourceId))throw new Error(`Unselected chest evidence source: ${topic.id}`);validateSourceEvidence(item,locked.get(item.sourceId));}
+  }
 }
 function validateSourceEvidence(e,source) {
   const file=source.files.find(f=>f.path===e?.path);
@@ -162,6 +175,14 @@ function selectStyle(db,style) {
 }
 const withoutStyleAliases = ({aliases,roles,...style})=>style;
 const sourceMetadata = ({id,url,revision,license,reuse,runtime})=>({id,url,revision,license,reuse,runtime});
+export function chestContext(db,{topic}={}) {
+  const selected=db.chest.topics.find(item=>item.id===topic);
+  if(!selected)throw new Error(`Unknown chest topic ${topic??'<missing>'}; run chest-topics first`);
+  return {schema:'mcbe-chest-context@1',decisionStatus:'authored-adaptation',runtimeVerified:false,topic:selected,
+    sources:db.sources.filter(source=>selected.sourceIds.includes(source.id)).map(sourceMetadata),pathScope:'upstream',
+    boundary:'Selected pinned evidence only. Native container actions and ActionForm responses are different protocols. No upstream execution, asset redistribution or Bedrock runtime proof.',
+  };
+}
 export function pixelArtMethod(db,{method,style}={}) {
   const selected=db.methods.methods.find(m=>m.id===method);
   if(!selected)throw new Error(`Unknown method ${method??'<missing>'}; run methods first`);

@@ -2,6 +2,8 @@
 
 Portable Codex skills and research notes for Minecraft Bedrock JSON UI.
 
+Chest GUI: [design and inspection tools](docs/75-chest-gui.md), [pinned source review](docs/76-chest-source-review.md), and the `mcbe-json-ui-chest-gui` specialist distinguish native containers, chest-style ActionForm menus and Minato editor projects.
+
 This repository is designed to be usable as a standalone GitHub project, not just as a local note dump.  
 The goal is simple:
 

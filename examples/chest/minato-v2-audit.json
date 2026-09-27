@@ -1,0 +1,24 @@
+{
+  "formatVersion": 2,
+  "formatLabel": "2.0.0",
+  "components": [
+    { "id": "example-slot", "type": "container_item", "x": 0, "y": 0, "width": 18, "height": 18, "properties": { "collection_index": 0 } }
+  ],
+  "settings": { "mainPanelHeight": 166 },
+  "uploadedImages": {},
+  "uiProject": {
+    "activeId": "example-native-chest",
+    "uis": [
+      {
+        "id": "example-native-chest",
+        "triggerTitle": "Independent example chest",
+        "newTitle": "Example inventory",
+        "title": "Example inventory",
+        "settings": { "mainPanelHeight": 166 },
+        "components": [
+          { "id": "example-slot", "type": "container_item", "x": 0, "y": 0, "width": 18, "height": 18, "properties": { "collection_index": 0 } }
+        ]
+      }
+    ]
+  }
+}
