@@ -367,11 +367,12 @@ export async function localAssetEvidence(catalog, { id, limit = 8, maxChars = 60
 }
 
 export async function writeLocalLearningCatalog(outputPath, catalog, { workspace = resolve(ROOT, 'workspace') } = {}) {
-  const base = await realpath(workspace), output = resolve(outputPath);
-  if (!inside(base, output) || output === base) throw new Error('Private learning output must stay under the repository workspace');
-  let ancestor = dirname(output);
-  while (true) { try { ancestor = await realpath(ancestor); break; } catch (error) { if (error.code !== 'ENOENT') throw error; const parent = dirname(ancestor); if (parent === ancestor) throw error; ancestor = parent; } }
-  if (!inside(base, ancestor)) throw new Error('Private output parent escapes the workspace through a symlink');
+  const base = await realpath(workspace), requested = resolve(outputPath);
+  let ancestor = dirname(requested), canonicalAncestor;
+  while (true) { try { canonicalAncestor = await realpath(ancestor); break; } catch (error) { if (error.code !== 'ENOENT') throw error; const parent = dirname(ancestor); if (parent === ancestor) throw error; ancestor = parent; } }
+  // Compare canonical parents so Windows 8.3 names and other aliases agree with realpath(workspace).
+  const output = resolve(canonicalAncestor, relative(ancestor, requested));
+  if (!inside(base, output) || relative(base, output) === '') throw new Error('Private output escapes the workspace or targets its root');
   await mkdir(dirname(output), { recursive: true });
   if (!inside(base, await realpath(dirname(output)))) throw new Error('Private output parent escapes workspace');
   await writeFile(output, `${JSON.stringify(catalog)}\n`, { flag: 'wx' });

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, mkdir, readFile, writeFile, rm, symlink } from 'node:fs/promises';
+import { mkdtemp, mkdir, readFile, writeFile, rm, symlink, link, realpath } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
@@ -93,6 +93,29 @@ try {
   const out = join(workspace, 'catalog.json'); await writeLocalLearningCatalog(out, catalog, { workspace });
   await assert.rejects(() => writeLocalLearningCatalog(out, catalog, { workspace }), /EEXIST/);
   await assert.rejects(() => writeLocalLearningCatalog(join(temp, 'outside.json'), catalog, { workspace }), /workspace/);
+  await assert.rejects(() => writeLocalLearningCatalog(workspace, catalog, { workspace }), /workspace/);
+  const outsideTarget = join(temp, 'preserved.json'); await write(outsideTarget, 'preserve this file');
+  const linkedOutput = join(workspace, 'existing-hardlink.json'); await link(outsideTarget, linkedOutput);
+  await assert.rejects(() => writeLocalLearningCatalog(linkedOutput, catalog, { workspace }), /EEXIST/);
+  assert.equal(await readFile(outsideTarget, 'utf8'), 'preserve this file');
+  // The logical alias and canonical parent differ, just as with RUNNER~1 on Windows CI.
+  const workspaceAlias = join(temp, 'workspace-alias');
+  await symlink(await realpath(workspace), workspaceAlias, process.platform === 'win32' ? 'junction' : 'dir');
+  await writeLocalLearningCatalog(join(workspaceAlias, 'new-parent', 'nested', 'alias.json'), catalog, { workspace });
+  assert.equal(JSON.parse(await readFile(join(workspace, 'new-parent/nested/alias.json'))).schema, catalog.schema);
+  await assert.rejects(() => writeLocalLearningCatalog(workspaceAlias, catalog, { workspace }), /workspace/);
+  await assert.rejects(() => writeLocalLearningCatalog(join(workspaceAlias, 'catalog.json'), catalog, { workspace }), /EEXIST/);
+  let windowsShortPathVerified = false;
+  if (process.platform === 'win32') {
+    const command = `Add-Type -TypeDefinition 'using System.Text; using System.Runtime.InteropServices; public static class LearningShortPath { [DllImport("kernel32.dll", EntryPoint="GetShortPathNameW", CharSet=CharSet.Unicode, SetLastError=true)] public static extern uint Read(string path, StringBuilder result, uint length); }'; $buffer = [Text.StringBuilder]::new(32768); $length = [LearningShortPath]::Read($env:MCBE_LEARNING_TEST_PATH, $buffer, 32768); if ($length -eq 0 -or $length -ge 32768) { exit 1 }; [Console]::Write($buffer.ToString())`;
+    const probe = spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', command], { encoding: 'utf8', env: { ...process.env, MCBE_LEARNING_TEST_PATH: await realpath(workspace) } });
+    assert.equal(probe.status, 0, probe.stderr);
+    if (probe.stdout.toLowerCase() !== (await realpath(workspace)).toLowerCase()) {
+      await writeLocalLearningCatalog(join(probe.stdout, 'short-name', 'catalog.json'), catalog, { workspace });
+      assert.equal(JSON.parse(await readFile(join(workspace, 'short-name/catalog.json'))).schema, catalog.schema);
+      windowsShortPathVerified = true;
+    }
+  }
   const cached = await learnLocalAssets({ root: library, cache: out });
   assert.equal(cached.coverage.reusedExtractions, cached.coverage.hashVerifiedFiles);
   const damagedCache = structuredClone(catalog); damagedCache.entries.forEach(e => { if (e.extraction) e.extraction = { features: ['ui'] }; });
@@ -131,5 +154,5 @@ try {
   for (const args of [['scan', '--unknown', 'x'.repeat(10000)], ['context', '--catalog', out, '--need', 'ui', '--need', 'ui'], ['context', '--catalog', out, '--need', 'ui', '--limit', '-1']]) {
     const result = cli(...args); assert.equal(result.status, 2); assert.ok(result.stderr.length <= 1000);
   }
-  console.log(JSON.stringify({ ok: true, checked: 'full scan, content graph, pack/subpack ownership, material discovery, stale/cache hashes, neutral bounded context, private no-overwrite output, CLI' }));
+  console.log(JSON.stringify({ ok: true, windowsShortPathVerified, checked: 'full scan, content graph, pack/subpack ownership, material discovery, stale/cache hashes, neutral bounded context, canonical alias output, private no-overwrite output, CLI' }));
 } finally { await rm(temp, { recursive: true, force: true }); }
