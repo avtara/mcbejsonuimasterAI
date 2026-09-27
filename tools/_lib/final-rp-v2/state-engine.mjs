@@ -42,7 +42,17 @@ export function projectInteractionState(tree, fixture = {}, options = {}) {
       ...Object.fromEntries(Object.entries(props).map(([key, value]) => [`#${key}`, value]))
     };
     for (const binding of props.bindings || []) {
-      if (binding?.binding_type !== "view" || !binding.target_property_name) continue;
+      const explicitBindingType = binding?.binding_type;
+      const bindingType = explicitBindingType || "view";
+      if (bindingType === "global" || (!explicitBindingType && binding?.binding_name)) {
+        const sourceProperty = binding.binding_name || binding.source_property_name;
+        const targetProperty = binding.binding_name_override || binding.target_property_name || sourceProperty;
+        if (!sourceProperty || !targetProperty) continue;
+        if (Object.hasOwn(environment, sourceProperty)) props[targetProperty.replace(/^#/, "")] = environment[sourceProperty];
+        else unresolved.push({kind:"unresolved_global_binding",control:node.qualified||node.id,sourceProperty,targetProperty});
+        continue;
+      }
+      if (bindingType !== "view" || !binding.target_property_name) continue;
       const sourceEnvironment = binding.source_control_name ? { ...environment, ...(sourceStates.get(binding.source_control_name) || {}) } : environment;
       const result = evaluateExpression(binding.source_property_name, sourceEnvironment, { control: node.qualified || node.id, property: binding.target_property_name });
       if (!result.ok) { unresolved.push(...result.unresolved); continue; }

@@ -1,38 +1,30 @@
 ---
 name: mcbe-json-ui-debugging
-description: Diagnose Bedrock JSON UI failures. Use when Codex must find why a screen does not render, a server form does not replace, a HUD panel stays hidden, a binding-derived value is wrong, a chat or actionbar protocol is misparsed, or a texture path or pack dependency breaks Minecraft Bedrock JSON UI behavior.
+description: Diagnose Bedrock JSON UI failures. Use when a screen or server form does not render, a control reference or property is rejected, a hover/input state is wrong, bindings or protocol text leak, or static checks disagree with Bedrock runtime.
 ---
 
 # MCBE JSON UI Debugging
 
-Treat failures as layered diagnosis.
+Diagnose from the exact failing control path outward. Do not patch the visible symptom before identifying the owning layer.
 
 ## Contract
 
-- Input: failing screen, entry files, relevant UI/BP files, reproduction steps, and logs when available.
-- Output: evidence-ranked root cause, minimal owning-layer fix, and the exact checks run.
-- Success: registration, references, data flow, assets, and runtime logs are separated; static success is not presented as runtime proof.
+- Input: failing screen, entry files, related UI/BP sender files, exact reproduction, Content Log, and target device/input method.
+- Output: evidence-ranked root cause, smallest owning-layer fix, exact checks run, and runtime checks still pending.
+- Success: registration, control resolution, collection ownership, bindings, visual state, input, assets, and runtime evidence are separated.
 
-If `data/skill-tool-profiles.json` exists, read only the `mcbe-json-ui-debugging` entry. Confirm each diagnostic command exists before running it and record unavailable checks instead of inventing results.
+If `data/skill-tool-profiles.json` exists, read only the `mcbe-json-ui-debugging` entry. Confirm diagnostic commands exist before running them; unavailable checks stay unavailable.
 
 ## Workflow
 
-1. Read `references/debugging-map.md`.
-2. Identify the failing layer:
-   - registration
-   - namespace or insertion point
-   - factory routing
-   - binding or string parsing
-   - texture path
-   - addon asset dependency
-3. Compare against the closest included working sample.
-4. Return an ordered suspect list plus the minimal fix set.
+1. Read `references/debugging-map.md` and classify the first target `[UI]` failure by its full control path.
+2. Trace `_ui_defs.json` -> namespace -> route/factory -> inherited control -> collection/binding -> input mapping.
+3. Compare the failing construct with the closest verified local or vanilla example; never invent a property or event name.
+4. Fix the owning layer, re-run focused static checks, then request or inspect Bedrock interaction and a clean target Content Log.
 
-## Checklist
+## Required boundaries
 
-- Is the file registered in `_ui_defs.json`?
-- Is the namespace correct?
-- Is the control inserted into the right panel?
-- Is the activation text or form title exact?
-- Is the texture path valid and present?
-- Is the sample copied without its dependent assets?
+- A parsed file or successful static preview is not Bedrock runtime proof.
+- Separate unrelated Sound, Animation, and Script noise from the target UI failure.
+- Preserve unresolved bindings and states as diagnostics; do not guess their values.
+- Keep project-specific title tokens, namespaces, objectives, and hidden markers out of general rules.

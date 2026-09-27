@@ -29,6 +29,24 @@ The fixture uses `title`, `body`, `buttons`, `hoveredIndex`, `pressedIndex`, and
 
 Keep the default fixture's interaction indices `null`. Render each interactive family with an explicit index and require different PNG hashes when its visible state should change. Equal hashes across visibly different default/hover/pressed requests are a renderer or state-dispatch failure, not evidence that the UI is stable.
 
+For state-content persistence, compare semantic controls and bindings. A default/hover/pressed background texture change with the same label and icon controls is expected styling; report content loss only when a semantic label/icon or its binding disappears or changes incompatibly.
+
+Render the qualified registered screen or form root at the target logical viewport before thumbnail reduction. Do not substitute a child panel and call it the form. Cache keys must cover the screen source, inherited sources, fixture, state, viewport, renderer revision, and resolved asset fingerprints. After changing state, wait for render completion and compare the final image hash rather than an intermediate frame. If a local server may be stale, verify its revision endpoint or start a fresh port.
+
+Trace `_ui_defs.json -> screen -> route -> modifications -> final root`. Record whether modifications were applied and whether the fixture matches the source family, expected route/root, collection names, materialized item minimum, and required indices. A skipped required fixture is unavailable, not passing evidence.
+
+For fast/thumbnail analysis, require explicit capability flags. If per-control pixels, masks, silhouettes, or source alpha were omitted, a validator that needs them must return `PIXEL_METRICS_UNAVAILABLE` or an equivalent unavailable state. Separate render completion, nonblank pixels, inspection capability, and validation result.
+
+## Engine-backed custom renderers
+
+Treat `type: "custom"` controls whose `renderer` is supplied by the Bedrock engine as a separate capability boundary. Common examples include `live_player_renderer` and `paper_doll_renderer`.
+
+- If the offline renderer does not implement that engine renderer, emit a blocking `RUNTIME_CUSTOM_RENDERER_UNAVAILABLE` diagnostic containing the control and renderer names.
+- Preserve the control's resolved rectangle and provenance in the report, but do not draw a placeholder or silently convert it to a generic group.
+- A blank offline region is diagnostic-only. It does not prove that Bedrock will leave the region blank, and it cannot be used to reject a source-valid custom renderer.
+- Do not replace the custom renderer with a 2D icon merely to make the preview nonblank. Use a Bedrock screenshot and the target Content Log to verify the model, pose, cursor tracking, clipping, and stacking order.
+- A screen containing an unavailable required custom renderer cannot reach `final-pack-static-visual` completeness for that region. Other independently rendered regions may still be inspected as partial evidence.
+
 ## MCP tools
 
 - `mcbe_ui_open_project`
@@ -50,10 +68,16 @@ Probe the required request, not merely the advertised tool list. A missing depen
 
 Render a state matrix with `mcbe_ui_render_states`, then validate state textures. Compare an actual Bedrock screenshot only after calibration. Correction proposals must reference server-issued evidence IDs and the current project revision, include old/new values and property origins, and remain read-only until the user explicitly authorizes an edit. Geometry proposals target source IR when it exists.
 
+Screenshot evidence also requires nonempty required regions, a minimum root-match score, minimum IoU, maximum residual, calibration ID, screenshot/render hashes, and matching project revision. Empty regions, placeholder device provenance, stale reports, or low-quality matches cannot issue correction evidence.
+
 MCP render output must be outside the RP. External editor exports may be used as pinned compatibility fixtures, never as screenshot calibration or runtime proof.
 
 ## Evidence labels
 
-- Resolver or validator only: `final pack structure checked`.
-- Local final-RP PNG with all required dependencies resolved: `final-pack static visual`.
-- Imported Bedrock screenshots compared and content log clean: `Bedrock runtime verified`.
+1. `structural-static`: parsing, references, registration, and pack linkage only.
+2. `final-pack-static-visual`: complete final-RP root rendered with resolved dependencies, source-complete fixture, requested inspection capability, and nonblank expected pixels.
+3. `calibrated-screenshot-comparison`: comparison to one identified capture with thresholds, regions, calibration, revision, and artifact hashes.
+4. `bedrock-runtime-visual`: Bedrock rendered the target screen and the target UI Content Log is clean.
+5. `bedrock-runtime-interaction`: required hover, click, focus, input, collection, animation, and sender-response scenarios passed.
+
+Each level proves only its own capability. A later-looking tool output such as `report.ok` or an evidence ID does not skip a missing prerequisite.

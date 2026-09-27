@@ -40,7 +40,7 @@ export function projectTooltipVisibility({ hovered=false, focused=false, pressed
   const visible=touchFallback==="always"||touchFallback==="focus-or-press"&&(focused||pressed);
   return{visible,reason:visible?`touch-${touchFallback}`:"touch-fallback-hidden",verifiedFallback:["always","focus-or-press"].includes(touchFallback)};
 }
-function flattenContent(node){const out=[];(function walk(value){if(["label","image"].includes(value.props?.type))out.push(contentIdentity(value));for(const child of value.controls||[])walk(child)})(node);return out.sort((a,b)=>String(a.semanticId).localeCompare(String(b.semanticId)));}
+function flattenContent(node){const out=[];const walk=(value)=>{if(["label","image"].includes(value.props?.type))out.push(contentIdentity(value));for(const child of value.controls||[])walk(child)};for(const child of node.controls||[])walk(child);return out.sort((a,b)=>String(a.semanticId).localeCompare(String(b.semanticId)));}
 function contentSemantics(content){return content.map(item=>({role:item.role,semanticId:item.semanticId,text:item.role==="label"?item.text:null,collectionIndex:item.collectionIndex,bindings:item.bindings}));}
 function stateChildren(node){return(node.controls||[]).filter(child=>/(default|hover|press|lock|checked|unchecked|selected|unselected|focus)/i.test(child.id||""));}
 function normalizeType(type){return type==="input_panel"?"input_panel":TYPE_STATES[type]?type:"button";}

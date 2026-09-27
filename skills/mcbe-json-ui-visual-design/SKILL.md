@@ -1,6 +1,6 @@
 ---
 name: mcbe-json-ui-visual-design
-description: Design and verify Minecraft Bedrock JSON UI proportions, positions, sizes, spacing, alignment, typography, nine-slice surfaces, and button states from measured evidence. Use for visual layout decisions; use a data-flow skill separately for bindings or protocols.
+description: Design Minecraft Bedrock game UI, select cartoon pixel, fantasy RPG, clean pixel or Cozy 16x16 styles, and verify layout, typography, surfaces and input states. Use for visual direction and game interface critique; use a data-flow skill for bindings.
 ---
 
 # MCBE JSON UI Visual Design
@@ -15,6 +15,12 @@ Turn a screenshot, working screen, or catalog recipe into explicit layout decisi
 
 ## Workflow
 
+For style selection or game UI design, first read [references/style-selection.md](references/style-selection.md). It provides a small context query and a portable fallback. Read [references/design-skill-adapters.md](references/design-skill-adapters.md) only when a reviewed external design method helps the specific decision.
+
+For a direction or brief only, return the selected style and relevant game UI decisions here. Continue into the numbered measurement/implementation workflow only when actual layout, assets or validation are requested.
+
+When choosing a pixel-art production method, query `design.library methods`, then `method --method ID --style ID` from the checkout. The method is an optional authored adaptation; keep layout decisions here and hand actual asset work to `mcbe-json-ui-texture-design`.
+
 1. Read [references/measured-layout-workflow.md](references/measured-layout-workflow.md).
 2. Inspect the target screen, its inherited controls, referenced textures, adjacent nine-slice metadata, and available vanilla/font/device profiles.
 3. If `data/skill-tool-profiles.json` exists, read only the `mcbe-json-ui-visual-design` profile. Invoke a tool only when its command or script is present in the current checkout; otherwise perform the measurable parts directly and report the missing capability.
@@ -27,6 +33,8 @@ Turn a screenshot, working screen, or catalog recipe into explicit layout decisi
 ## Design rules
 
 - Establish the root and content box before placing children.
+- For a set of reference screens, define a structural signature for each screen before styling: major regions, fixed versus dynamic collections, scroll owner, card topology, header shape, and action placement. Assert that the intended distinct screens have distinct signatures; a palette, texture, or title swap alone is not a new layout.
+- Share a shell or component only where the references actually share it. If one reference changes the hierarchy or silhouette (for example, a centered modal header versus an angled brand header), give it a dedicated control composition instead of forcing the shared template.
 - Distinguish baked artwork from live controls before measuring. If a socket, separator, label, or button surface is already present in the background, do not stack a second full surface over it without a deliberate mask or cutout.
 - Use one spacing rule for a repeated row or grid unless the evidence shows a deliberate exception.
 - Size labels from their available region and test the normal string, a 30% longer Korean string, and a long English string.

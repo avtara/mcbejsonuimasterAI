@@ -117,7 +117,7 @@ Keep text at readable Minecraft GUI sizes. Large headings belong in the form hea
 - Avoid duplicate full-screen panels, nested scroll views, and always-visible transparent overlays.
 - Normalize texture keys to the exact case stored in the pack or vanilla index.
 - Use `collection_panel` only with `binding_collection_name` and valid collection details.
-- Avoid cross-namespace inherited controls directly inside `modifications[].value`; insert a local wrapper that owns the external control, or replace the intended local host deliberately.
+- For inherited controls inside `modifications[].value`, verify registration, matching resource path and target-array ownership. Use a wrapper or inner-content replacement only when the target pack/client requires it; see `docs/26-common-failure-modes.md` for the evidence boundary.
 - Validate all `_ui_defs.json` entries and texture references before in-game testing.
 
 ## Production workflow

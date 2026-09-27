@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import pixelmatch from "pixelmatch";
 import { PNG } from "pngjs";
+import { evaluateTextFixtures, validateTextCoverage } from "./offline-text-eval.mjs";
 
 const slash = (value) => value.replaceAll("\\", "/");
 async function exists(path) { try { await stat(path); return true; } catch { return false; } }
@@ -23,12 +24,6 @@ function walkObject(value, visitor, path = "$") {
   visitor(value, path);
   if (Array.isArray(value)) value.forEach((child, i) => walkObject(child, visitor, `${path}[${i}]`));
   else for (const [key, child] of Object.entries(value)) walkObject(child, visitor, `${path}.${key}`);
-}
-function namedControls(value, output = []) {
-  if (!value || typeof value !== "object") return output;
-  for (const entry of value.controls || []) for (const [name, child] of Object.entries(entry)) { output.push({ id: name.split("@")[0].split(".").pop(), node: child }); namedControls(child, output); }
-  for (const [name, child] of Object.entries(value)) if (name !== "controls" && name !== "namespace" && child?.type) { output.push({ id: name.split("@")[0].split(".").pop(), node: child }); namedControls(child, output); }
-  return output;
 }
 
 const GOLDEN_POLICY = { engine: "pixelmatch", threshold: 0.15, maxDiffRatio: 0.001, fontPolicy: "platform text antialiasing is tolerated; geometry and texture layers remain deterministic" };
@@ -116,9 +111,8 @@ async function structuralChecks(root, exampleRoot, validation, fixtures, task) {
   }
   checks.push(check("protocol_sender_ui", protocolIssues.length === 0, protocolIssues));
 
-  const fixtureCases = fixtures.text.cases || [], stringValues = Object.values(validation.stringCases || {}), fixtureIssues = [];
-  for (const wanted of ["long_ko_130", "long_en"]) { const item = fixtureCases.find((entry) => entry.id === wanted); if (!item) fixtureIssues.push(`missing fixture ${wanted}`); else if (!stringValues.includes(item.text)) fixtureIssues.push(`${wanted} is not represented in validation.stringCases`); }
-  checks.push(check("long_ko_en_fixtures", fixtureIssues.length === 0, fixtureIssues));
+  const fixtureIssues = validateTextCoverage(validation.textCoverage, fixtures.text.cases || []);
+  checks.push(check("semantic_text_fixture_contract", fixtureIssues.length === 0, fixtureIssues));
 
   const leakIssues = [];
   for (const path of exampleFiles.filter((p) => [".json", ".js", ".yaml", ".yml", ".md"].includes(extname(p)))) {
@@ -159,12 +153,13 @@ export async function evaluateOffline({ root, taskManifest, taskId = null, repor
       const solved = await json(join(outDir, "solved.json")), actualUiText = JSON.stringify(await json(actualUi));
       const mappingMissing = (solved.elements || []).map((item) => item.id).filter((id) => !actualUiText.includes(`\"${id}\"`));
       checks.push(check("ir_control_mapping", mappingMissing.length === 0, mappingMissing));
-      const actualData = await json(actualUi), labelRegions = namedControls(actualData).filter((item) => item.node.type === "label" && solved.rects[item.id]).map((item) => {
-        const rect = solved.rects[item.id], scale = (Number(item.node.font_scale_factor) || 1) * 0.5, font = item.node.font_size === "large" ? 12 : item.node.font_size === "small" ? 8 : 10;
-        return { id: item.id, capacity: Math.floor((rect.w * rect.h) / Math.max(1, font * scale * 0.55 * font * scale * 1.2)), policy: "word wrap with font scale down to 0.5" };
+      const textEvaluation = await evaluateTextFixtures({
+        canvasMod: await import("@napi-rs/canvas").catch(() => null),
+        ui: await json(actualUi), uiFile: actualUi, solved,
+        fixtureCases: fixtures.text.cases || [], profileIds: requestedProfiles,
+        outputDir: join(outDir, "text-fixtures"), coverage: validation.textCoverage,
       });
-      const textMeasurements = ["long_ko_130", "long_en"].map((id) => { const item = fixtures.text.cases.find((entry) => entry.id === id), best = labelRegions.reduce((a, b) => a.capacity > b.capacity ? a : b, { capacity: 0 }); return { id, characters: item?.text.length || 0, region: best.id, capacity: best.capacity, fits: Boolean(item) && best.capacity >= item.text.length }; });
-      checks.push(check("long_text_label_measurement", textMeasurements.every((item) => item.fits), textMeasurements));
+      checks.push(check("semantic_text_label_measurement", textEvaluation.ok, textEvaluation));
       const geometryIssues = [];
       for (const constraint of solved.constraints || []) {
         const rects = (constraint.ids || []).map((id) => solved.rects[id]).filter(Boolean);

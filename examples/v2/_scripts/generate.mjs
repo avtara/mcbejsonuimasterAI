@@ -3,6 +3,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { deflateSync } from "node:zlib";
 import { stringify as stringifyYaml } from "yaml";
+import { presentText } from "../../../tools/_lib/text-presentation.mjs";
 
 const v2Root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repoRoot = resolve(v2Root, "..", "..");
@@ -13,7 +14,7 @@ const ENGINE = [1, 21, 80];
 const WHITE = [0.949, 0.957, 0.973];
 const MUTED = [0.675, 0.71, 0.773];
 
-const examples = [
+export const examples = [
   {
     dir: "01-typography-state-gallery",
     id: "typography_state_gallery",
@@ -474,13 +475,18 @@ function minimapScreen(example) {
   return baseScreen(example, controls);
 }
 
+export const BOOK_TEXT_PRESENTATION = { mode: "break-long-tokens", maxTokenCodePoints: 16 };
+const BOOK_BODY = "Search the old watchtower and recover the brass compass before nightfall.";
+
+function bookBody(example) { return presentText(example.bodyText ?? BOOK_BODY, BOOK_TEXT_PRESENTATION); }
+
 function bookScreen(example) {
   const t = `textures/ui/${example.namespace}`;
   return baseScreen(example, [
     imageControl("left_page", `${t}/page`, [306, 366], [25, 30]),
     imageControl("right_page", `${t}/page`, [306, 366], [349, 30]),
     labelControl("quest_title", "THE LOST COMPASS", [250, 24], [53, 58], "top_left", { fontSize: "large", color: [0.22, 0.12, 0.07], shadow: false }),
-    labelControl("quest_body", "Search the old watchtower and recover the brass compass before nightfall.", [250, 150], [53, 100], "top_left", { alignment: "left", color: [0.25, 0.16, 0.1], shadow: false, scale: 0.85 }),
+    labelControl("quest_body", bookBody(example), [250, 150], [53, 100], "top_left", { alignment: "left", color: [0.25, 0.16, 0.1], shadow: false, scale: 0.85 }),
     labelControl("objectives", "OBJECTIVES", [250, 20], [377, 58], "top_left", { fontSize: "large", color: [0.22, 0.12, 0.07], shadow: false }),
     labelControl("objective_list", "1. Visit the watchtower\n2. Defeat the sentry\n3. Return the compass", [250, 150], [377, 100], "top_left", { alignment: "left", color: [0.25, 0.16, 0.1], shadow: false, scale: 0.85 }),
     buttonControl("accept", t, "ACCEPT QUEST", [210, 44], [405, 330])
@@ -522,7 +528,7 @@ function responsiveScreen(example) {
   ], example.shell, ["88%", "76%"]);
 }
 
-function buildScreen(example) {
+export function buildScreen(example) {
   if (example.id === "typography_state_gallery") return galleryScreen(example);
   if (example.id === "daily_rewards") return dailyScreen(example);
   if (example.id === "server_form_grid") return gridScreen(example);
@@ -654,7 +660,7 @@ function irLabel(id, parent, text, pos, size, options = {}) {
   });
 }
 
-function irDocument(example) {
+export function irDocument(example) {
   const t = `textures/ui/${example.namespace}`;
   const elements = [];
   const constraints = [];
@@ -743,7 +749,7 @@ function irDocument(example) {
     elements.push(irElement("left_page", "image", "shell", [25, 30], [306, 366], { props: { texture: `${t}/page` } }));
     elements.push(irElement("right_page", "image", "shell", [349, 30], [306, 366], { props: { texture: `${t}/page` } }));
     elements.push(irLabel("quest_title", "shell", "THE LOST COMPASS", [53, 58], [250, 24], { fontSize: "large" }));
-    elements.push(irLabel("quest_body", "shell", "Search the old watchtower and recover the brass compass before nightfall.", [53, 100], [250, 150], { alignment: "left", scale: 0.85 }));
+    elements.push(irLabel("quest_body", "shell", bookBody(example), [53, 100], [250, 150], { alignment: "left", scale: 0.85 }));
     elements.push(irLabel("objectives", "shell", "OBJECTIVES", [377, 58], [250, 20], { fontSize: "large" }));
     elements.push(irLabel("objective_list", "shell", "1. Visit the watchtower\\n2. Defeat the sentry\\n3. Return the compass", [377, 100], [250, 150], { alignment: "left", scale: 0.85 }));
     elements.push(irElement("accept", "button", "shell", [405, 330], [210, 44]));
@@ -813,6 +819,54 @@ function irYaml(example) {
 const longKo = "오늘의 보상 목록은 화면 폭이 좁아져도 카드 간격과 버튼 정렬을 유지하며, 긴 한국어 설명이 지정된 영역을 벗어나지 않아야 합니다.";
 const longEn = "This deliberately extended English validation sentence checks that labels remain inside their measured regions without shifting adjacent controls or button states.";
 
+const localizedTitles = {
+  typography_state_gallery: "글꼴과 버튼 상태", daily_rewards: "일일 보상", server_form_grid: "서버 메뉴",
+  book_quest: "잃어버린 나침반", casino_reels: "다섯 릴 카지노", responsive_shell: "화면에 맞춘 인터페이스"
+};
+const roleCases = [
+  ["caption_ko", "caption", "ko-KR", "누름 상태"], ["caption_en", "caption", "en-US", "PRESSED"],
+  ["day_ko", "day", "ko-KR", "7일차"], ["day_en", "day", "en-US", "DAY 7"],
+  ["quantity_ko", "quantity", "ko-KR", "14개"], ["quantity_en", "quantity", "en-US", "x14"],
+  ["coordinates_zero", "coordinates", "und", "X 0  Z 0"], ["coordinates_signed", "coordinates", "und", "X -128  Z 42"],
+  ["balance_ko", "balance", "ko-KR", "잔액  12,500"], ["balance_en", "balance", "en-US", "BALANCE  12,500"],
+  ["bet_ko", "bet", "ko-KR", "베팅  100"], ["bet_en", "bet", "en-US", "BET  100"],
+  ["payline_ko", "payline", "ko-KR", "와일드 x5  |  스캐터 x3"], ["payline_en", "payline", "en-US", "WILD x5  |  SCATTER x3"],
+  ["book_instructions_ko", "instructions", "ko-KR", "1. 망루 방문\n2. 보초 처치\n3. 나침반 반환"],
+  ["responsive_instructions_ko", "instructions", "ko-KR", "PC: 중앙에 넓은 화면\n터치: 가장자리 여백과 큰 버튼 유지"],
+  ["objectives_ko", "caption", "ko-KR", "목표"]
+];
+
+export function textFixtureCases() {
+  return [
+    { id: "short_ko", roles: ["body"], locale: "ko-KR", text: "오늘의 보상을 받으세요." },
+    { id: "long_ko_130", roles: ["body"], locale: "ko-KR", growth: 1.3, text: longKo },
+    { id: "short_en", roles: ["body"], locale: "en-US", text: "Claim today's reward." },
+    { id: "long_en", roles: ["body"], locale: "en-US", text: longEn },
+    { id: "unbroken_token", roles: ["body"], locale: "en-US", text: "UNBROKEN_IDENTIFIER_WITHOUT_SPACES_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789" },
+    ...roleCases.map(([id, role, locale, text]) => ({ id, roles: [role], locale, text })),
+    ...examples.filter((example) => localizedTitles[example.id]).map((example) => ({ id: `${example.id}_title_ko`, roles: ["title"], locale: "ko-KR", text: localizedTitles[example.id] }))
+  ];
+}
+
+export function textCoverage(example) {
+  const targets = irDocument(example).elements.filter((element) => element.kind === "label").map((element) => {
+    const id = element.id;
+    const role = /(^|_)(body|description)$/.test(id) ? "body" : /(^|_)title$/.test(id) ? "title"
+      : /^day_/.test(id) ? "day" : /^amount_/.test(id) ? "quantity" : id === "coordinates" ? "coordinates"
+      : ["balance", "bet", "payline"].includes(id) ? id : ["objective_list", "content_label"].includes(id) ? "instructions" : "caption";
+    const fixtures = role === "body" ? ["long_ko_130", "long_en", "unbroken_token"]
+      : role === "title" ? [`${example.id}_title_ko`] : id === "objectives" ? ["objectives_ko"]
+      : role === "instructions" ? [id === "objective_list" ? "book_instructions_ko" : "responsive_instructions_ko"]
+      : roleCases.filter((item) => item[1] === role && item[0] !== "objectives_ko").map((item) => item[0]);
+    return { id, role, fixtures: ["source", ...fixtures], ...(id === "quest_body" ? { presentation: BOOK_TEXT_PRESENTATION } : {}) };
+  });
+  return {
+    version: 1, scope: "static-solved-labels", hasBody: targets.some((target) => target.role === "body"),
+    policy: "Cover every authored label with a solved rectangle at its original scale. Role fixtures exercise these static examples; they do not certify arbitrary runtime values or nested button-state text.",
+    targets
+  };
+}
+
 function validation(example) {
   const uiEntry = example.surface === "hud" ? "RP/ui/hud_screen.json" : "RP/ui/server_form.json";
   return {
@@ -852,7 +906,7 @@ function validation(example) {
       "preview/preview.png",
       "preview/measurement-overlay.png"
     ],
-    stringCases: { baseline: example.description, koreanLong: longKo, englishLong: longEn },
+    textCoverage: textCoverage(example),
     checks: {
       jsonParse: "passed",
       javascriptSyntax: "passed",
@@ -968,13 +1022,7 @@ async function generateEvals() {
   });
   await writeJson(join(evalRoot, "fixtures", "text-cases.json"), {
     schemaVersion: 1,
-    cases: [
-      { id: "short_ko", locale: "ko-KR", text: "오늘의 보상을 받으세요." },
-      { id: "long_ko_130", locale: "ko-KR", growth: 1.3, text: longKo },
-      { id: "short_en", locale: "en-US", text: "Claim today's reward." },
-      { id: "long_en", locale: "en-US", text: longEn },
-      { id: "unbroken_token", locale: "en-US", text: "UNBROKEN_IDENTIFIER_WITHOUT_SPACES_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789" }
-    ],
+    cases: textFixtureCases(),
     expectations: { overflow: 0, unintendedClipping: 0, adjacentControlShift: 0 }
   });
   await writeJson(join(evalRoot, "fixtures", "button-states.json"), {
@@ -1005,6 +1053,12 @@ async function generateEvals() {
 }
 
 async function main() {
+  if (process.argv.includes("--text-contracts-only")) {
+    for (const example of examples) await writeJson(join(v2Root, example.dir, "validation.json"), validation(example));
+    await writeJson(join(evalRoot, "fixtures", "text-cases.json"), { schemaVersion: 1, cases: textFixtureCases(), expectations: { overflow: 0, unintendedClipping: 0, adjacentControlShift: 0 } });
+    process.stdout.write(`generated ${examples.length} semantic text contracts and role fixtures\n`);
+    return;
+  }
   await writeText(join(v2Root, "LICENSE.md"), `# V2 Public Example Licensing\n\n## Code and structured example data\n\nSPDX-License-Identifier: MIT\n\nScope: all JavaScript, JSON, YAML, Markdown, RP/BP manifests, JSON UI definitions, validation metadata, and evaluation fixtures under \`examples/v2/\` and \`evals/\`, except the generated PNG assets described below.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n## Generated PNG assets\n\nSPDX-License-Identifier: CC0-1.0\n\nScope: every PNG under \`examples/v2/*/RP/textures/\` and \`examples/v2/*/preview/\` generated by \`examples/v2/_scripts/generate.mjs\`. These assets were created specifically for this repository and are dedicated to the public domain under CC0 1.0. No private pack, local asset library, or third-party texture is embedded.\n`);
   await writeText(join(v2Root, "README.md"), `# MCBE JSON UI Design System V2 Examples\n\nSeven independent RP/BP examples demonstrate measured typography, button states, repeated layouts, HUD markers, book pages, a five-by-three casino reel grid, and PC/touch-safe sizing.\n\nRegenerate deterministic first-party assets and scaffold files with:\n\n\`\`\`powershell\nnode examples/v2/_scripts/generate.mjs\n\`\`\`\n\nEvery example records static validation separately from pending Bedrock runtime evidence.\n`);
   for (const example of examples) await generateExample(example);
@@ -1012,7 +1066,7 @@ async function main() {
   process.stdout.write(`generated ${examples.length} v2 examples and offline fixtures\n`);
 }
 
-main().catch((error) => {
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch((error) => {
   process.stderr.write(`${error.stack ?? error}\n`);
   process.exitCode = 1;
 });

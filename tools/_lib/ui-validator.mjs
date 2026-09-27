@@ -48,8 +48,8 @@ function validateBindings(bindings, path, out, spec) {
 
 function validateNode(name, node, path, out, spec, allowedProperties) {
   const here = `${path} > ${name}`;
-  // @-extends references: skip type-rule checks but still walk children/bindings.
-  const isExtends = name.includes("@");
+  // Inheritance may omit a type, but explicit property overrides still need
+  // the same checks as a direct declaration.
 
   for (const key of Object.keys(node)) {
     if (key.startsWith("$") || key.startsWith("#") || allowedProperties.has(key)) continue;
@@ -57,7 +57,7 @@ function validateNode(name, node, path, out, spec, allowedProperties) {
       "Remove it or replace it with a property confirmed by data/jsonui-spec.json and a working Bedrock UI sample.");
   }
 
-  if (!isExtends) {
+  {
     if (node.type !== undefined && !isVar(node.type) && !spec.control_types.includes(node.type)) {
       pushErr(out, here, `Invalid type "${node.type}"`, `Valid: ${spec.control_types.join(", ")}`);
     }
@@ -102,6 +102,28 @@ function validateNode(name, node, path, out, spec, allowedProperties) {
   }
 
   if (Array.isArray(node.bindings)) validateBindings(node.bindings, here, out, spec);
+  // Inserted/replacement values become controls or bindings just like direct
+  // declarations. Move/swap values are selectors and must not be type-checked.
+  for (const [index, change] of (Array.isArray(node.modifications) ? node.modifications : []).entries()) {
+    if (!change || !(String(change.operation).startsWith("insert_") || change.operation === "replace")) continue;
+    const values = Array.isArray(change.value) ? change.value : [change.value];
+    const target = `${here} > modifications[${index}].value`;
+    if (change.array_name === "bindings") validateBindings(values, target, out, spec);
+    else if (change.array_name === "controls" || change.control_name) {
+      for (const [ordinal, entry] of values.entries()) {
+        if (!entry || typeof entry !== "object" || Array.isArray(entry) || Object.keys(entry).length !== 1) {
+          pushErr(out, `${target}[${ordinal}]`, "child entry must be a single-key object");
+          continue;
+        }
+        const [childName, childNode] = Object.entries(entry)[0];
+        if (!childNode || typeof childNode !== "object" || Array.isArray(childNode)) {
+          pushErr(out, `${target}[${ordinal}]`, "child declaration must be an object");
+          continue;
+        }
+        validateNode(childName, childNode, `${target}[${ordinal}]`, out, spec, allowedProperties);
+      }
+    }
+  }
   if (Array.isArray(node.controls)) {
     for (const child of node.controls) {
       if (!child || typeof child !== "object") continue;

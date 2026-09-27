@@ -31,7 +31,7 @@ let installedRoot = resolve(homedir(), ".codex", "skills");
 const index = process.argv.indexOf("--installed");
 if (index >= 0 && process.argv[index + 1]) installedRoot = resolve(process.argv[index + 1]);
 if (process.argv.includes("--help")) {
-  process.stdout.write("Usage: node tools/skill-sync-check.mjs [--installed <directory>]\n");
+  process.stdout.write("Usage: node tools/skill-sync-check.mjs [--installed <directory>] [--strict]\nDefault checks managed source Skills; --strict also rejects installed-only Skills. No files are changed.\n");
   process.exit(0);
 }
 const source = await skillNames(sourceRoot);
@@ -55,6 +55,9 @@ for (const name of source.filter((value) => installed.includes(value))) {
 }
 const expected = [...topology.sourceSkills].sort();
 const sourceSetEqual = source.length === expected.length && source.every((name, i) => name === expected[i]);
-const parity = sourceSetEqual && sourceOnly.length === 0 && installedOnly.length === 0 && drift.length === 0;
-process.stdout.write(`${JSON.stringify({ schema: "mcbe-jsonui-ai-kit/skill-sync@1", ok: parity, readOnly: true, sourceRoot, installedRoot, sourceSetEqual, sourceOnly, installedOnly, drift, counts: { source: source.length, installed: installed.length, driftSkills: drift.length, driftFiles: drift.reduce((n, item) => n + item.differentFiles.length, 0) } })}\n`);
-if (!parity) process.exit(9);
+const managedParity = sourceSetEqual && sourceOnly.length === 0 && drift.length === 0;
+const exactParity = managedParity && installedOnly.length === 0;
+const strict = process.argv.includes("--strict");
+const ok = strict ? exactParity : managedParity;
+process.stdout.write(`${JSON.stringify({ schema: "mcbe-jsonui-ai-kit/skill-sync@1", ok, readOnly: true, comparison: strict ? "exact" : "managed", managedParity, exactParity, sourceRoot, installedRoot, sourceSetEqual, sourceOnly, installedOnly, drift, counts: { source: source.length, installed: installed.length, driftSkills: drift.length, driftFiles: drift.reduce((n, item) => n + item.differentFiles.length, 0) } })}\n`);
+if (!ok) process.exit(9);

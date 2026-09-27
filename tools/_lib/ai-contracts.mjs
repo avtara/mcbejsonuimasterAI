@@ -117,6 +117,7 @@ export async function validateProfiles(profiles, registry) {
       if (typeof selection.reason !== "string" || !selection.reason.trim()) errors.push({ path: `${selectionPath}/reason`, message: "reason is required" });
       if (typeof selection.phase !== "string" || !selection.phase.trim()) errors.push({ path: `${selectionPath}/phase`, message: "phase is required" });
       if (typeof selection.required !== "boolean") errors.push({ path: `${selectionPath}/required`, message: "required must be boolean" });
+      if (selection.optIn !== undefined && typeof selection.optIn !== "boolean") errors.push({ path: `${selectionPath}/optIn`, message: "optIn must be boolean when present" });
       const tool = tools.get(selection.id);
       if (profile.skillStatus === "implemented" && selection.required === true && tool.status === "planned") {
         errors.push({ path: `${selectionPath}/id`, message: `implemented skill cannot require planned tool ${selection.id}` });
@@ -127,6 +128,27 @@ export async function validateProfiles(profiles, registry) {
       if (!selected.has(id)) errors.push({ path: `${path}/workflow/${workflowIndex}`, message: `workflow tool ${id} is not selected` });
       if (workflowSeen.has(id)) errors.push({ path: `${path}/workflow/${workflowIndex}`, message: `workflow repeats ${id}` });
       workflowSeen.add(id);
+    }
+    if (profile.contextByNeed !== undefined) {
+      const mapPath = path + "/contextByNeed";
+      if (!profile.contextByNeed || typeof profile.contextByNeed !== "object" || Array.isArray(profile.contextByNeed)) {
+        errors.push({ path: mapPath, message: "contextByNeed must map need names to selected workflow tool IDs" });
+      } else for (const [need, ids] of Object.entries(profile.contextByNeed)) {
+        const needPath = mapPath + "/" + need;
+        if (!need.trim() || need !== need.trim()) errors.push({ path: needPath, message: "contextByNeed need name must be nonempty and trimmed" });
+        if (!Array.isArray(ids) || !ids.length) {
+          errors.push({ path: needPath, message: "contextByNeed value must be a nonempty array of tool IDs" });
+          continue;
+        }
+        const seen = new Set();
+        for (const [toolIndex, id] of ids.entries()) {
+          if (typeof id !== "string" || !tools.has(id) || !selected.has(id) || !workflowSeen.has(id)) {
+            errors.push({ path: needPath + "/" + toolIndex, message: "contextByNeed tool " + id + " must be a selected workflow tool" });
+          }
+          if (seen.has(id)) errors.push({ path: needPath + "/" + toolIndex, message: "contextByNeed repeats " + id });
+          seen.add(id);
+        }
+      }
     }
     for (const id of selected) {
       if (!workflowSeen.has(id)) warnings.push({ path: `${path}/workflow`, message: `selected tool ${id} is not in workflow` });

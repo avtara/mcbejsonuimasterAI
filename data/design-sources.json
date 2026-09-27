@@ -1,0 +1,579 @@
+{
+  "schema": "mcbe-design-sources@1",
+  "reviewedAt": "2026-09-27",
+  "sources": [
+    {
+      "id": "mojang-bedrock-samples",
+      "kind": "official",
+      "url": "https://github.com/Mojang/bedrock-samples",
+      "revision": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+      "revisionDate": "2026-09-16T04:27:23Z",
+      "license": "Mojang-EULA",
+      "reuse": "analysis-only",
+      "summary": "공식 바닐라 화면, 공통 컨트롤, server-ui 메타데이터. 실제 클라이언트 버전과 별도 비교한다.",
+      "fileCount": 224,
+      "bytes": 6262619,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "mojang-bedrock-schemas",
+      "kind": "official",
+      "url": "https://github.com/Mojang/bedrock-schemas",
+      "revision": "2b842801ce08f42f21d9782543c8dfb868b84eee",
+      "revisionDate": "2026-09-21T18:10:57Z",
+      "license": "MIT",
+      "reuse": "reference",
+      "summary": "공식 UI 속성·요소 스키마. 허용 문법의 근거이며 런타임 구현 보장은 아니다.",
+      "fileCount": 13,
+      "bytes": 64948,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "herobrine643928-chest-ui",
+      "kind": "addon",
+      "url": "https://github.com/Herobrine643928/Chest-UI",
+      "revision": "115d95c8239a0ee2f578a9a7710699a8f6627f26",
+      "revisionDate": "2026-08-14T14:07:02Z",
+      "license": "CC-BY-4.0",
+      "reuse": "reference",
+      "summary": "ActionFormData 버튼 슬롯과 RP chest/furnace 폼 연결. 원본 코드 재사용 시 출처 표시, 텍스처 권리는 별도 확인.",
+      "fileCount": 23,
+      "bytes": 409368,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "islocal-chest-gui",
+      "kind": "addon",
+      "url": "https://github.com/IsLocal/Chest-GUI",
+      "revision": "daa618405f49207c2b47630bd171d50f85ca5f0b",
+      "revisionDate": "2023-01-27T14:44:46Z",
+      "license": "NOASSERTION",
+      "reuse": "analysis-only",
+      "summary": "2023년 컨테이너·엔티티 방식의 사례. 라이선스 미확인, 모바일 지원 근거로 사용하지 않는다.",
+      "fileCount": 22,
+      "bytes": 581831,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "dryanfth-customserverui",
+      "kind": "addon",
+      "url": "https://github.com/DryanFTH/CustomServerUI",
+      "revision": "0b6a60aef8413cb71b3388c601a5d666c4c96c0b",
+      "revisionDate": "2023-04-02T01:05:16Z",
+      "license": "GPL-3.0",
+      "reuse": "analysis-only",
+      "summary": "2023년 폼 스타일·라우팅 사례. GPL 코드와 게임 유래 에셋의 권리를 분리하며 기본적으로 복사하지 않는다.",
+      "fileCount": 67,
+      "bytes": 342126,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "bedrock-core-ui",
+      "kind": "addon",
+      "url": "https://github.com/bedrock-core/ui",
+      "revision": "6977e257cb874087b22cfc506ae9db3440d17bda",
+      "revisionDate": "2026-09-21T17:44:55Z",
+      "license": "MIT-code/mixed-assets",
+      "reuse": "analysis-only",
+      "summary": "폼 제목 프로토콜과 modifications 기반 host. 최신 snapshot 분석용이며 기존 compatibility fixture를 대체하지 않는다.",
+      "fileCount": 30,
+      "bytes": 162978,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "bedrock-oss-bedrock-wiki",
+      "kind": "community-docs",
+      "url": "https://github.com/Bedrock-OSS/bedrock-wiki",
+      "revision": "73d2c4116fad3865a14f63367c038c2f6aba78a9",
+      "revisionDate": "2026-09-25T12:00:11Z",
+      "license": "per-page-unresolved",
+      "reuse": "reference-only",
+      "summary": "서버 폼·텍스트 보존·스프라이트 애니메이션 설명. 페이지별 라이선스 확인 전 문서/예제 전문을 재배포하지 않는다.",
+      "fileCount": 13,
+      "bytes": 315451,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "kenney-ui-pack-pixel-adventure",
+      "kind": "art",
+      "url": "https://kenney.nl/assets/ui-pack-pixel-adventure",
+      "revision": "sha256:0b0ed4802ebcfff5e44e370f394baa1d751862a5a4a7612ac4ce84e85faa0627",
+      "revisionDate": null,
+      "license": "CC0-1.0",
+      "reuse": "optional-reuse",
+      "summary": "픽셀 양피지 패널·리본·버튼·막대. 다운로드한 Sample.png를 육안 확인했다.",
+      "fileCount": 1,
+      "bytes": 317032,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "kenney-ui-pack-adventure",
+      "kind": "art",
+      "url": "https://kenney.nl/assets/ui-pack-adventure",
+      "revision": "sha256:982e8ab66842509ee9214f9c2038e594cbe029f19d1dc177fecaad3b41a67ed3",
+      "revisionDate": null,
+      "license": "CC0-1.0",
+      "reuse": "optional-reuse",
+      "summary": "부드러운 양피지·리본 UI. 구성과 상태 관계 참고용이며 16px 픽셀 에셋으로 분류하지 않는다.",
+      "fileCount": 1,
+      "bytes": 577463,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "kenney-ui-pack",
+      "kind": "art",
+      "url": "https://kenney.nl/assets/ui-pack",
+      "revision": "sha256:a8a14a234911eb648c062622915c93e79e94e97cb7f9f375a70f6617f1174318",
+      "revisionDate": null,
+      "license": "CC0-1.0",
+      "reuse": "optional-reuse",
+      "summary": "탭·설정·버튼·입력 상태의 계층 참고. 원본은 부드러운 GUI이며 픽셀화는 별도 작업이다.",
+      "fileCount": 1,
+      "bytes": 1229750,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "kenney-tiny-town",
+      "kind": "art",
+      "url": "https://kenney.nl/assets/tiny-town",
+      "revision": "sha256:9768692dccff1d706408a5aedd6ca4f6cd1409506cbc84cb2f862919764be977",
+      "revisionDate": null,
+      "license": "CC0-1.0",
+      "reuse": "optional-reuse",
+      "summary": "16×16 월드 타일의 화사한 색·밀도 참고. 완성된 UI 키트가 아니다.",
+      "fileCount": 1,
+      "bytes": 182243,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "kenney-fantasy-ui-borders",
+      "kind": "art",
+      "url": "https://kenney.nl/assets/fantasy-ui-borders",
+      "revision": "sha256:59532da3bd61195a425585455b40baa6cbf1eda8227c42adcef31a535a737769",
+      "revisionDate": null,
+      "license": "CC0-1.0",
+      "reuse": "optional-reuse",
+      "summary": "어두운 패널과 얇은 장식 모서리·퀘스트 텍스트 계층 참고. 원본 가장자리 크기를 직접 측정한다.",
+      "fileCount": 1,
+      "bytes": 358780,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "title": "UI UX Pro Max",
+      "kind": "external-skill",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "revision": "823b0a14d3539b5d78c0efb614426a4fab5983ec",
+      "revisionDate": "2026-09-26T13:32:23Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "reuse": "reference",
+      "treatment": "adapt",
+      "role": "style-catalog",
+      "summary": "스타일·색상 후보 검색과 짧은 질의 설계를 선택적으로 적용한다. 웹·네이티브 구현 규칙은 Bedrock 속성 근거로 사용하지 않는다.",
+      "adopt": [
+        "시각 스타일, 색상 역할, 정보 밀도를 별도 축으로 선택한다.",
+        "한 번에 한 의도로 검색하고 결과의 플랫폼 적합성을 확인한다."
+      ],
+      "doNotPort": [
+        "CSS blur·GSAP·SVG 전용 규칙·Google Fonts 및 웹 프레임워크 코드",
+        "44 CSS px 터치 크기나 16px 본문 값을 Bedrock GUI 단위로 직접 대입"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-texture-design"
+      ],
+      "evidence": [
+        {
+          "path": ".claude/skills/ui-ux-pro-max/SKILL.md",
+          "lineStart": 51,
+          "lineEnd": 63,
+          "sha256": "ea087c341bfb5b23195c7302027268ede86da802554c18a5c4896a6017b439f9"
+        }
+      ],
+      "fileCount": 7,
+      "bytes": 267413,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "game-ui-ux",
+      "title": "Game UI/UX",
+      "kind": "external-skill",
+      "url": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills",
+      "revision": "d4b0e35550c55ae70bdfcab4ef5a0e94610438a9",
+      "revisionDate": "2026-09-27T02:25:26Z",
+      "license": "Apache-2.0",
+      "licensePath": "LICENSE",
+      "noticePath": "NOTICE",
+      "reuse": "reference",
+      "treatment": "adapt",
+      "role": "game-navigation",
+      "summary": "안전 영역·입력별 초점·화면 복귀·상태 갱신 시점의 설계 자료로 적용한다. Godot와 Unity 코드는 참조 전용이다.",
+      "adopt": [
+        "화면 열기·닫기·복귀 때 초점과 입력 소유자를 명시한다.",
+        "화면 비율과 안전 영역 정책을 먼저 정하고 대상 장치에서 확인한다."
+      ],
+      "doNotPort": [
+        "절대 픽셀 금지를 이 저장소의 px 기반 IR에 적용",
+        "Godot signal·Control 및 Unity CanvasScaler API를 JSON UI 속성으로 변환"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-server-forms"
+      ],
+      "evidence": [
+        {
+          "path": "skills/disciplines/game-ui-ux/SKILL.md",
+          "lineStart": 35,
+          "lineEnd": 52,
+          "sha256": "8a094c84a377503aa8f4c40df676d1c6b6fc07d36ff95554ce06467f1614397e"
+        }
+      ],
+      "fileCount": 4,
+      "bytes": 26127,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "game-ui-design",
+      "title": "Game UI Design",
+      "kind": "external-skill",
+      "url": "https://github.com/jeremylongworth-source/AgentSkills",
+      "revision": "45f314d2a3d3201dd5a0304a3a4f3a5f23a905a2",
+      "revisionDate": "2026-09-23T07:35:48Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "reuse": "reference",
+      "treatment": "adapt",
+      "role": "game-design-brief",
+      "summary": "플레이어의 다음 행동, 전투와 메뉴의 정보 밀도, 전체 상태와 장르에 맞는 시각 방향을 정하는 기본 설계 자료다.",
+      "adopt": [
+        "주 행동과 긴급도에 따라 HUD·메뉴 정보량을 정한다.",
+        "빈 상태·잠금·선택·오류·쿨다운 등 실제 가능한 상태만 설계한다."
+      ],
+      "doNotPort": [
+        "드래그·드롭이나 입력 재매핑을 검증 없이 Bedrock 폼 기능으로 약속",
+        "이벤트 기반 갱신 제안을 실제 Script API 가용성 검증 없이 구현"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-server-forms"
+      ],
+      "evidence": [
+        {
+          "path": "skills/game-ui-design/SKILL.md",
+          "lineStart": 11,
+          "lineEnd": 17,
+          "sha256": "3291770337d611d6fc6425e1d273c4dffdc6d5a8634eac8a2c23459f356c303a"
+        }
+      ],
+      "fileCount": 3,
+      "bytes": 6513,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "frontend-design",
+      "title": "Frontend Design",
+      "kind": "external-skill",
+      "url": "https://github.com/anthropics/skills",
+      "revision": "33375500bcea98d610eb30ce10ac4e59b89c390d",
+      "revisionDate": "2026-09-24T16:20:35Z",
+      "license": "Apache-2.0",
+      "licensePath": "skills/frontend-design/LICENSE.txt",
+      "reuse": "reference",
+      "treatment": "reference-only",
+      "role": "visual-critique",
+      "summary": "주제에 맞는 시각 선택과 디자인 비평만 참고한다. 웹 화면 구조나 임의 글꼴 도입은 Bedrock 기본 작업 흐름에 포함하지 않는다.",
+      "adopt": [
+        "색상·문자 역할·구조·강조점을 짧게 정한 뒤 사용자 참조와 비교한다.",
+        "장식보다 정보 관계를 보여주고 화면마다 필요한 구조 차이를 검토한다."
+      ],
+      "doNotPort": [
+        "웹 hero·CSS 선택자·웹 글꼴·모바일 breakpoint 구현",
+        "사용자 참조보다 독창성이나 유행 회피를 우선"
+      ],
+      "owners": [
+        "mcbe-json-ui-visual-design",
+        "mcbe-json-ui-texture-design"
+      ],
+      "evidence": [
+        {
+          "path": "skills/frontend-design/SKILL.md",
+          "lineStart": 30,
+          "lineEnd": 32,
+          "sha256": "d91970639e9f5c37682ac7ab60094d35f1c7c1f38d731bd56396563aee10c1d3"
+        }
+      ],
+      "fileCount": 2,
+      "bytes": 19564,
+      "runtime": "unverified",
+      "pathScope": "upstream"
+    },
+    {
+      "id": "dbinky-claude-fairy-pixel-art",
+      "kind": "tooling",
+      "url": "https://github.com/dbinky/claude-fairy-pixel-art",
+      "revision": "4de3ba0be118ebbc158afb0983d642e6c2818e48",
+      "revisionDate": "2026-04-02T12:56:51Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseScope": "검토한 코드·문서 MIT. 이 통합은 직접 작성한 참조이며 원본 실행이나 RP 에셋 재배포가 아니다.",
+      "reuse": "reference-only",
+      "summary": "명세·역할명 팔레트·상태별 공통 기하를 참고한다. 생성기 결정성·경로·시트 파싱·편집기 복원 한계는 별도 기록한다.",
+      "fileCount": 5,
+      "bytes": 151516,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "generate-art.py",
+          "sha256": "ae4d7c39b924bde3d5aecc97f66d2199c4b769f2eacc32b49196cff0ed7f54e2",
+          "lineStart": 24,
+          "lineEnd": 97
+        },
+        {
+          "path": "generate-art.py",
+          "sha256": "ae4d7c39b924bde3d5aecc97f66d2199c4b769f2eacc32b49196cff0ed7f54e2",
+          "lineStart": 142,
+          "lineEnd": 154
+        },
+        {
+          "path": "generate-art.py",
+          "sha256": "ae4d7c39b924bde3d5aecc97f66d2199c4b769f2eacc32b49196cff0ed7f54e2",
+          "lineStart": 2103,
+          "lineEnd": 2118
+        },
+        {
+          "path": "generate-art.py",
+          "sha256": "ae4d7c39b924bde3d5aecc97f66d2199c4b769f2eacc32b49196cff0ed7f54e2",
+          "lineStart": 2604,
+          "lineEnd": 2607
+        },
+        {
+          "path": "generate-art.py",
+          "sha256": "ae4d7c39b924bde3d5aecc97f66d2199c4b769f2eacc32b49196cff0ed7f54e2",
+          "lineStart": 2629,
+          "lineEnd": 2643
+        },
+        {
+          "path": "pixel-editor.jsx",
+          "sha256": "ebf3bb47d7ad6d0077faab4aed1f4895c40c3b396b4b04621bee5236abae37b7",
+          "lineStart": 86,
+          "lineEnd": 124
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "647133845974383d3c1fce518f59042f1ed7b36aaed1c7c9de2db1883935efb2",
+          "lineStart": 1,
+          "lineEnd": 12
+        }
+      ]
+    },
+    {
+      "id": "gamezxz-pixel-art-studio",
+      "kind": "external-skill",
+      "url": "https://github.com/Gamezxz/pixel-art-studio",
+      "revision": "f8c246635c4621a6c2b427833149afdc3dc3c719",
+      "revisionDate": "2026-07-11T16:29:08Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseScope": "다운로드한 코드·문서 MIT. 예제 캐릭터/팬아트 PNG는 수집하거나 배포자료로 채택하지 않았다.",
+      "reuse": "reference-only",
+      "summary": "실루엣·픽셀 덩어리·팔레트와 프레임 검토를 참고한다. 전체 스킬, 자동 이미지 정리, 예제 캐릭터를 가져오지 않는다.",
+      "fileCount": 7,
+      "bytes": 36463,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "references/validations.md",
+          "sha256": "d31b5826fcdb0125ceec6683067377db1543a366883557b789cc50cfaf75d0c3",
+          "lineStart": 6,
+          "lineEnd": 37
+        },
+        {
+          "path": "references/export.md",
+          "sha256": "0d054ef3375c39159ff062b15d63951d25ed653844c69f846a551bb5c3a9fc5d",
+          "lineStart": 3,
+          "lineEnd": 35
+        },
+        {
+          "path": "scripts/pixelpipe.py",
+          "sha256": "282f7f67ef5c742f84f1bbf38f5bda3b29aead6eae2acdbc92f6de1410d5760c",
+          "lineStart": 69,
+          "lineEnd": 125
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "02356246e8a18ae2afe5d156ad52b6d5c6fce527ba86bddbcd7d588097af391a",
+          "lineStart": 1,
+          "lineEnd": 21
+        }
+      ]
+    },
+    {
+      "id": "orama-interactive-pixelorama",
+      "kind": "tooling",
+      "url": "https://github.com/Orama-Interactive/Pixelorama",
+      "revision": "da7b68f97806c461abde615d1d847af91921c37b",
+      "revisionDate": "2026-09-15T13:11:47Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseScope": "저장소 MIT LICENSE 확인. 모든 addons/서드파티 자료까지 단일 MIT로 일반화하지 않는다.",
+      "reuse": "reference-only",
+      "summary": "레이어·프레임 편집 원본과 명시적 PNG·atlas 내보내기 계약을 참고한다. 편집기를 설치하거나 실행하지 않는다.",
+      "fileCount": 3,
+      "bytes": 50205,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "README.md",
+          "sha256": "85981766d1069403a1c342ac15fa6e75e9ee73055c35199d1ccc62e1367c718a",
+          "lineStart": 59,
+          "lineEnd": 74
+        },
+        {
+          "path": "src/Autoload/Export.gd",
+          "sha256": "883a39455d0f0332a1f5794535a26d95f6cd3e96e20ae9c125364d324e9788a6",
+          "lineStart": 219,
+          "lineEnd": 267
+        },
+        {
+          "path": "src/Autoload/Export.gd",
+          "sha256": "883a39455d0f0332a1f5794535a26d95f6cd3e96e20ae9c125364d324e9788a6",
+          "lineStart": 583,
+          "lineEnd": 592
+        },
+        {
+          "path": "src/Autoload/Export.gd",
+          "sha256": "883a39455d0f0332a1f5794535a26d95f6cd3e96e20ae9c125364d324e9788a6",
+          "lineStart": 668,
+          "lineEnd": 689
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "07ddf85025568856f9b92fb7193589dd055c749c563aa9b2d4e943eb53ef61f9",
+          "lineStart": 1,
+          "lineEnd": 21
+        }
+      ]
+    },
+    {
+      "id": "joangeldelarosa-pxlkit",
+      "kind": "tooling",
+      "url": "https://github.com/Joangeldelarosa/pxlkit",
+      "revision": "8e735fa3404a2b4a067e6904a4759a50b1af5bb7",
+      "revisionDate": "2026-08-09T16:38:45Z",
+      "license": "MIT (code/docs); Pxlkit Asset License (restricted icons/assets)",
+      "licensePath": "LICENSE-CODE",
+      "licenseScope": "LICENSE-CODE는 코드/문서 MIT. LICENSE-ASSETS는 기존 아이콘/아트의 visible attribution과 standalone/competing library 재배포 제한을 정한 별도 라이선스. 아이콘 자산은 다운로드하지 않았고 스키마·문서만 분석한다.",
+      "reuse": "reference-only",
+      "summary": "코드·문서의 아이콘 크기·팔레트·투명 셀·프레임 데이터 구조를 참고한다. 별도 제한 라이선스의 기존 아이콘은 수집하지 않는다.",
+      "fileCount": 6,
+      "bytes": 56002,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "packages/core/src/types.ts",
+          "sha256": "4b24d4ac8d196b19000c775c6559fe2629f32e2f741c5e4c69d5638f29956a5a",
+          "lineStart": 58,
+          "lineEnd": 94
+        },
+        {
+          "path": "packages/core/src/types.ts",
+          "sha256": "4b24d4ac8d196b19000c775c6559fe2629f32e2f741c5e4c69d5638f29956a5a",
+          "lineStart": 245,
+          "lineEnd": 270
+        },
+        {
+          "path": "plugins/pxlkit/skills/icon/SKILL.md",
+          "sha256": "63407fb5b477734a369c5a438e795260b45b34a1ed661a6675953d4467b06124",
+          "lineStart": 55,
+          "lineEnd": 79
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "eeeff748777424bf07cfd5a25da44f8c222cbd8d616b0f3c5ad64c533d7cb1c4",
+          "lineStart": 1,
+          "lineEnd": 26
+        },
+        {
+          "path": "LICENSE-CODE",
+          "sha256": "781f3cfc93fb2b823a9725f6a6c9e3a238dbd93c622a8de9021045a38ceafa4a",
+          "lineStart": 1,
+          "lineEnd": 25
+        },
+        {
+          "path": "LICENSE-ASSETS",
+          "sha256": "210d24b582bee204f95bea9debd499dd5d2c0d913efadf220d9c90e937a0bf46",
+          "lineStart": 1,
+          "lineEnd": 47
+        }
+      ]
+    },
+    {
+      "id": "vollkorn-games-aseprite-mcp",
+      "kind": "tooling",
+      "url": "https://github.com/Vollkorn-Games/aseprite-mcp",
+      "revision": "28900e757d7e5c18515ad0a95558acde1865aad2",
+      "revisionDate": "2026-09-02T16:53:46Z",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseScope": "MCP 서버 MIT 확인. 별도 Aseprite 실행파일의 설치/구매/라이선스는 포함하지 않는다.",
+      "reuse": "reference-only",
+      "summary": "필요한 도구 선택과 작은 수정 뒤 PNG를 확인하는 방식을 참고한다. MCP 연결과 Aseprite 실행 환경은 포함하지 않는다.",
+      "fileCount": 4,
+      "bytes": 84332,
+      "runtime": "unverified",
+      "pathScope": "upstream",
+      "evidence": [
+        {
+          "path": "src/tool-definitions.ts",
+          "sha256": "fabc4f086953511c7f50ad832173c16829a84642d1c270e30a3c8a3799910ff9",
+          "lineStart": 577,
+          "lineEnd": 632
+        },
+        {
+          "path": "src/handlers/export-handlers.ts",
+          "sha256": "05f048eecc85e21f6455b5d20643d4fbe5a3cc64fd6eef7f6dd93aa5fee3ce66",
+          "lineStart": 209,
+          "lineEnd": 244
+        },
+        {
+          "path": "README.md",
+          "sha256": "b5a2480107cc7259822bdce028331442b3b64c4c0eeca03e97d8222f1441bf0b",
+          "lineStart": 228,
+          "lineEnd": 239
+        },
+        {
+          "path": "src/handlers/export-handlers.ts",
+          "sha256": "05f048eecc85e21f6455b5d20643d4fbe5a3cc64fd6eef7f6dd93aa5fee3ce66",
+          "lineStart": 78,
+          "lineEnd": 102
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "024dd561f37ddb665e99552c961039f81b2cdb3c3326a930643663c2f112825a",
+          "lineStart": 1,
+          "lineEnd": 21
+        }
+      ]
+    }
+  ]
+}

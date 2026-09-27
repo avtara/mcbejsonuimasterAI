@@ -41,17 +41,39 @@ export async function indexResourcePack(targetRoot, options = {}) {
         const at = declaration.indexOf("@"), id = at < 0 ? declaration : declaration.slice(0, at), baseRef = at < 0 ? null : declaration.slice(at + 1);
         const qualified = `${namespace}.${id}`;
         const provenance = options.includeControlProvenance === false ? null : provenanceTree(value, { file, relative, hash: parsed.hash, layer: source.layer }, `/${pointerEscape(declaration)}`);
-        const candidate = { qualified, namespace, id, declaration, baseRef, value, provenance, file, relative, hash: parsed.hash, layer: source.layer };
+        const candidate = { qualified, namespace, id, declaration, baseRef, value, provenance, file, relative, hash: parsed.hash, layer: source.layer, root: source.root };
         const candidates = controlCandidates.get(qualified) || [];
         candidates.push(candidate); controlCandidates.set(qualified, candidates);
-        if (candidates.filter((entry) => entry.layer === source.layer).length > 1) {
+        if (candidates.filter((entry) => entry.root === source.root).length > 1) {
           unresolved.push({ kind: "ambiguous_control", code: "CONTROL_AMBIGUOUS", qualified, candidates: candidates.map((entry) => entry.relative) });
         }
-        controls.set(qualified, candidate);
+        controls.set(qualified, withModificationBase(controls.get(qualified), candidate));
       }
     }
   }
   return { targetRoot: resolve(targetRoot), roots, files, controls, controlCandidates, unresolved, globals, globalSources };
+}
+
+function hasModifications(value) {
+  if (!value || typeof value !== "object") return false;
+  return Object.hasOwn(value, "modifications") || Object.values(value).some(hasModifications);
+}
+
+function withModificationBase(lower, upper) {
+  if (!lower || !hasModifications(upper.value)) return upper;
+  // Only compose matching resource paths. Namespace equality alone does not
+  // establish Bedrock's cross-file patch behavior.
+  return lower.relative === upper.relative
+    ? { ...upper, overlayBase: lower }
+    : { ...upper, modificationBoundary: "cross_file_modification_unsupported" };
+}
+
+export function mergeResourcePackIndexes(lower, upper) {
+  if (!lower) return upper;
+  const controls = new Map(lower.controls), controlCandidates = new Map(lower.controlCandidates);
+  for (const [name, record] of upper.controls) controls.set(name, withModificationBase(controls.get(name), record));
+  for (const [name, candidates] of upper.controlCandidates || []) controlCandidates.set(name, [...(controlCandidates.get(name) || []), ...candidates]);
+  return { targetRoot: upper.targetRoot, roots: [...lower.roots, ...upper.roots], files: [...lower.files, ...upper.files], controls, controlCandidates, unresolved: [...lower.unresolved, ...upper.unresolved], globals: { ...lower.globals, ...upper.globals }, globalSources: [...lower.globalSources, ...upper.globalSources] };
 }
 
 async function parseFile(file) {

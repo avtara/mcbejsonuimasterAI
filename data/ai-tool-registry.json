@@ -978,6 +978,255 @@
       "inputs": [{"name": "packs", "kind": "directory", "required": true, "description": "Source and installed pack roots."}], "outputs": [{"name": "installed_pack_verification", "kind": "report", "required": true, "format": "JSON", "description": "Fingerprint comparison."}],
       "preconditions": ["Exact pack roots are known."], "mutates": {"mode": "none", "paths": [], "description": "Read-only."}, "successExitCodes": [0], "failures": [{"exitCode": 9, "meaning": "Installed pack differs.", "recovery": "Remove duplicates or reinstall the expected revision."}],
       "evidenceProduced": ["Hash-bound installed/source comparison."], "unsupportedBehavior": ["Does not inspect the active world stack."], "supports": {"help": false, "json": true, "report": false}
+    },
+    {
+      "id": "design.library",
+      "status": "implemented",
+      "purpose": "Retrieve one style or pixel-art production method with pinned source evidence under a character budget.",
+      "command": {
+        "executable": "node",
+        "script": "tools/design-library.mjs",
+        "display": "node tools/design-library.mjs"
+      },
+      "arguments": [
+        {
+          "name": "command",
+          "kind": "positional",
+          "required": true,
+          "valueType": "enum",
+          "values": [
+            "styles",
+            "context",
+            "sources",
+            "skills",
+            "methods",
+            "method",
+            "verify"
+          ],
+          "description": "Small style/method index, one selected card, sources, external skill adapters or metadata validation."
+        },
+        {
+          "name": "method",
+          "kind": "option",
+          "flag": "--method",
+          "required": false,
+          "valueType": "string",
+          "description": "Exact method id for the method command; lists are available through methods."
+        },
+        {
+          "name": "style",
+          "kind": "option",
+          "flag": "--style",
+          "required": false,
+          "valueType": "string",
+          "description": "Exact style id or known alias for context, or optional palette/style in a method card."
+        },
+        {
+          "name": "role",
+          "kind": "option",
+          "flag": "--role",
+          "required": false,
+          "valueType": "string",
+          "description": "Screen role; defaults to menu."
+        },
+        {
+          "name": "input",
+          "kind": "option",
+          "flag": "--input",
+          "required": false,
+          "valueType": "string",
+          "description": "mixed, keyboard, gamepad or touch."
+        },
+        {
+          "name": "source",
+          "kind": "option",
+          "flag": "--source",
+          "required": false,
+          "valueType": "string",
+          "description": "One pinned source id."
+        },
+        {
+          "name": "limit",
+          "kind": "option",
+          "flag": "--limit",
+          "required": false,
+          "valueType": "integer",
+          "description": "Zero to three pattern cards; default two."
+        },
+        {
+          "name": "max-chars",
+          "kind": "option",
+          "flag": "--max-chars",
+          "required": false,
+          "valueType": "integer",
+          "description": "JSON character cap, 1500 to 16000; default 7500."
+        }
+      ],
+      "inputs": [
+        {
+          "name": "catalogs",
+          "kind": "file",
+          "required": true,
+          "format": "json",
+          "pathPattern": "data/design-*.json",
+          "description": "Reviewed style/source metadata and immutable source lock."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "kind": "stdout",
+          "required": true,
+          "format": "json",
+          "description": "Compact machine-readable result."
+        }
+      ],
+      "preconditions": [
+        "Run from a checkout containing the design catalogs."
+      ],
+      "mutates": {
+        "mode": "none",
+        "paths": [],
+        "description": "Read-only local lookup. Does not load upstream instructions or run downloaded code."
+      },
+      "successExitCodes": [
+        0
+      ],
+      "failures": [
+        {
+          "exitCode": 2,
+          "meaning": "Invalid query, source metadata or output budget too small.",
+          "recovery": "Select a listed id; reduce optional patterns or increase the explicit budget."
+        }
+      ],
+      "evidenceProduced": [
+        "Proposed style and opaque palette contrast, input-specific review checks, pinned source/reuse metadata."
+      ],
+      "unsupportedBehavior": [
+        "No Bedrock runtime proof, asset installation, automatic upstream code execution or unlicensed redistribution."
+      ],
+      "supports": {
+        "help": true,
+        "json": true,
+        "report": false
+      }
+    },
+    {
+      "id": "design.board",
+      "status": "implemented",
+      "purpose": "Compare one to six style proposals on a shared inventory/shop specimen with palette, states and long-text controls.",
+      "command": { "executable": "node", "script": "tools/design-board.mjs", "display": "node tools/design-board.mjs" },
+      "arguments": [
+        { "name": "styles", "kind": "option", "flag": "--styles", "required": false, "valueType": "string", "description": "Comma-separated style ids or aliases; defaults to all six." },
+        { "name": "role", "kind": "option", "flag": "--role", "required": false, "valueType": "string", "description": "Up to three roles selecting review checks, not specimen geometry; default inventory,shop." },
+        { "name": "input", "kind": "option", "flag": "--input", "required": false, "valueType": "string", "description": "mixed, keyboard, touch or gamepad; default mixed." },
+        { "name": "out", "kind": "option", "flag": "--out", "required": false, "valueType": "string", "description": "Relative output directory under workspace/; default workspace/design-board." },
+        { "name": "overwrite", "kind": "flag", "flag": "--overwrite", "required": false, "valueType": "boolean", "description": "Explicitly replace these two generated board artifacts." }
+      ],
+      "inputs": [{ "name": "catalogs", "kind": "file", "required": true, "format": "json", "pathPattern": "data/design-*.json", "description": "Validated styles and pinned source metadata." }],
+      "outputs": [
+        { "name": "board", "kind": "file", "required": true, "format": "html", "pathPattern": "workspace/**/index.html", "description": "Standalone interactive comparison with no remote resources." },
+        { "name": "proposal", "kind": "file", "required": true, "format": "json", "pathPattern": "workspace/**/design-board.json", "description": "Style proposals, contrast ratios, source and reuse metadata." },
+        { "name": "result", "kind": "stdout", "required": true, "format": "json", "description": "Compact artifact paths and explicit evidence boundary." }
+      ],
+      "preconditions": ["Run from this checkout; an existing output requires --overwrite or a new directory."],
+      "mutates": { "mode": "workspace", "paths": ["workspace"], "description": "Writes index.html and design-board.json plus a temporary .design-board-output.lock directory in the selected workspace directory. Failed rollback retains recovery backups." },
+      "successExitCodes": [0],
+      "failures": [{ "exitCode": 2, "meaning": "Invalid query, unsafe path, existing output or write failure.", "recovery": "Inspect the error; use supported styles and a fresh workspace path or explicitly authorize replacement with --overwrite." }],
+      "evidenceProduced": ["Authored visual proposal and opaque color contrast; runtimeVerified is always false."],
+      "unsupportedBehavior": ["No Bedrock geometry, texture import, animation implementation, runtime input validation or arbitrary screen generation."],
+      "supports": { "help": true, "json": true, "report": false }
+    },
+    {
+      "id": "design.sources",
+      "status": "implemented",
+      "purpose": "Plan, download or verify one source snapshot by pinned file hash without executing it.",
+      "command": {
+        "executable": "node",
+        "script": "tools/design-source-sync.mjs",
+        "display": "node tools/design-source-sync.mjs"
+      },
+      "arguments": [
+        {
+          "name": "source",
+          "kind": "option",
+          "flag": "--source",
+          "required": true,
+          "valueType": "string",
+          "description": "One exact source id from design.library."
+        },
+        {
+          "name": "download",
+          "kind": "flag",
+          "flag": "--download",
+          "required": false,
+          "valueType": "boolean",
+          "description": "Explicitly acquire pinned originals to the ignored workspace."
+        },
+        {
+          "name": "verify",
+          "kind": "flag",
+          "flag": "--verify",
+          "required": false,
+          "valueType": "boolean",
+          "description": "Check every cached file hash without network writes."
+        }
+      ],
+      "inputs": [
+        {
+          "name": "catalogs",
+          "kind": "file",
+          "required": true,
+          "format": "json",
+          "pathPattern": "data/design-*.json",
+          "description": "Reviewed style/source metadata and immutable source lock."
+        }
+      ],
+      "outputs": [
+        {
+          "name": "result",
+          "kind": "stdout",
+          "required": true,
+          "format": "json",
+          "description": "Compact machine-readable result."
+        }
+      ],
+      "preconditions": [
+        "Run from a checkout containing the design catalogs."
+      ],
+      "mutates": {
+        "mode": "workspace",
+        "paths": [
+          "workspace/design-library/upstreams"
+        ],
+        "description": "Writes only with --download. Plan is default; archives stay zipped and existing mismatched files are preserved."
+      },
+      "successExitCodes": [
+        0
+      ],
+      "failures": [
+        {
+          "exitCode": 2,
+          "meaning": "Invalid arguments or lock.",
+          "recovery": "Check the source id and lock metadata."
+        },
+        {
+          "exitCode": 3,
+          "meaning": "Missing source, network or integrity failure.",
+          "recovery": "Inspect the compact failed-file list; preserve local changes and review the upstream before updating hashes."
+        }
+      ],
+      "evidenceProduced": [
+        "Per-source counts and hash/size integrity outcome; license and reuse policy."
+      ],
+      "unsupportedBehavior": [
+        "No Bedrock runtime proof, asset installation, automatic upstream code execution or unlicensed redistribution."
+      ],
+      "supports": {
+        "help": true,
+        "json": true,
+        "report": false
+      }
     }
   ]
 }

@@ -22,7 +22,7 @@ The canonical schema is `schemas/ir.schema.json`.
 ## Element
 
 ```yaml
-- id: snake_case            # required, unique within the file
+- id: snake_case            # required, unique; namespace and root_panel are reserved
   parent: snake_case | __root__
   kind: panel | image | label | button | stack_h | stack_v | scroll
   anchor: <one of 9 anchors>
@@ -45,7 +45,7 @@ The canonical schema is `schemas/ir.schema.json`.
 - If anchor includes `middle`/`center` on x → `pos.x` is offset from parent's horizontal center.
 - Same on y for `top` / `bottom` / `middle`.
 
-This matches Bedrock JSON UI behavior with `anchor_from = anchor_to = <anchor>` and `offset = pos`.
+This matches Bedrock JSON UI behavior with `anchor_from = anchor_to = <anchor>` and `offset = pos`. When a constraint moves or resizes a parent, its descendants follow their current parent-relative offsets and anchors. A later explicit child constraint can adjust that offset.
 
 ## Pre-solve Sizing
 
@@ -105,7 +105,7 @@ If one axis is zero, the tool derives it from the declared aspect ratio. If both
 
 ## Constraints
 
-All constraints are evaluated to a fixed point (max 32 iterations). Conflicts are reported in `solved.json.log`.
+All constraints are evaluated to a fixed point (max 32 iterations). A non-converging solve sets `solved.json.converged` to `false`. The pipeline exits with code 7, writes `report.json` with `ok: false`, and does not compile a new `ui.json`. A previous `ui.json`, if present, is not evidence of this run succeeding. The standalone compiler also rejects non-converged input, and validation treats it as an error.
 
 ### Pair constraints
 

@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-09-27",
+  "evidenceTier": "source-inspected",
+  "runtimeVerified": false,
+  "reviewDocument": "docs/73-bedrock-source-review.md",
+  "patterns": [
+    {
+      "id": "vanilla-action-form-shell",
+      "sourceId": "mojang-bedrock-samples",
+      "paths": [
+        "resource_pack/ui/server_form.json"
+      ],
+      "roles": [
+        "server-form",
+        "routing",
+        "collection",
+        "selection",
+        "cancel"
+      ],
+      "summary": "현재 바닐라는 server_form_factory에서 long_form을 선택하고 form_buttons의 클릭 컨트롤에 collection_details와 button.form_button_click을 함께 둔다.",
+      "adaptation": "third_party_server_screen의 menu_cancel→menu_exit와 바깥 화면을 유지한다. long_form_dynamic_buttons_panel의 factory·컬렉션 계약에 맞춰 안쪽 표현을 자체 네임스페이스로 분리하고 BP에서 canceled를 먼저 검사한 뒤 selection을 처리한다.",
+      "limitations": [
+        "공식 샘플 RP에는 대상 애드온의 BP 구매·보상·권한 로직이 없다.",
+        "샘플 manifest의 최소 버전은 1.26.50이며 26.52 실기 검증을 대신하지 않는다.",
+        "Mojang LICENSE.md는 EULA를 참조하므로 에셋을 자유 배포 라이선스로 분류하지 않는다.",
+        "이번 확인은 소스 연결과 파싱까지이며 실제 선택·취소는 미검증이다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "menu",
+        "inventory",
+        "shop",
+        "quest",
+        "reward",
+        "character"
+      ]
+    },
+    {
+      "id": "vanilla-modal-field-collection",
+      "sourceId": "mojang-bedrock-samples",
+      "paths": [
+        "resource_pack/ui/server_form.json"
+      ],
+      "roles": [
+        "server-form",
+        "modal",
+        "input",
+        "collection",
+        "submit"
+      ],
+      "summary": "generated_contents의 factory가 custom_form 컬렉션의 input·toggle·slider·dropdown 등을 선택하고 제출 버튼이 button.submit_custom_form을 사용한다.",
+      "adaptation": "generated_contents/factory/control_ids와 custom_form_scrolling_content의 제출 경로를 함께 유지한다. BP 필드 순서와 formValues 해석을 한 계약으로 정의하고 취소 응답에서는 입력 결과를 적용하지 않는다.",
+      "limitations": [
+        "필드가 그려지는 것만으로 포커스·키보드·값 제출이 검증되지는 않는다.",
+        "DDUI CustomForm의 Observable 계약과 구분해야 한다.",
+        "긴 한국어 입력·모바일 키보드·게임패드 포커스는 실기 확인이 필요하다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "settings"
+      ]
+    },
+    {
+      "id": "chest-form-fixed-slot-index",
+      "sourceId": "herobrine643928-chest-ui",
+      "paths": [
+        "BP/scripts/extensions/forms.js",
+        "BP/scripts/index.js",
+        "RP/ui/server_form.json",
+        "RP/ui/chest_server_form.json",
+        "RP/ui/_global_variables.json"
+      ],
+      "roles": [
+        "chest",
+        "grid",
+        "server-form",
+        "protocol",
+        "selection"
+      ],
+      "summary": "ChestFormData는 빈칸을 포함한 고정 버튼 배열을 전송하고 제목 표식으로 grid 화면을 골라 selection을 슬롯 번호로 사용한다.",
+      "adaptation": "빈 슬롯을 제거하지 않는 배열 계약과 하나의 셀 템플릿을 사용한다. 자체 제목 표식, BP 슬롯 수, RP grid_dimensions와 레이아웃 활성화 설정을 함께 정의하고 canceled를 selection보다 먼저 처리한다.",
+      "limitations": [
+        "기본 생성자는 27칸이지만 취득 RP 설정은 54칸 이외 레이아웃을 비활성화한다.",
+        "취득 BP는 server 1.18.0/server-ui 1.3.0이며 최신 커밋만으로 최신 클라이언트 호환성을 판단하지 않는다.",
+        "CC-BY-4.0 출처 관리가 필요하고 원본 명칭·표식·텍스처를 새 작업에 그대로 복사하지 않는다.",
+        "18×18 셀의 터치 사용성과 hover 없는 설명 전달은 미검증이다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "inventory",
+        "shop"
+      ]
+    },
+    {
+      "id": "chest-form-payload-texture-boundary",
+      "sourceId": "herobrine643928-chest-ui",
+      "paths": [
+        "BP/scripts/extensions/forms.js",
+        "BP/scripts/extensions/constants.js",
+        "RP/ui/chest_server_form.json",
+        "README.md"
+      ],
+      "roles": [
+        "protocol",
+        "text",
+        "texture",
+        "item-icon",
+        "inventory"
+      ],
+      "summary": "버튼 텍스트의 고정 폭 수량·내구도 필드를 RP가 나눠 읽고 텍스처 경로와 숫자 AUX를 구분해 다른 렌더러에 연결한다.",
+      "adaptation": "송신 필드 폭과 RP 문자열 범위를 같은 명세로 관리한다. 소유한 텍스처 경로를 우선 확인하고 숫자 ID는 지원 버전별로 검증한다. inventory 확장 항목에는 실제 원본 슬롯 번호의 별도 매핑을 유지한다.",
+      "limitations": [
+        "show()는 빈 인벤토리 슬롯을 생략하므로 확장 응답 인덱스가 실제 슬롯 번호와 같지 않다.",
+        "BP inventory_enabled와 RP $show_inventory 설정이 일치해야 한다.",
+        "직접 텍스처 경로는 AUX 아이템 렌더러의 인챈트 표현과 기능이 다르다.",
+        "고정 폭 변경·한국어 표시·빈 payload·최대 수량은 별도 fixture와 실기 확인이 필요하다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "inventory",
+        "shop"
+      ]
+    },
+    {
+      "id": "container-slot-role-lifecycle",
+      "sourceId": "islocal-chest-gui",
+      "paths": [
+        "Behavior/scripts/chestGUI.js",
+        "Behavior/entities/chest_gui.json",
+        "Behavior/manifest.json",
+        "Resource/ui/chest_screen.json",
+        "README.md"
+      ],
+      "roles": [
+        "container",
+        "inventory",
+        "server-state",
+        "lifecycle",
+        "input"
+      ],
+      "summary": "실제 GUI 엔티티의 인벤토리를 container_items로 표시하고 매 틱 슬롯 변화를 읽어 button/input/output 역할을 처리하는 방식이다.",
+      "adaptation": "분석 메타데이터로만 사용한다. 슬롯 역할과 서버 소유 상태를 분리하는 설계를 참고하되 세션 식별, 아이템 보존, 동시 사용자와 종료 처리는 현재 API에 맞춰 독립적으로 구현한다.",
+      "limitations": [
+        "ActionFormData의 selection/canceled 경로가 아니며 실제 아이템과 서버 수명주기가 개입한다.",
+        "오래된 1.19.50 beta API를 사용하고 README는 모바일을 지원 대상으로 삼지 않는다.",
+        "명확한 코드 재배포 라이선스를 확인하지 못했다.",
+        "종료 뒤 같은 콜백의 접근, 반환 공간 부족, 관련 없는 entityCreate 이벤트와 아이템 제거 범위는 검증되지 않았다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "inventory"
+      ],
+      "contextPolicy": "explicit-source-only"
+    },
+    {
+      "id": "server-form-explicit-close-states",
+      "sourceId": "dryanfth-customserverui",
+      "paths": [
+        "resource_packs/CustomUIRSP/ui/server_form.json",
+        "README.md"
+      ],
+      "roles": [
+        "server-form",
+        "button-state",
+        "close",
+        "cancel",
+        "surface"
+      ],
+      "summary": "close_button은 default/hover/pressed 표면을 분리하고 입력을 menu_exit로 보내며 기존 long/custom 폼 컬렉션 경로를 유지한다.",
+      "adaptation": "보이는 닫기 컨트롤과 상태별 표면이라는 설계만 참고한다. 현재 바닐라 셸에 자체 프레임·텍스처를 적용하고 BP 취소 처리까지 연결한다.",
+      "limitations": [
+        "RP만 있어 BP의 취소 후 상태나 선택 처리까지 확인할 수 없다.",
+        "2023년 소스와 유지보수 중단 안내가 있어 전체 server_form 복사는 업데이트 위험을 늘린다.",
+        "GPL-3.0 및 Mojang/Microsoft 고지를 구분하고 원본 텍스처의 배포 권리를 일괄 추정하지 않는다.",
+        "상태 이름과 텍스처 선언은 실제 모바일·게임패드 동작 증거가 아니다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "menu",
+        "shop",
+        "quest",
+        "character"
+      ]
+    },
+    {
+      "id": "compiled-form-title-and-values",
+      "sourceId": "bedrock-core-ui",
+      "paths": [
+        "packages/ui-runtime/src/hosts/form/runtime.ts",
+        "packages/ui-runtime/src/hosts/form/contract.ts",
+        "packages/ui-compiler/src/hosts/form/emit.ts",
+        "packages/resource-pack/packs/RP/ui/server_form.json",
+        "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/mount.json"
+      ],
+      "roles": [
+        "server-form",
+        "compiler",
+        "protocol",
+        "routing",
+        "selection"
+      ],
+      "summary": "화면 구조를 RP에 미리 컴파일하고 제목은 인코딩과 화면 키, 버튼 항목은 값과 클릭 주소를 전달한다.",
+      "adaptation": "titleFor/keyFrom처럼 자체 프로토콜 버전과 화면 키를 분리한다. compiledValuesOf와 컴파일러가 같은 항목 순서를 사용하게 하고 클릭 컨트롤 자체의 collection_details를 보존한다. 취소는 세션 정리, 선택은 저장한 항목 주소로 처리한다.",
+      "limitations": [
+        "README는 beta 단계이므로 정확한 RP·런타임·컴파일러 버전을 함께 고정해야 한다.",
+        "전체 세션·모달·컴파일러 파이프라인과 게임 입력은 실행하지 않았다.",
+        "기존 폼을 다시 표시하는 정책은 DDUI의 열린 상태 갱신과 다르다.",
+        "MIT 코드 조건과 포함된 개별 에셋의 출처를 별도로 관리한다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "menu",
+        "shop",
+        "quest",
+        "character"
+      ]
+    },
+    {
+      "id": "compiled-mount-modification-boundary",
+      "sourceId": "bedrock-core-ui",
+      "paths": [
+        "packages/resource-pack/packs/RP/ui/core-ui/hosts/form/mount.json",
+        "packages/resource-pack/packs/RP/ui/server_form.json"
+      ],
+      "roles": [
+        "modifications",
+        "overlay",
+        "routing",
+        "diagnostics"
+      ],
+      "summary": "compiled_root는 직접 controls 배열을 선언한다. 소스 주석은 파일 경로 단위 수정과 상속 배열 수정의 차이를 관찰했다고 설명한다.",
+      "adaptation": "동일한 리소스 파일 경로와 직접 선언한 대상 배열을 근거로 수정 범위를 좁힌다. 해석기가 파일 간 수정 또는 상속만 한 배열의 의미를 확인하지 못하면 명시적인 미지원 진단으로 종료한다.",
+      "limitations": [
+        "주석의 엔진 설명은 커뮤니티 관찰이며 이번 작업의 런타임 재현 결과가 아니다.",
+        "동일 네임스페이스라는 이유만으로 서로 다른 파일의 modifications를 합치면 안 된다.",
+        "지원하는 연산 목록과 실제 Bedrock 엔진 전체 동작의 일치 여부는 별개다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": []
+    },
+    {
+      "id": "hud-component-local-title-storage",
+      "sourceId": "bedrock-oss-bedrock-wiki",
+      "paths": [
+        "docs/json-ui/preserve-title-texts.md",
+        "docs/json-ui/best-practices.md"
+      ],
+      "roles": [
+        "hud",
+        "binding",
+        "text",
+        "preserved-state",
+        "protocol"
+      ],
+      "summary": "data_control의 property_bag에 받은 HUD 제목을 보존하고 지정한 표식이 맞을 때만 표시 값을 갱신하는 컴포넌트 예제다.",
+      "adaptation": "새 컴포넌트마다 자체 저장 속성과 표식을 정한다. 전역 변수를 동적 저장소로 쓰지 않고 입력 제목·보존 값·표시 문자열의 경로를 구분한다. 원문은 복제하지 않고 필요한 동작을 독립 구현한다.",
+      "limitations": [
+        "HUD #hud_title_text_string 패턴이며 서버 폼 #title_text 라우팅과 별개다.",
+        "visibility_changed 타이밍, 중복·누락 제목, 리스폰 뒤 보존 상태는 실기 미검증이다.",
+        "읽은 페이지에는 license frontmatter가 없어 본문/코드 적용 라이선스가 미확정이다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": [
+        "hud"
+      ]
+    },
+    {
+      "id": "schema-sample-conflict-gate",
+      "sourceId": "mojang-bedrock-schemas",
+      "paths": [
+        "schemas/rp/ui/index.schema.json",
+        "types/rp/ui/UiElement.d.ts",
+        "forms/ui/ui_element.form.json"
+      ],
+      "roles": [
+        "schema",
+        "validation",
+        "diagnostics",
+        "reference"
+      ],
+      "summary": "화면 스키마의 범위와 생성된 타입을 실제 UI 선언과 교차 확인해야 한다. 취득 타입의 factory·font_scale_factor·grid_item_template에는 충돌 가능성이 있다.",
+      "adaptation": "스키마 통과 범위를 보고서에 명시하고 현재 공식 샘플 및 속성 문서와 타입이 다르면 충돌 기록을 만든다. 상위 자료 업데이트를 로컬 validator에 무조건 덮어쓰지 않는다.",
+      "limitations": [
+        "index.schema.json은 namespace만 기술해 하위 속성 검증을 제공하지 않는다.",
+        "타입 파일의 factory 문자열·font_scale_factor boolean·grid_item_template number를 실제 엔진 계약으로 단정할 수 없다.",
+        "MIT 스키마 이용 조건은 게임 UI 에셋의 배포 조건을 대신하지 않는다."
+      ],
+      "pathScope": "upstream",
+      "screenRoles": []
+    }
+  ]
+}

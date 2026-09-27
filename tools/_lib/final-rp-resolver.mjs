@@ -169,8 +169,8 @@ export function layoutResolvedTree(tree, options = {}) {
     const props = node.props || {}, size = Array.isArray(props.size) ? props.size : ["100%", "100%"];
     const w = parseDimension(size[0], parentRect.w, unresolved, `${path}/size/0`), h = parseDimension(size[1], parentRect.h, unresolved, `${path}/size/1`);
     const af = anchor(props.anchor_from || "center"), at = anchor(props.anchor_to || "center"), offset = Array.isArray(props.offset) ? props.offset : [0, 0];
-    const x = parentRect.x + parentRect.w * at[0] - w * af[0] + Number(offset[0] || 0);
-    const y = parentRect.y + parentRect.h * at[1] - h * af[1] + Number(offset[1] || 0);
+    const x = parentRect.x + parentRect.w * af[0] - w * at[0] + Number(offset[0] || 0);
+    const y = parentRect.y + parentRect.h * af[1] - h * at[1] + Number(offset[1] || 0);
     const rect = { x, y, w, h }, visible = inheritedVisible && props.visible !== false;
     const out = { ...node, path, rect, visible };
     nodes.push(out);

@@ -30,7 +30,9 @@ If `data/skill-tool-profiles.json` exists, read only the `mcbe-json-ui-addon-int
 5. Record when dynamic data is snapshotted and what event refreshes it. A form-open payload is not a live subscription; cross-category search cannot include products never supplied to the client-side data owner.
 6. Verify the exact installed RP/BP path, manifest UUID/version/dependencies, pack priority, and changed-file fingerprint; exclude duplicate packs with the same identity before treating stale visuals as a code failure. Resolve assets target-RP-first.
 7. When more than one RP is active, map ordered ownership of vanilla screen overrides, namespaces, global variables, protocol prefixes, atlas keys, font pages, and textures. Validate the stack in both source and installed order; a single-pack parse cannot close a stack collision.
-8. If the task is only about UI structure, switch back to the narrower skill.
+8. When a new aggregate pack copies earlier `server_form.json` routes or imports earlier BP handlers, activate the aggregate pack alone. Assert that superseded RP/BP UUIDs are absent from the target world's active lists while unrelated packs are preserved; otherwise the same route modification and event subscription can run once per active version and render duplicate screens.
+9. Fingerprint copied compatibility UI and BP modules against their current source packs after every regeneration so the installed aggregate cannot silently contain stale earlier layouts.
+10. If the task is only about UI structure, switch back to the narrower skill.
 
 ## Focus
 

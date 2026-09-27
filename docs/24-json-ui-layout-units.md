@@ -18,9 +18,14 @@ Use this when the AI must place controls without assuming a fixed screen size.
 
 ## Anchors and offsets
 
-- `anchor_from` is the point on this control.
-- `anchor_to` is the point on the parent.
+- `anchor_from` is the point on the parent.
+- `anchor_to` is the point on this control.
 - `offset` moves from that anchor relationship.
+
+For a 100 x 80 parent and a 20 x 10 child, `anchor_from: center` with
+`anchor_to: top_left` places the child's top-left corner at (50, 40).
+The position is `parent origin + parent size * anchor_from - child size * anchor_to + offset`.
+See Microsoft's [UI element reference](https://learn.microsoft.com/en-us/minecraft/creator/reference/content/jsonuireference/examples/jsonuicomponents/ui_element).
 
 Stable HUD pattern:
 

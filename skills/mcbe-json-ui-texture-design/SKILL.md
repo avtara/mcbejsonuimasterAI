@@ -15,6 +15,10 @@ Turn asset-catalog evidence into an original, implementation-ready texture set w
 
 ## Workflow
 
+When selecting a style or palette, use [references/style-directions.md](references/style-directions.md) before the brief. Load one style card; retain catalog measurements separately from proposed colors and decoration.
+
+For pixel asset sets, palette/cluster review, frame animation or atlas handoff, read [references/pixel-art-production.md](references/pixel-art-production.md) and select one production method. It adapts reviewed external workflows without loading or installing their complete Skills or tools.
+
 1. Read [references/asset-brief-contract.md](references/asset-brief-contract.md) before producing a brief or generation prompt.
 2. Run registered `asset.catalog`, then query `asset.context` by role and state. If the local semantic catalog is unavailable, fall back to `asset.search` with role/state/shape/size terms and inspect several distinct results.
 3. Record only abstract evidence: function, role, state behavior, dimensions, aspect ratio, alpha use, stretchability, nine-slice margins, palette characteristics, edge weight, corner treatment, and pixel density.

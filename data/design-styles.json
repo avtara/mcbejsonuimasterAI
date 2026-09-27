@@ -1,0 +1,224 @@
+{
+  "schema": "mcbe-design-styles@1",
+  "decisionStatus": "authored-proposal",
+  "styles": [
+    {
+      "id": "cartoony-pixel",
+      "name": "카툰 / 애니메이션 픽셀",
+      "aliases": [
+        "cartoony",
+        "animated-pixel",
+        "카툰",
+        "애니메이션풍"
+      ],
+      "roles": [
+        "menu",
+        "shop",
+        "reward",
+        "hud"
+      ],
+      "sources": [
+        "kenney-ui-pack-pixel-adventure",
+        "kenney-tiny-town"
+      ],
+      "palette": {
+        "background": "#29283D",
+        "surface": "#FFF0CC",
+        "text": "#302638",
+        "accent": "#F6B44D",
+        "success": "#356447",
+        "danger": "#9D354D",
+        "focus": "#204F9C"
+      },
+      "shape": "모서리를 1~2px 계단으로 단순화하고 같은 소재의 밝은 윗면·어두운 아랫면을 유지한다.",
+      "pixel": "아이콘 16×16을 우선 초안으로 쓰되 패널과 글자를 16px로 강제하지 않는다. 실루엣을 1배에서 먼저 확인한다.",
+      "motion": "보상 강조 한 곳만 2~4프레임 반짝임 초안. 반복 깜박임·레이아웃 이동을 피하고 정지 대안을 둔다.",
+      "avoid": [
+        "상태별로 외곽 크기 변경",
+        "아이템보다 장식의 대비가 강한 화면"
+      ]
+    },
+    {
+      "id": "fantasy-rpg",
+      "name": "판타지 RPG / 어드벤처",
+      "aliases": [
+        "fantasy",
+        "rpg",
+        "adventure",
+        "판타지",
+        "어드벤처"
+      ],
+      "roles": [
+        "inventory",
+        "quest",
+        "shop",
+        "character"
+      ],
+      "sources": [
+        "kenney-ui-pack-pixel-adventure",
+        "kenney-ui-pack-adventure",
+        "kenney-fantasy-ui-borders"
+      ],
+      "palette": {
+        "background": "#25202B",
+        "surface": "#F0DEB1",
+        "text": "#30271F",
+        "accent": "#906321",
+        "success": "#305F3A",
+        "danger": "#963B3B",
+        "focus": "#284F85"
+      },
+      "shape": "양피지 본문, 어두운 금속/나무 프레임, 좁은 제목 리본. 장식은 모서리에 모으고 슬롯은 같은 규칙을 쓴다.",
+      "pixel": "아이콘 기본 16×16, 필요할 때 32×32. nine-slice 모서리와 장식 폭은 원본에서 측정한다.",
+      "motion": "선택·획득 피드백만 짧게. 퀘스트 읽기 영역과 버튼은 움직이지 않는다.",
+      "avoid": [
+        "모든 카드에 큰 리본",
+        "희귀도 색만으로 선택/잠금을 구분"
+      ]
+    },
+    {
+      "id": "clean-pixel",
+      "name": "클린 GUI / 미니멀 픽셀",
+      "aliases": [
+        "clean",
+        "minimal",
+        "클린",
+        "미니멀"
+      ],
+      "roles": [
+        "settings",
+        "inventory",
+        "menu",
+        "shop"
+      ],
+      "sources": [
+        "kenney-ui-pack",
+        "kenney-fantasy-ui-borders"
+      ],
+      "palette": {
+        "background": "#202B35",
+        "surface": "#EDF1EE",
+        "text": "#233039",
+        "accent": "#356579",
+        "success": "#315D43",
+        "danger": "#993F41",
+        "focus": "#6936A1"
+      },
+      "shape": "1px 윤곽 초안, 한 단계 그림자, 정렬된 콘텐츠와 하나의 주 행동. 구분선보다 여백을 먼저 사용한다.",
+      "pixel": "스무스 원본은 정보 계층 참고만 한다. 픽셀 출력은 정수 배율/nearest와 일관된 선 두께를 별도 설계한다.",
+      "motion": "hover/focus/pressed 대비와 눌림 1px 초안만. 기능에 필요 없는 루프를 기본으로 넣지 않는다.",
+      "avoid": [
+        "흐린 회색 본문",
+        "선택 색과 초점 색의 혼용"
+      ]
+    },
+    {
+      "id": "cozy-vanilla-16",
+      "name": "Cozy 16×16 바닐라",
+      "aliases": [
+        "cozy",
+        "vanilla16",
+        "cozy16",
+        "아기자기",
+        "화사",
+        "바닐라"
+      ],
+      "roles": [
+        "inventory",
+        "shop",
+        "quest",
+        "menu",
+        "hud"
+      ],
+      "sources": [
+        "kenney-tiny-town",
+        "kenney-ui-pack-pixel-adventure",
+        "mojang-bedrock-samples"
+      ],
+      "palette": {
+        "background": "#293C35",
+        "surface": "#FFF0D3",
+        "text": "#3B3028",
+        "accent": "#996321",
+        "success": "#37623A",
+        "danger": "#A34243",
+        "focus": "#315F9A"
+      },
+      "shape": "바닐라 슬롯의 반복 구조와 단단한 픽셀 가장자리를 보존하며 따뜻한 크림·목재·잎색을 역할별로 배치한다.",
+      "pixel": "아이콘 원본 16×16 우선. 16은 모든 컨트롤 크기가 아니다. 기존 팩 텍셀 밀도와 실제 GUI scale을 확인한다.",
+      "motion": "선택 테두리와 단발 피드백 중심. 작은 잎/별 장식도 본문·터치 영역을 침범하지 않는다.",
+      "avoid": [
+        "파스텔 바탕에 흰 본문",
+        "장식으로 슬롯 수/버튼 인덱스 변경"
+      ]
+    },
+    {
+      "id": "dark-fantasy",
+      "name": "다크 판타지 / 간결한 퀘스트",
+      "aliases": [
+        "dark-rpg",
+        "dark-fantasy",
+        "다크판타지"
+      ],
+      "roles": [
+        "quest",
+        "character",
+        "inventory",
+        "menu"
+      ],
+      "sources": [
+        "kenney-fantasy-ui-borders"
+      ],
+      "palette": {
+        "background": "#111A22",
+        "surface": "#24303A",
+        "text": "#F1EBD8",
+        "accent": "#E2BA68",
+        "success": "#A5D193",
+        "danger": "#FFA7A7",
+        "focus": "#A7D9FF"
+      },
+      "shape": "얇은 모서리 문양과 어두운 단색 패널. 목표·보상·행동을 세 구역으로 구분한다.",
+      "pixel": "얇은 선도 최소 표시 배율에서 끊김 없이 읽혀야 한다. 장식의 알파 범위를 따로 검사한다.",
+      "motion": "퀘스트 진행 갱신에만 짧은 밝기 변화. 상시 연기·입자 배경은 선택 사항이다.",
+      "avoid": [
+        "읽기 영역에 고대비 무늬",
+        "검은 윤곽과 검은 배경의 소실"
+      ]
+    },
+    {
+      "id": "arcade-pixel",
+      "name": "아케이드 / 밝은 보상 UI",
+      "aliases": [
+        "arcade",
+        "retro",
+        "아케이드"
+      ],
+      "roles": [
+        "reward",
+        "hud",
+        "menu"
+      ],
+      "sources": [
+        "kenney-ui-pack-pixel-adventure",
+        "kenney-ui-pack"
+      ],
+      "palette": {
+        "background": "#24243B",
+        "surface": "#393D59",
+        "text": "#FFF4D6",
+        "accent": "#FFD062",
+        "success": "#ACDF97",
+        "danger": "#FFADAD",
+        "focus": "#9DDCFF"
+      },
+      "shape": "큰 점수와 명확한 행동 버튼, 짧은 본문. 장식은 결과 강조에 집중한다.",
+      "pixel": "점수 폰트도 실제 지원 글리프를 확인한다. 긴 한글은 픽셀 장식 폰트에 강제하지 않는다.",
+      "motion": "결과 등장 1회, 초점 유지. 움직임 최소화 모드에서는 정지 색·아이콘으로 같은 정보를 준다.",
+      "avoid": [
+        "서로 다른 방향의 반복 애니메이션",
+        "숫자 갱신마다 버튼 위치 변경"
+      ]
+    }
+  ]
+}

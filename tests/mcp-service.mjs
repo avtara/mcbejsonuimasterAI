@@ -72,19 +72,26 @@ assert.equal(unknown.ok, false);
 assert.equal(unknown.error.code, "UNKNOWN_TOOL");
 
 const rpRoot = join(temp, "rp");
+const vanillaRoot = join(temp, "vanilla-without-fonts");
 await mkdir(join(rpRoot, "ui"), { recursive: true });
+await mkdir(join(vanillaRoot, "ui"), { recursive: true });
+await writeFile(join(vanillaRoot, "ui", "_ui_defs.json"), JSON.stringify({ ui_defs: [] }));
 await writeFile(join(rpRoot, "ui", "_ui_defs.json"), JSON.stringify({ ui_defs: ["ui/demo.json"] }));
 await writeFile(join(rpRoot, "ui", "demo.json"), JSON.stringify({
   namespace: "demo",
   screen: { type: "panel", size: [120, 60], controls: [{ "title": { type: "label", size: [80, 12], text: "fixture" } }] },
 }));
 const integrated = createMcbeUiService(await createLocalBackend());
-const integratedOpen = await integrated.dispatch("mcbe_ui_open_project", { rpRoot });
+const integratedOpen = await integrated.dispatch("mcbe_ui_open_project", { rpRoot, vanillaRoot });
 assert.equal(integratedOpen.ok, true);
 assert.equal(integratedOpen.controlCount, 1);
 const integratedResolve = await integrated.dispatch("mcbe_ui_resolve_screen", { projectId: integratedOpen.projectId, control: "demo.screen", viewport: [480, 270] });
 assert.equal(integratedResolve.ok, true);
 assert.equal(integratedResolve.tree.qualified, "demo.screen");
 assert.deepEqual(integratedResolve.layout.viewport, [480, 270]);
+assert.equal(integratedResolve.evidenceLevel, "structural-static");
+assert.equal(integratedResolve.runtimeVerified, false);
+assert.equal(integratedResolve.renderPreparation.ok, false, "fixed-size structure can resolve without establishing font rendering");
+assert.ok(integratedResolve.renderPreparation.unresolved.some(item => item.kind === "FONT_UNAVAILABLE"));
 
 console.log("mcp-service: ok");

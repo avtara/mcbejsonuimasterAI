@@ -25,8 +25,12 @@ If `data/skill-tool-profiles.json` exists, read only the `mcbe-json-ui-hud-and-c
    - chat panel
    - bottom chat or mobile split
 3. Inspect `hud_screen.json` and `chat_screen.json` together when both exist.
-4. Preserve any server-side protocol assumptions in the answer.
+4. Inventory every sender that writes title, subtitle, actionbar, chat, or scoreboard state. One singleton factory/channel does not accumulate independent sends.
+5. For fixed-width payloads, route byte framing to `mcbe-json-ui-logic`; for pack/script ownership, add `mcbe-json-ui-addon-integration`.
+6. Preserve any server-side protocol assumptions and the exact pending Bedrock scenario in the answer.
 
 ## Important rule
 
 If a feature is keyed off title text or actionbar text, document the exact expected string format. That format is part of the system, not incidental text.
+
+Do not close HUD/chat work from a validator or static PNG. Channel arbitration, per-row sibling scope, chat lifetime, collection correlation, and normal actionbar/chat recovery require Bedrock interaction evidence.

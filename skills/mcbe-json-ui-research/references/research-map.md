@@ -20,7 +20,8 @@ Primary included sources:
 
 Primary upstream:
 
-- <https://github.com/verified sample source/official-samples/tree/main/resource_pack/ui>
+- <https://github.com/Mojang/bedrock-samples/tree/main/resource_pack/ui> — Mojang sample structure; obey `LICENSE.md` and pin the revision used.
+- <https://learn.microsoft.com/en-us/minecraft/creator/reference/content/jsonuireference/examples/jsonuilist?view=minecraft-bedrock-stable> — Microsoft JSON UI reference index; availability may require sign-in.
 
 ## Use community reference docs when
 
@@ -28,10 +29,10 @@ Primary upstream:
 - the user needs explanation of JSON UI behavior
 - the task needs a known reusable technique such as preserved titles
 
-Primary pages:
+Primary pages (community-maintained behavior evidence, not Mojang runtime guarantees):
 
 - <https://wiki.bedrock.dev/json-ui/json-ui-documentation>
-- <https://wiki.bedrock.dev/json-ui/json-ui-intro.html>
+- <https://wiki.bedrock.dev/json-ui/json-ui-intro>
 - <https://wiki.bedrock.dev/json-ui/best-practices>
 - <https://wiki.bedrock.dev/json-ui/preserve-title-texts>
 - <https://wiki.bedrock.dev/json-ui/modifying-server-forms>
@@ -45,7 +46,8 @@ Primary pages:
 
 Primary upstream:
 
-- <https://github.com/vanilla resource mirror>
+- <https://github.com/Mojang/bedrock-samples/tree/main/resource_pack> — official sample pack and first authority for current stable examples.
+- <https://github.com/ZtechNetwork/MCBVanillaResourcePack> — versioned community mirror used only after pinning a release/commit and cross-checking the target game version.
 
 ## Use external example repositories when
 
